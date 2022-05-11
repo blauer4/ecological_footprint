@@ -1,0 +1,19 @@
+{
+  "name": "ecological_footprint",
+  "version": "1.0.0",
+  "description": "Project for computer engineering 2 course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lollixzc/ecological_footprint.git"
+  },
+  "author": "Vittoria Ossanna, Fabrizio Sandri, Laurence Bonat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lollixzc/ecological_footprint/issues"
+  },
+  "homepage": "https://github.com/Lollixzc/ecological_footprint#readme"
+}
