@@ -7,7 +7,7 @@ mongoose.connect(process.env.MONGO_DB_URL, {useNewUrlParser: true, useUnifiedTop
     
     console.log("Connected to the Database");
     
-    app.listen(3000, function() {
+    app.listen(process.env.EXPRESS_PORT, function() {
         console.log('Server running on port ', 3000);
     });
     
