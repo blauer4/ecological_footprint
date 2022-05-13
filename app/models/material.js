@@ -1,12 +1,12 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-let materialSchema = new Schema({
+var materialSchema = new Schema({
     name: {type:String, required:true},
     unitImpact: {type:String, required:true},
 });
 
-let Material = mongoose.model('Material', materialSchema);
+var Material = mongoose.model('Material', materialSchema);
 
 module.exports = {
     Material,
