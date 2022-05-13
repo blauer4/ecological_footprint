@@ -1,0 +1,19 @@
+/**
+ * Ritorna un tipo di attività del tipo spazzatura(garbage)
+ */
+
+const express = require('express');
+const GarbageActivity = require('./models/garbageActivity.js');
+const Material = require('./models/material.js').Material; 
+
+const router = express.Router();
+
+router.get('', async (req, res) => {
+
+    let activities = await GarbageActivity.find({});
+
+    res.status(200).json(activities);
+});
+
+module.exports = router;
+
