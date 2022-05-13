@@ -1,0 +1,7 @@
+/**
+* Gestione dei materiali di consumo con i vari impatti ambientali
+*/
+ const express = require('express');
+ const router = express.Router();
+ const Material = require('./models/material.js').Material; 
+ 
