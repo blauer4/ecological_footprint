@@ -12,3 +12,10 @@ router.get('', async (req, res) => {
 
     res.status(200).json(vehicles);
 });
+
+router.get('/:id', async (req, res) => {
+
+    let vehicle = await Vehicle.findById(req.params.id);
+
+    res.status(200).json(vehicle);
+});
