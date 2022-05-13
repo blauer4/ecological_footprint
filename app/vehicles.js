@@ -19,3 +19,5 @@ router.get('/:id', async (req, res) => {
 
     res.status(200).json(vehicle);
 });
+
+module.exports = router;
