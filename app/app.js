@@ -1,6 +1,7 @@
 const express = require("express");
 const productActivities = require("./productActivities.js");
 const garbageActivities = require("./garbageActivities.js");
+const transportActivities = require("./transportActivities.js");
 const materials = require("./materials.js");
 const vehicles = require("./vehicles.js");
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.use('/api/v1/activities/products', productActivities);
 app.use('/api/v1/activities/garbage', garbageActivities);
+app.use('/api/v1/activities/transports', transportActivities);
 
 app.use('/api/v1/materials', materials);
 app.use('/api/v1/vehicles', vehicles); 
