@@ -18,4 +18,34 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(activity);
 });
 
+
+router.post('', async (req, res) => {
+
+    let userId = req.body["userId"];
+    let vehicleId = req.body["vehicleId"];
+    let distance = req.body["distance"];
+
+
+    //TODO get the impact from the DB
+    let unitImpact = 5;
+    let impact = unitImpact * parseInt(distance);
+
+    let vehicle = await Vehicle.findById(vehicleId);
+
+    var newActivity = new TransportActivity({
+        userId: userId,
+        distance: distance,
+        impact: impact,
+        vehicle: vehicle
+    });
+
+    activity = await newActivity.save();
+
+    /**
+     * Return the link to the newly created resource 
+     */
+    res.location("/api/v1/activities/transports/" + activity.id).status(201).send();
+});
+
+
 module.exports = router;
