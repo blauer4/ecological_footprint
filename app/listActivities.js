@@ -11,18 +11,18 @@ router.get('',async (req,res)=>{
     let resp = [];
     for(item of product){
         resp.push({
-            ref: "/api/v1/activities/products/" + item.id,
+            self: "/api/v1/activities/products/" + item.id,
             type: "product",
         });
     }
 
     for(item of garbage){
         resp.push({
-            ref: "/api/v1/activities/materials/" + item.id,
+            self: "/api/v1/activities/materials/" + item.id,
             type: "materials",
         });
     }
-    
+
     res.status(200).json(resp);
 });
 

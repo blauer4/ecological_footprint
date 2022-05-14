@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.use('/api/v1/activities/products', productActivities);
 app.use('/api/v1/activities/garbage', garbageActivities);
-app.use('/api/v1/listactivities', listActivities);
+app.use('/api/v1/activities', listActivities);
 
 app.use('/api/v1/materials', materials);
 app.use('/api/v1/vehicles', vehicles); 
