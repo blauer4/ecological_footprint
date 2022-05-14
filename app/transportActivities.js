@@ -47,5 +47,12 @@ router.post('', async (req, res) => {
     res.location("/api/v1/activities/transports/" + activity.id).status(201).send();
 });
 
+router.delete('/:id', async (req, res) => {
+    let id = req.params["id"];
+
+    let result = await GarbageActivity.deleteOne({_id: id});
+    
+    
+});
 
 module.exports = router;
