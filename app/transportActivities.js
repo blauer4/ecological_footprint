@@ -47,5 +47,18 @@ router.post('', async (req, res) => {
     res.location("/api/v1/activities/transports/" + activity.id).status(201).send();
 });
 
+router.delete('/:id', async (req, res) => {
+    let id = req.params["id"];
+
+    let result = await GarbageActivity.deleteOne({_id: id});
+    if (result.deletedCount == 1){
+        console.log(`Documento con id ${id} eliminato con successo`);
+        res.send("OK");
+    }else{
+        console.error(`ERRORE: eliminazione documento con attivita'(transport) con id ${id}`);
+        res.send("Fail");
+    }
+    
+});
 
 module.exports = router;
