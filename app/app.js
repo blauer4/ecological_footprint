@@ -3,6 +3,7 @@ const productActivities = require("./productActivities.js");
 const garbageActivities = require("./garbageActivities.js");
 const transportActivities = require("./transportActivities.js");
 const listActivities = require("./listActivities.js");
+const products = require("./products.js");
 const materials = require("./materials.js");
 const vehicles = require("./vehicles.js");
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 /**
  * V1 Api endopoints routes
  */
+app.use('/api/v1/products', products);
 app.use('/api/v1/activities/products', productActivities);
 app.use('/api/v1/activities/garbage', garbageActivities);
 app.use('/api/v1/activities/transports', transportActivities);
