@@ -153,7 +153,36 @@ function addProductActivity(){
     
 }
 
+/**
+ * Function that adds a new garbage activity to the system. Invoked when 
+ * the add button under the column is clicked
+ */
 
+ function addGarbageActivity(){
+    let resourceLocation = document.getElementById("materialSelect").value;
+    let quantity = document.getElementById("input_garbage_quantity").value;
+    let garbageId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
+
+    console.log(garbageId);
+
+    let newGarbageActivityData = { 
+        userId: 1234,
+        materialId: garbageId,
+        amount: quantity
+    };
+
+    fetch('/api/v1/activities/garbage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newGarbageActivityData),
+    })
+    .then((resp) => {
+        console.log(resp);
+        return;
+    })
+    .catch( error => console.error(error) ); // error handle
+
+}
 
 /**
  * Inital calls
