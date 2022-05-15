@@ -88,6 +88,37 @@ function fillProductActivityForm(){
     .catch( error => console.error(error) );  // error handle
 }
 
+/**
+ * function that adds a new product to the system if it is not 
+ * already registered and returns the id of the newly created resource 
+ * or the id of the existing one
+ */
+function addNewProduct(name, code){
+    return new Promise(function(resolve, reject) {
+        
+        let unitImpact = Math.floor(Math.random() * 20 + 1);
+
+        let newProductData = { 
+            name: name,
+            code: code,
+            unitImpact: unitImpact
+        };
+
+        fetch('/api/v1/products', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newProductData),
+        })
+        .then((resp) => {
+            let resoruceLocation = resp.headers.get("Location"); // get the location of the resource
+            let resourceId = resoruceLocation.substring(resoruceLocation.lastIndexOf('/') + 1);
+
+            resolve(resourceId);
+        })
+        .catch( error => console.error(error) ); // error handle
+    });
+    
+}
 
 
 /**
