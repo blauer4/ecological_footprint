@@ -98,12 +98,9 @@ function fillProductActivityForm(){
 function addNewProduct(name, code){
     return new Promise(function(resolve, reject) {
         
-        let unitImpact = Math.floor(Math.random() * 20 + 1);
-
         let newProductData = { 
             name: name,
-            code: code,
-            unitImpact: unitImpact
+            code: code
         };
 
         fetch('/api/v1/products', {
@@ -130,6 +127,7 @@ function addProductActivity(){
     let name = document.getElementById("input_food_name").value;
     let code = document.getElementById("input_food_code").value;
     let quantity = document.getElementById("input_food_quantity").value;
+
 
     // add the new product to the database (inserted only if it doesn't exists)
     addNewProduct(name, code).then((productId) => {
