@@ -60,8 +60,10 @@
                 <form>
                     <label for="input_food_item" class="form-label">search item </label>
                     <!--questo input dovra' essere modificato poi per diventare una seach bar-->
-                    <input type="text" class="form-control" id="input_food_item" placeholder="banana...">
-                    <span>or</span> <br>
+                    <input type="text" class="form-control" id="input_food_item" placeholder="banana..." oninput="getProductsByName()">
+                    <hr/>
+                    <label for="input_food_name" class="form-label">insert food name </label>
+                    <input type="text" class="form-control" id="input_food_name" placeholder="Banana">
                     <label for="input_food_code" class="form-label">insert barcode </label>
                     <input type="text" class="form-control" id="input_food_code" placeholder="72834239">
                     <br>
