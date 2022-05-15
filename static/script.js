@@ -19,6 +19,25 @@ function loadMaterials() {
 }
 
 /**
+ * this sunction loads the data that correspond to the transportation choices. 
+*/  
+
+function loadVehicles() {
+    fetch('/api/v1/vehicles')
+        .then((resp) => resp.json())
+        .then(function (data) {
+            let select = document.getElementById("vehicleSelect");
+            data.forEach(element => {
+                let option = document.createElement("option");
+                option.setAttribute("value", element.self);
+                let text = document.createTextNode(element.name);
+                option.appendChild(text);
+                select.appendChild(option);
+            });
+        }).catch(error => console.error(error));
+}
+
+/**
  * function that searches for a product by its name and returns the 
  * list of corresponding products as a select menu
  */
@@ -75,4 +94,5 @@ function fillProductActivityForm(){
  * Inital calls
  */
 loadMaterials();
+loadVehicles();
 getProductsByName();
