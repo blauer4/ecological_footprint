@@ -20,5 +20,25 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(product);
 });
 
+router.post('', async (req, res) => {
+
+	let code = req.body["code"];
+	let name = req.body["name"];
+	let unitImpact = req.body["unitImpact"];
+
+    let newProduct = new Product({
+        code: code,
+        name: name,
+        unitImpact: unitImpact
+    });
+
+    newProduct = await newProduct.save();
+    let newProductId = newProduct.id;
+
+    /**
+     * Return the link to the newly created resource 
+     */
+    res.location("/api/v1/products/" + newProductId).status(201).send();
+});
 
 module.exports = router;
