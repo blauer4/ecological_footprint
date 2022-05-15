@@ -77,7 +77,7 @@ function fillProductActivityForm(){
     let inputFoodCode = document.getElementById("input_food_code");
     
     let input_value = document.getElementById("input_food_item").value;
-    let productReference = document.querySelector("#floatingSelectProduct option[value='" + input_value + "']").dataset.value;
+    let productReference = document.querySelector('#floatingSelectProduct option[value="' + input_value + '"]').dataset.value;
 
     fetch(productReference)
     .then((resp) => resp.json()) // Transform the data into json
@@ -163,8 +163,6 @@ function addProductActivity(){
     let quantity = document.getElementById("input_garbage_quantity").value;
     let garbageId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
 
-    console.log(garbageId);
-
     let newGarbageActivityData = { 
         userId: 1234,
         materialId: garbageId,
@@ -175,6 +173,35 @@ function addProductActivity(){
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newGarbageActivityData),
+    })
+    .then((resp) => {
+        console.log(resp);
+        return;
+    })
+    .catch( error => console.error(error) ); // error handle
+
+}
+
+/**
+ * Function that adds a new garbage activity to the system. Invoked when 
+ * the add button under the column is clicked
+ */
+
+ function addTransportActivity(){
+    let resourceLocation = document.getElementById("vehicleSelect").value;
+    let distance = document.getElementById("input_distance").value;
+    let vehicleId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
+
+    let newTransportActivityData = { 
+        userId: 1234,
+        vehicleId: vehicleId,
+        distance: distance
+    };
+
+    fetch('/api/v1/activities/transports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newTransportActivityData),
     })
     .then((resp) => {
         console.log(resp);
