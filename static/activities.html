@@ -53,21 +53,26 @@
             <!--FIRST COLUMN-->
             <div class="col">
                 <div class="row m-auto">
-                    <h4 class="h4">add food consumpion</h4>
+                    <h4 class="h4">Add food consumpion</h4>
                 </div>
 
-
                 <form>
-                    <label for="input_food_item" class="form-label">search item </label>
+                    <label for="input_food_item" class="form-label">Search product by name</label>
                     <!--questo input dovra' essere modificato poi per diventare una seach bar-->
-                    <input type="text" class="form-control" id="input_food_item" placeholder="banana..." oninput="getProductsByName()">
+                    <input type="text" class="form-control" id="input_food_item" placeholder="product name" oninput="getProductsByName()">
+                    
+                    <label for="floatingSelectProduct" class="form-label">Results</label>
+                    <div class="form-floating_">
+                        <select class="form-select" id="floatingSelectProduct" aria-label="Floating label select example"></select>
+                    </div>
+                    <button class="btn btn-success" type="button" onclick="fillProductActivityForm()">Use this product</button>
                     <hr/>
-                    <label for="input_food_name" class="form-label">insert food name </label>
+                    <label for="input_food_name" class="form-label">Product name </label>
                     <input type="text" class="form-control" id="input_food_name" placeholder="Banana">
-                    <label for="input_food_code" class="form-label">insert barcode </label>
+                    <label for="input_food_code" class="form-label">Product code </label>
                     <input type="text" class="form-control" id="input_food_code" placeholder="72834239">
                     <br>
-                    <label for="input_food_quantity" class="form-label">quantity </label>
+                    <label for="input_food_quantity" class="form-label">Quantity</label>
                     <div class="row mt-2">
                         <div class="col">
                             <input type="number" class="form-control" id="input_food_quantity" placeholder="1">
