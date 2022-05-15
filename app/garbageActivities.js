@@ -28,10 +28,21 @@ router.post('', async (req, res) => {
     let materialId = req.body["materialId"];
     let amount = req.body["amount"];
 
-    //TODO calculation of the impact 
-    // get the impact of the product from the DB
-    let impact = 10 * amount;
+    if (!materialId || !amount){
+        console.error("The garbageActivity materialId and amount are required");
+        res.status(400).send("The garbageActivity materialId and amount are required");
+        return;
+    }
+
     let material = await Material.findById(materialId);
+    if (!material){
+        console.error("The material you are trying to use doesn't exists");
+        res.status(404).send("The material you are trying to use doesn't exists");
+        return;
+    }
+
+    // impact calculation
+    let impact = material.unitImpact * amount;
 
     var newActivity = new GarbageActivity({
         userId: userId,
