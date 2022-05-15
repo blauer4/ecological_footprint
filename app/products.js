@@ -36,7 +36,13 @@ router.post('', async (req, res) => {
 
 	let code = req.body["code"];
 	let name = req.body["name"];
-	let unitImpact = req.body["unitImpact"];
+	let unitImpact = Math.floor(Math.random() * 20 + 1); // the unit impact is a random number between 1 and 20
+
+    if (!code || !name){
+        console.error("The product code and name are required");
+        res.status(400).send("The product code and name are required");
+        return;
+    }
 
     let newProduct = new Product({
         code: code,

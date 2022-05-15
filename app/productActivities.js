@@ -23,7 +23,18 @@ router.post('', async (req, res) => {
     let productId = req.body["productId"];
     let amount = req.body["amount"];
 
+    if (!productId || !amount){
+        console.error("The productActivity productId and amount are required");
+        res.status(400).send("The productActivity productId and amount are required");
+        return;
+    }
+
     let product = await Product.findById(productId);
+    if (!productId){
+        console.error("The product you are trying to add doesn't exists");
+        res.status(404).send("The product you are trying to add doesn't exists");
+        return;
+    }
     
     //TODO calculation of a random impact 
     let impact = product.unitImpact * amount;

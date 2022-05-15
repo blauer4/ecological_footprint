@@ -25,12 +25,22 @@ router.post('', async (req, res) => {
     let vehicleId = req.body["vehicleId"];
     let distance = req.body["distance"];
 
-
-    //TODO get the impact from the DB
-    let unitImpact = 5;
-    let impact = unitImpact * parseInt(distance);
+    if (!vehicleId || !distance){
+        console.error("The transportActivity vehicleId and distance are required");
+        res.status(400).send("The transportActivity vehicleId and distance are required");
+        return;
+    }
 
     let vehicle = await Vehicle.findById(vehicleId);
+    if (!vehicle){
+        console.error("The vehicle you are trying to use doesn't exists");
+        res.status(404).send("The vehicle you are trying to use doesn't exists");
+        return;
+    }
+
+    // calculate the impact
+    let impact = vehicle.unitImpact * parseInt(distance);
+
 
     var newActivity = new TransportActivity({
         userId: userId,
