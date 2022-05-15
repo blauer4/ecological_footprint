@@ -120,6 +120,38 @@ function addNewProduct(name, code){
     
 }
 
+/**
+ * function that adds a new product activity to the system. This is invoked
+ * when the add button is clicked for a new product activity 
+ */
+function addProductActivity(){
+    let name = document.getElementById("input_food_name").value;
+    let code = document.getElementById("input_food_code").value;
+    let quantity = document.getElementById("input_food_quantity").value;
+
+    // add the new product to the database (inserted only if it doesn't exists)
+    addNewProduct(name, code).then((productId) => {
+        console.log(productId);
+
+        let newProductActivityData = { 
+            userId: name,
+            productId: productId,
+            amount: quantity
+        };
+
+        fetch('/api/v1/activities/products', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newProductActivityData),
+        })
+        .then((resp) => {
+            console.log(resp);
+            return;
+        })
+        .catch( error => console.error(error) ); // error handle
+    })
+    
+}
 
 /**
  * Inital calls
