@@ -9,6 +9,12 @@ const Product = require('./models/product.js').Product;
 router.get('', async (req, res) => {
 
     let products = await Product.find({});
+    products = products.map( (product) => {
+        return {
+            self: '/api/v1/products/' + product["_id"],
+            name: product["name"]
+        };
+    });
 
     res.status(200).json(products);
 });
@@ -16,6 +22,12 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
 
     let product = await Product.findById(req.params.id);
+    product = {
+        self: '/api/v1/products/' + product.id,
+        name: product["name"],
+        code: product["code"],
+        unitImpact: product["unitImpact"]
+    }
 
     res.status(200).json(product);
 });
