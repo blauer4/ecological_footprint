@@ -16,6 +16,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /**
+ * Serve static files
+ */
+app.use('/', express.static('static'));
+
+/**
  * V1 Api endopoints routes
  */
 app.use('/api/v1/products', products);

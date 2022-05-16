@@ -44,19 +44,29 @@ router.post('', async (req, res) => {
         return;
     }
 
-    let newProduct = new Product({
-        code: code,
-        name: name,
-        unitImpact: unitImpact
-    });
+    // if the product doesn't already exists in the DB add it
+    let products = await Product.find({code: code, name: name});
 
-    newProduct = await newProduct.save();
-    let newProductId = newProduct.id;
+    if(products.length == 0){ // product not already in the database
+        let newProduct = new Product({
+            code: code,
+            name: name,
+            unitImpact: unitImpact
+        });
+    
+        newProduct = await newProduct.save();
+        let newProductId = newProduct.id;
+    
+        /**
+         * Return the link to the newly created resource 
+         */
+        res.location("/api/v1/products/" + newProductId).status(201).send();
+    }
 
     /**
-     * Return the link to the newly created resource 
+     * Return the link to the existing resource 
      */
-    res.location("/api/v1/products/" + newProductId).status(201).send();
+    res.location("/api/v1/products/" + products[0].id).status(201).send();
 });
 
 module.exports = router;
