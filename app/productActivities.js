@@ -42,6 +42,7 @@ router.post('', async (req, res) => {
 
     var newActivity = new ProductActivity({
         userId: userId,
+        date: Date.now(),
         amount: amount,
         impact: impact,
         product: product

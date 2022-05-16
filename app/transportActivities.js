@@ -44,6 +44,7 @@ router.post('', async (req, res) => {
 
     var newActivity = new TransportActivity({
         userId: userId,
+        date: Date.now(),
         distance: distance,
         impact: impact,
         vehicle: vehicle

@@ -15,6 +15,7 @@ router.get('',async (req,res)=>{
         resp.push({
             self: "/api/v1/activities/products/" + item.id,
             type: "product",
+            date: item.date
         });
     }
 
@@ -22,6 +23,7 @@ router.get('',async (req,res)=>{
         resp.push({
             self: "/api/v1/activities/materials/" + item.id,
             type: "materials",
+            date: item.date
         });
     }
 
@@ -29,6 +31,7 @@ router.get('',async (req,res)=>{
         resp.push({
             self: "/api/v1/activities/transport/" + item.id,
             type: "transport",
+            date: item.date
         });
     }
 

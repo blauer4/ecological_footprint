@@ -46,6 +46,7 @@ router.post('', async (req, res) => {
 
     var newActivity = new GarbageActivity({
         userId: userId,
+        date: Date.now(),
         material: material,
         amount: amount,
         impact: impact
