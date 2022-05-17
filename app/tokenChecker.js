@@ -4,7 +4,7 @@ const tokenChecker = function(req, res, next) {
     
     let token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (!token) {
-        res.redirect("login.html");
+        res.redirect("/login.html");
         return;
     }
 
