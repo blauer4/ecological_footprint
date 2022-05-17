@@ -32,7 +32,7 @@ router.post('', async (req, res) => {
     
     user = await user.save();
 
-    res.location("/api/v1/" + user._id).status(201).send();
+    res.location("/login.html").status(302).send();
 })
 
 module.exports = router;
