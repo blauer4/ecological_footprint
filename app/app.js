@@ -29,6 +29,7 @@ app.use('/private_area', tokenChecker);
  * Serve static files
  */
 app.use('/', express.static('static/authentication'));
+app.use('/img', express.static('static/img'));
 app.use('/private_area', express.static('static/private_area'));
 
 /**
