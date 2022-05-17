@@ -8,6 +8,8 @@ const materials = require("./materials.js");
 const vehicles = require("./vehicles.js");
 const register = require("./registration.js")
 
+const tokenChecker = require('./tokenChecker.js');
+
 const app = express();
 
 /**
@@ -20,6 +22,9 @@ app.use(express.urlencoded({ extended: true }));
  * Serve static files
  */
 app.use('/', express.static('static'));
+
+app.use('/api/v1/activities', tokenChecker);
+
 
 /**
  * V1 Api endopoints routes

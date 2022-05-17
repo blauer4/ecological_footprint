@@ -2,18 +2,6 @@ const express = require('express');
 const User = require('./models/user').User;
 const router = express.Router();
 
-router.get('/:id', async (req,res) => {
-    let user = await User.findById(req.params.id);
-    product = {
-        self: '/api/v1/user/' + user.id,
-        name: user["name"],
-        cognome: user["cognome"],
-        email: user["email"]
-    }
-
-    res.status(200).json(user);
-});
-
 router.post('', async (req, res) => {
     let usern = req.body.username;
     let nome_ = req.body.nome;
@@ -31,7 +19,7 @@ router.post('', async (req, res) => {
 
     if (!usern || !nome_ || !cognome_ || !username_ || !email_) {
         console.error("Something went wrong! Missing required arguments");
-        res.status(404).send("Something went wrong! Missing required arguments");
+        res.status(400).send("Something went wrong! Missing required arguments");
         return;
     }
 
@@ -45,7 +33,7 @@ router.post('', async (req, res) => {
 
     user = await user.save();
 
-    res.location("/api/v1/register/" + user._id).status(201).send();
+    res.location("/api/v1/" + user._id).status(201).send();
 })
 
 module.exports = router;
