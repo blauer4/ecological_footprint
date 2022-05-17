@@ -23,20 +23,28 @@ app.use(express.urlencoded({ extended: true }));
  */
 app.use('/', express.static('static'));
 
+/**
+ * protect some endpoints (also products to avoid product insertion from unauthorizes users)
+ */
 app.use('/api/v1/activities', tokenChecker);
+app.use('/api/v1/activities/products', tokenChecker);
+app.use('/api/v1/activities/garbage', tokenChecker);
+app.use('/api/v1/activities/transport', tokenChecker);
+app.use('/api/v1/products', tokenChecker);
 
 
 /**
  * V1 Api endopoints routes
  */
-app.use('/api/v1/products', products);
 app.use('/api/v1/activities/products', productActivities);
 app.use('/api/v1/activities/garbage', garbageActivities);
 app.use('/api/v1/activities/transport', transportActivities);
 app.use('/api/v1/activities', listActivities);
 
+app.use('/api/v1/products', products);
 app.use('/api/v1/materials', materials);
 app.use('/api/v1/vehicles', vehicles); 
+
 app.use('/api/v1/register', register);
 
 module.exports = app;
