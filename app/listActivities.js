@@ -21,8 +21,8 @@ router.get('',async (req,res)=>{
 
     for(item of garbage){
         resp.push({
-            self: "/api/v1/activities/materials/" + item.id,
-            type: "materials",
+            self: "/api/v1/activities/garbage/" + item.id,
+            type: "garbage",
             date: item.date
         });
     }
