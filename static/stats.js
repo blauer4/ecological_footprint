@@ -42,7 +42,7 @@ function getAllActivities() {
             fetch(element.self)
             .then((resp) => resp.json()) // Transform the data into json
             .then(function(data) { 
-
+                
                 collapseDiv.innerHTML = `Impact: ${data.impact}<br />`;
 
                 switch (element.type) {
@@ -51,11 +51,11 @@ function getAllActivities() {
                         collapseDiv.innerHTML += `Quantity: ${data.amount}<br />`;
                         break;
                     case "garbage":
-                        collapseDiv.innerHTML += `Product: ${data.material.name}<br />`;
+                        collapseDiv.innerHTML += `Garbage material: ${data.material.name}<br />`;
                         collapseDiv.innerHTML += `Quantity: ${data.amount}<br />`;
                         break;
                     case "transport":
-                        collapseDiv.innerHTML += `Product: ${data.transport.name}<br />`;
+                        collapseDiv.innerHTML += `Vehicle: ${data.vehicle.name}<br />`;
                         collapseDiv.innerHTML += `Quantity: ${data.distance}<br />`;
                         break;
                     default:

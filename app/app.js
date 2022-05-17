@@ -26,7 +26,7 @@ app.use('/', express.static('static'));
 app.use('/api/v1/products', products);
 app.use('/api/v1/activities/products', productActivities);
 app.use('/api/v1/activities/garbage', garbageActivities);
-app.use('/api/v1/activities/transports', transportActivities);
+app.use('/api/v1/activities/transport', transportActivities);
 app.use('/api/v1/activities', listActivities);
 
 app.use('/api/v1/materials', materials);
