@@ -36,6 +36,12 @@
  *                          unitImpact:
  *                              type: integer
  *                              description: impact of a single unit of the product
+ *              example:
+ *                      userId: 56789wdfefe
+ *                      date: 2022-05-17T12:46:47.215Z
+ *                      amount: 1
+ *                      impact: 12
+ *                      product: {2345678, Kinder Bueno, 12}
  */ 
 
 var mongoose = require('mongoose');

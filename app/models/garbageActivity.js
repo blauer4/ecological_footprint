@@ -36,7 +36,7 @@
  *              example:
  *                  userId: 34567gtfgyu67890mmkjm
  *                  date: 2022-05-17T12:46:47.215Z
- *                  impact: 333
+ *                  impact: 2
  *                  material: {Umido, 1}
  *                  amount: 2
  *                  
