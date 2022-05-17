@@ -80,40 +80,41 @@
         <div class="row">
             <!--form to fill in with personal infos-->
             <div class="col">
-                <div class="row m-auto m-5">
-                    <h4 class="h4">register</h4>
+                <form action="/api/v1/register" method="POST">
+                    <div class="row m-auto m-5">
+                        <h4 class="h4">register</h4>
+                    </div>
+                    
+                        <br>
+                        <label for="name" class="form-label">your name </label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="name">
+                        <br>
+                        <label for="surname" class="form-label">your surname </label>
+                        <input type="text" class="form-control" id="surname" name="surname" placeholder="surname">
+                        <br>
+                        <label for="username" class="form-label">create username </label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                        <br>
+                        <label for="email" class="form-label">your email </label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="ciao@fabri.jpg">
+                        <br>
+                        <label for="password" class="form-label">create password </label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                        <br>
+                        <label for="confirm password" class="form-label">confirm password </label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="password">
+                    
                 </div>
 
-                <form>
-                    <br>
-                    <label for="name" class="form-label">your name </label>
-                    <input type="text" class="form-control" id="name" placeholder="name">
-                    <br>
-                    <label for="surname" class="form-label">your surname </label>
-                    <input type="text" class="form-control" id="surname" placeholder="surname">
-                    <br>
-                    <label for="username" class="form-label">create username </label>
-                    <input type="text" class="form-control" id="username" placeholder="username">
-                    <br>
-                    <label for="email" class="form-label">your email </label>
-                    <input type="text" class="form-control" id="email" placeholder="ciao@fabri.jpg">
-                    <br>
-                    <label for="password" class="form-label">create password </label>
-                    <input type="password" class="form-control" id="password" placeholder="password">
-                    <br>
-                    <label for="confirm password" class="form-label">confirm password </label>
-                    <input type="password" class="form-control" id="confirm_password" placeholder="password">
-                </form>
-            </div>
-
-            <div class="row my-5">
-                <!--button register-->
-                <div class="col">
-                    <div class="d-grid gap">
-                        <button class="btn btn-success" type="button">sign up</button>
+                <div class="row my-5">
+                    <!--button register-->
+                    <div class="col">
+                        <div class="d-grid gap">
+                            <button class="btn btn-success" type="submit">sign up</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
         </div>
     </div>
