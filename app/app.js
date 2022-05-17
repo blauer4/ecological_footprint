@@ -19,10 +19,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+/**
+ * Protect the UI private area
+ */
+app.use('/private_area', tokenChecker);
+
 /**
  * Serve static files
  */
-app.use('/', express.static('static'));
+app.use('/', express.static('static/authentication'));
+app.use('/private_area', express.static('static/private_area'));
 
 /**
  * protect some endpoints (also products to avoid product insertion from unauthorizes users)
