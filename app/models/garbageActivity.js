@@ -13,7 +13,7 @@
  *              properties:
  *                  userId:
  *                      type: string
- *                      description: automatically assigned ID to the specific activity.
+ *                      description: id of this single garbage Activity.
  *                  date: 
  *                      type: string
  *                      format: date
