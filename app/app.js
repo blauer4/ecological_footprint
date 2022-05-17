@@ -6,6 +6,7 @@ const listActivities = require("./listActivities.js");
 const products = require("./products.js");
 const materials = require("./materials.js");
 const vehicles = require("./vehicles.js");
+const register = require("./registration.js")
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.use('/api/v1/activities', listActivities);
 
 app.use('/api/v1/materials', materials);
 app.use('/api/v1/vehicles', vehicles); 
+app.use('/api/v1/register', register);
 
 module.exports = app;
