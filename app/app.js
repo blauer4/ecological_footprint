@@ -1,4 +1,6 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+
 const productActivities = require("./productActivities.js");
 const garbageActivities = require("./garbageActivities.js");
 const transportActivities = require("./transportActivities.js");
@@ -18,7 +20,7 @@ const app = express();
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser());
 
 /**
  * Protect the UI private area

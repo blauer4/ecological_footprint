@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken")
 
 const tokenChecker = function(req, res, next) {
-    
-    let token = req.body.token || req.query.token || req.headers['x-access-token'];
+        
+    let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.cookies["token"];
     if (!token) {
         res.redirect("/login.html");
         return;
