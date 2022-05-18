@@ -30,11 +30,11 @@ mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTo
                 },
                 servers: [
                     {
-                        url: "http://localhost:3000",
+                        url: "http://127.0.0.1:3000",
                     },
                 ],
             },
-            apis: ["./app/models/*.js"],
+            apis: ["./app/models/*.js","./app/*.js"],
         };
 
         const specs = swaggerJsdoc(options);

@@ -3,6 +3,52 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/user').User;
 const router = express.Router();
 
+/**
+ * @swagger
+ * paths:
+ *      /api/v1/login/logout:
+ *          get:
+ *              summary: Logs out an user from the current session
+ *              responses:
+ *                  '200':
+ *                      description: Returns an answer that the user successfully logged out
+ *      /api/v1/login:
+ *          post:
+ *              summary: Gets a new login request
+ *              description: Login an account if a match is found in the database
+ *              requestBody:
+ *                  required: true
+ *                  content: 
+ *                      application/x-www-form-urlencoded:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  email: 
+ *                                      type: string
+ *                                      description: The email of the user
+ *                                  password:
+ *                                      type: string
+ *                                      description: The password of the user
+ *                          example:
+ *                              description: An example of a request
+ *                              value:
+ *                                  email: example@example.com
+ *                                  password: 12345
+ *              responses:
+ *                  '200':
+ *                      description: Returns the jwt token in case of success, otherwise a message error
+ *                      content:
+ *                          application/json:
+ *                              type: object
+ *                              properties: 
+ *                                  success:
+ *                                      type: boolean
+ *                                      description: If the response was successfull
+ *                                  message: 
+ *                                      type: string
+ *                                      description: The message of success or the message of what I got wrong
+ */
+
 router.get('/logout',async function(req,res){
 	res.clearCookie('token', { path: '/' });
 	res.status(200).send("Successfully logged out");
@@ -20,7 +66,7 @@ router.post('', async function(req, res) {
 	}
 	
 	if (user.password != req.body.password) {
-		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+		res.status().json({ success: false, message: 'Authentication failed. Wrong password.' });
         return;
 	}
 	
