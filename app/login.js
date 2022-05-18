@@ -34,13 +34,8 @@ router.post('', async function(req, res) {
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
 
 	res.json({
-		success: true,
-		message: 'This token is valid!',
 		token: token,
-		email: user.email,
-        username: user.username,
-		id: user._id,
-		self: "api/v1/" + user._id
+		userId: user._id
 	});
 
 });

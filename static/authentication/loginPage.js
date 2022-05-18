@@ -16,6 +16,7 @@ function login(){
         
         // set the token cookie that is stored across all the pages of the site
         document.cookie = `token=${data.token}`;
+        document.cookie = `userId=${data.userId}`;
         location.href = "/private_area/activities.html"
         
         return;

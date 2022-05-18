@@ -8,7 +8,7 @@ const listActivities = require("./listActivities.js");
 const products = require("./products.js");
 const materials = require("./materials.js");
 const vehicles = require("./vehicles.js");
-const register = require("./registration.js")
+const users = require("./users.js")
 const login = require("./login.js")
 
 const tokenChecker = require('./tokenChecker.js');
@@ -56,7 +56,7 @@ app.use('/api/v1/products', products);
 app.use('/api/v1/materials', materials);
 app.use('/api/v1/vehicles', vehicles); 
 
-app.use('/api/v1/register', register);
+app.use('/api/v1/users', users);
 app.use('/api/v1/login', login);
 
 module.exports = app;

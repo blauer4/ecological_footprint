@@ -15,7 +15,8 @@ router.get('',async (req,res)=>{
         resp.push({
             self: "/api/v1/activities/products/" + item.id,
             type: "product",
-            date: item.date
+            date: item.date,
+            userId: item.userId
         });
     }
 
@@ -23,7 +24,8 @@ router.get('',async (req,res)=>{
         resp.push({
             self: "/api/v1/activities/garbage/" + item.id,
             type: "garbage",
-            date: item.date
+            date: item.date,
+            userId: item.userId
         });
     }
 
@@ -31,7 +33,8 @@ router.get('',async (req,res)=>{
         resp.push({
             self: "/api/v1/activities/transport/" + item.id,
             type: "transport",
-            date: item.date
+            date: item.date,
+            userId: item.userId
         });
     }
 
