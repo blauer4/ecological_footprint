@@ -3,6 +3,10 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/user').User;
 const router = express.Router();
 
+router.get('/logout',async function(req,res){
+	res.clearCookie('token');
+	return;
+});
 
 router.post('', async function(req, res) {
     
