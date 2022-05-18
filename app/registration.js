@@ -3,37 +3,36 @@ const User = require('./models/user').User;
 const router = express.Router();
 
 router.post('', async (req, res) => {
-    let usern = req.body.username;
-    let nome_ = req.body.nome;
-    let cognome_ = req.body.cognome;
-    let username_ = req.body.username;
-    let password_ = req.body.password;
-    let email_ = req.body.email;
+    let username = req.body.username;
+    let name = req.body.name;
+    let surname = req.body.surname;
+    let password = req.body.password;
+    let email = req.body.email;
 
-    let user = await User.find({username: usern});
+    let user = await User.find({username: username});
     
     if(user.length!==0){
         res.status(404).send("Username already exists");
         return;
     }
 
-    if (!usern || !nome_ || !cognome_ || !username_ || !email_) {
+    if ( !username || !name || !surname || !password || !email) {
         console.error("Something went wrong! Missing required arguments");
         res.status(400).send("Something went wrong! Missing required arguments");
         return;
     }
 
     user = new User({
-        username: usern,
-        nome: nome_,
-        cognome: cognome_,
-        email: email_,
-        password: password_,
+        username: username,
+        name: name,
+        surname: surname,
+        email: email,
+        password: password
     });
-
+    
     user = await user.save();
 
-    res.location("/api/v1/" + user._id).status(201).send();
+    res.location("/login.html").status(302).send();
 })
 
 module.exports = router;

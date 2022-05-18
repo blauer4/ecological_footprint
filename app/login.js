@@ -12,10 +12,12 @@ router.post('', async function(req, res) {
 	
 	if (!user) {
 		res.json({ success: false, message: 'Authentication failed. User not found.' });
+        return;
 	}
 	
 	if (user.password != req.body.password) {
 		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+        return;
 	}
 	
 	var payload = {
@@ -38,3 +40,5 @@ router.post('', async function(req, res) {
 	});
 
 });
+
+module.exports = router;
