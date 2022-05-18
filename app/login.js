@@ -4,8 +4,8 @@ const User = require('./models/user').User;
 const router = express.Router();
 
 router.get('/logout',async function(req,res){
-	res.clearCookie('token');
-	return;
+	res.clearCookie('token', { path: '/' });
+	res.status(200).send("Successfully logged out");
 });
 
 router.post('', async function(req, res) {
