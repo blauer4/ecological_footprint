@@ -9,8 +9,9 @@ const tokenChecker = function(req, res, next) {
     }
 
     jwt.verify(token, process.env.SUPER_SECRET, function(err, decoded){
-        if (err) res.status(403).json({success:false, message:'Token not valid'})
-        else {
+        if (err) {  // if the token is invalid redirect to the login page
+            res.redirect("/login.html");
+        }else {
             req.loggedUser = decoded;
             next();
         }
