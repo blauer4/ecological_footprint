@@ -1,5 +1,79 @@
 /**
- * Gestione inserimento e listaggio dei prodotti presenti nel db
+ * @swagger
+ *  paths:
+ *      /api/v1/products:
+ *          get:
+ *              summary: Retrieve all the products present in the database
+ *              description: Returns a json object with the resource link and the name of the product
+ *              responses:
+ *                  '200': 
+ *                      description: Returns a json object with self link of the resource and the name of the product
+ *                      content:
+ *                          application/json:
+ *                              schema:
+ *                                  type: object
+ *                                  properties: 
+ *                                      self: 
+ *                                          type: string
+ *                                          description: The link to the api resource
+ *                                      name: 
+ *                                          type: string
+ *                                          description: The name of the product given
+ *          post:
+ *              summary: Insert a new product
+ *              description: Returns the link to the resource created, or, if it already exists, returns the link to the resource in the database. Requires authentication
+ *              requestBody:
+ *                  required: true
+ *                  content: 
+ *                      application/x-www-form-urlencoded:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  code:
+ *                                      type: string
+ *                                      description: The code of the product that you want to insert
+ *                                  name:
+ *                                      type: string
+ *                                      description: The name of the product you want to insert
+ *                          example:
+ *                              description: An example of a insertion
+ *                              value:
+ *                                  code: 1234
+ *                                  name: Nome prodotto
+ *              responses:
+ *                  '201': 
+ *                      description: Return the link to the resource that i created or found
+ *      /api/v1/products/{id}:
+ *          get:
+ *              summary: Get the specified product by ID
+ *              description: Returns a product with lots of information like name, code, and impact of the product. Requires authentication
+ *              parameters:
+ *                  - in: path
+ *                    name: id
+ *                    required: true
+ *                    description: The id of the correspondent product you would like to search for
+ *                    schema: 
+ *                      type: string
+ *              responses:
+ *                  '200': 
+ *                      description: Return the json of the before mentioned properties of the product
+ *                      content:
+ *                          application/json:
+ *                              schema:
+ *                                  type: object
+ *                                  properties:
+ *                                      self: 
+ *                                          type: string
+ *                                          description: The link to the api resource
+ *                                      name: 
+ *                                          type: string
+ *                                          description: The name of the product given
+ *                                      code: 
+ *                                          type: string
+ *                                          description: The code of the product given
+ *                                      unitImpact: 
+ *                                          type: integer
+ *                                          description: The impact of the product given
  */
 
 const express = require('express');
@@ -61,6 +135,7 @@ router.post('', async (req, res) => {
          * Return the link to the newly created resource 
          */
         res.location("/api/v1/products/" + newProductId).status(201).send();
+        return;
     }
 
     /**
