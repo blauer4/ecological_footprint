@@ -2,6 +2,83 @@ const express = require('express');
 const User = require('./models/user').User;
 const router = express.Router();
 
+/**
+ * @swagger
+ * paths:
+ *      /api/v1/users
+ *          get:
+ *              summary: users ids
+ *              description: this function retrives the list of users and returns it as a json document
+ *              responses:
+ *                  '200':
+ *                      description: return of the answer to the successful list retrive
+ *          post:
+ *              summary: insertion of a new user
+ *              description: this function allows the insertion of a new user with the corret specified params
+ *              requestBody:
+ *                  required: true
+ *                  content: 
+ *                      application/x-www-form-urlencoded:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  name:
+ *                                      type: string
+ *                                      description: The name of the user  
+ *                                  surname:
+ *                                      type: string
+ *                                      description: The surname of the user  
+ *                                  password:
+ *                                      type: string
+ *                                      description: The password of the user  
+ *                                  username:
+ *                                      type: string
+ *                                      description: The username of the user
+ *                                  email:
+ *                                      type: string
+ *                                      description: The email of the user
+ *                              example:
+ *                                  description: an example of registration
+ *                                  value:
+ *                                      name: vittoria
+ *                                      surname: ossanna
+ *                                      password: 12345678
+ *                                      username: vittannaossoria
+ *                                      email: ciao@vitt.jpg
+ *              responses:
+ *                  '302':
+ *                      description: the user has been correctly registered
+ *                  '404':
+ *                      description: username already exixts
+ *                  '400':
+ *                      description: a compulsory field is missing
+ *      /api/v1/users/{id}:
+ *          get:
+ *              summary: getting a specific user id
+ *              description: this function retrives a specifid user id as specified in the req parameter (as json document)
+ *              parameters:
+ *                  
+ *              responses:
+ *                  '200':
+ *                      description: return of the answer to the successful retrive
+ *                      content: 
+ *                          application/json:
+ *                              schema:
+ *                                  type: object
+ *                                  properties:
+ *                                      self:
+ *                                      username:
+ *                                      name:
+ *                                      surname
+ *                                      email:
+ *                                  example:
+ *                                      self: /api/v1/users/{id}
+ *                                      username: vittossanna
+ *                                      name: vittoria
+ *                                      surname: ossanna
+ *                                      email: ciao@vitt.jpg    
+ */
+
 router.get('', async (req, res) => {
  
     let users = await User.find({});
