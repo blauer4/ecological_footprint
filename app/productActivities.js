@@ -24,7 +24,7 @@ router.post('', async (req, res) => {
     let amount = req.body["amount"];
 
     if (!productId || !amount){
-        console.error("The productActivity productId and amount are required");
+        console.error("The productId and amount are required");
         res.status(400).send("The productActivity productId and amount are required");
         return;
     }
@@ -36,9 +36,8 @@ router.post('', async (req, res) => {
         return;
     }
     
-    //TODO calculation of a random impact 
+    // impact calculation
     let impact = product.unitImpact * amount;
-
 
     var newActivity = new ProductActivity({
         userId: userId,

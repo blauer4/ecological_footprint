@@ -26,8 +26,8 @@ router.post('', async (req, res) => {
     let distance = req.body["distance"];
 
     if (!vehicleId || !distance){
-        console.error("The transportActivity vehicleId and distance are required");
-        res.status(400).send("The transportActivity vehicleId and distance are required");
+        console.error("The vehicleId and distance are required");
+        res.status(400).send("The vehicleId and distance are required");
         return;
     }
 
