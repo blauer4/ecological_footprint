@@ -10,7 +10,6 @@ router.get('',async (req,res)=>{
     let product = await productActivity.find({});
     let transport = await transportActivity.find({});
     // TODO: Select only authenticated
-    let total_impact = 0;
     let resp = [];
     for(item of product){
         resp.push({
@@ -19,7 +18,6 @@ router.get('',async (req,res)=>{
             date: item.date,
             userId: item.userId
         });
-        total_impact += item.impact;
     }
 
     for(item of garbage){
@@ -29,7 +27,6 @@ router.get('',async (req,res)=>{
             date: item.date,
             userId: item.userId
         });
-        total_impact += item.impact;
     }
 
     for(item of transport){
@@ -39,9 +36,30 @@ router.get('',async (req,res)=>{
             date: item.date,
             userId: item.userId
         });
+    }
+    res.status(200).json(resp);
+});
+
+router.get('/total_impact',async (req,res)=>{
+    let garbage = await garbageActivity.find({});
+    let product = await productActivity.find({});
+    let transport = await transportActivity.find({});
+    // TODO: Select only authenticated
+    let total_impact = 0;
+    let resp;
+    for(item of product){
+
         total_impact += item.impact;
     }
-    resp.push({"total_impact" : total_impact});
+
+    for(item of garbage){
+        total_impact += item.impact;
+    }
+
+    for(item of transport){
+        total_impact += item.impact;
+    }
+    resp = {"total_impact" : total_impact};
     res.status(200).json(resp);
 });
 
