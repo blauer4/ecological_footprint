@@ -41,7 +41,7 @@ router.get('', async (req, res) => {
 });
 
 router.get('/total_impact', async (req, res) => {
-    console.log(req.cookies);
+
     let userId = req.cookies['userId'];
     let garbage, product, transport;
     let search = false;
