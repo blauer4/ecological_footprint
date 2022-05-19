@@ -143,7 +143,7 @@ function addProductActivity(){
             amount: quantity
         };
 
-        fetch('/api/v1/activities/products', {
+        fetch('/api/v1/activities/product', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newProductActivityData),

@@ -51,7 +51,7 @@ function getAllActivities() {
                 // remove activity button
                 let removeButton = document.createElement("button");
                 removeButton.classList.add("btn-sm", "btn-danger");
-                removeButton.setAttribute("onclick", `removeActivity(${activityId})`);
+                removeButton.setAttribute("onclick", `removeActivity('${activityId}', '${element.type}')`);
                 removeButton.innerHTML = `<i class="fa fa-trash"></i>`
                 span.appendChild(infoButton)
                 span.appendChild(removeButton)
@@ -100,6 +100,17 @@ function getAllActivities() {
 
     }).catch(error => console.error(error));
 }
+
+
+function removeActivity(activityId, type) {
+
+    fetch(`/api/v1/activities/${type}/${activityId}`, {
+        method: 'DELETE',
+    })
+    .then(res => res.text()) 
+    .then(res => console.log(res));
+}
+
 
 /**
  * Funzione che carica i dati delle impronte ecologiche del singolo utente
