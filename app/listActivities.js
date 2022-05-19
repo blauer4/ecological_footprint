@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require("jsonwebtoken")
 const garbageActivity = require('./models/garbageActivity.js');
 const productActivity = require('./models/productActivity.js');
 const transportActivity = require('./models/transportActivity.js');
@@ -41,14 +42,27 @@ router.get('',async (req,res)=>{
 });
 
 router.get('/total_impact',async (req,res)=>{
-    let garbage = await garbageActivity.find({});
-    let product = await productActivity.find({});
-    let transport = await transportActivity.find({});
+    let token = req.cookies['token'];
+    let garbage, product, transport;
+    let search = {};
+    if (token) {
+        jwt.verify(token, process.env.SUPER_SECRET, function(err, decoded){
+            if (err) {  // if the token is invalid redirect to the login page
+                res.redirect("/login.html");
+            }else {
+                req.loggedUser = decoded;
+                console.log("decoded:", decoded);
+                search = {userId: decoded.id};
+            }
+        });
+    } 
+    garbage = await garbageActivity.find(search);
+    product = await productActivity.find(search);
+    transport = await transportActivity.find(search);
     // TODO: Select only authenticated
     let total_impact = 0;
     let resp;
     for(item of product){
-
         total_impact += item.impact;
     }
 
@@ -60,6 +74,7 @@ router.get('/total_impact',async (req,res)=>{
         total_impact += item.impact;
     }
     resp = {"total_impact" : total_impact};
+    console.log(resp, garbage, product, transport);
     res.status(200).json(resp);
 });
 

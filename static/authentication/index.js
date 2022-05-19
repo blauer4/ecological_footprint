@@ -8,7 +8,7 @@
     
     fetch('/api/v1/activities/total_impact')
     .then((resp) => resp.json())
-    .then(async function (data) {
+    .then(function (data) {
            let h1 = document.getElementById("average_placeholder");
            h1.innerHTML = data["total_impact"];
         }).catch(error => console.error(error));
