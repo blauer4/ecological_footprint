@@ -25,7 +25,7 @@ router.post('', async (req, res) => {
 
     if (!productId || !amount){
         console.error("The productId and amount are required");
-        res.status(400).send("The productActivity productId and amount are required");
+        res.status(400).send("The productId and amount are required");
         return;
     }
 
