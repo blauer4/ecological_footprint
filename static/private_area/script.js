@@ -149,6 +149,14 @@ function addProductActivity(){
             body: JSON.stringify(newProductActivityData),
         })
         .then((resp) => {
+            if (resp.status == 201){
+                document.getElementById("resultCodeProduct").innerHTML = "Succesfully added the new activity";
+            }else{
+                resp.text().then((data)=>{
+                    document.getElementById("resultCodeProduct").innerHTML = data;
+                });
+            }
+
             return;
         })
         .catch( error => console.error(error) ); // error handle
@@ -180,6 +188,13 @@ function addProductActivity(){
         body: JSON.stringify(newGarbageActivityData),
     })
     .then((resp) => {
+        if (resp.status == 201){
+            document.getElementById("resultCodeGarbage").innerHTML = "Succesfully added the new activity";
+        }else{
+            resp.text().then((data)=>{
+                document.getElementById("resultCodeGarbage").innerHTML = data;
+            });
+        }
         return;
     })
     .catch( error => console.error(error) ); // error handle
@@ -210,6 +225,13 @@ function addProductActivity(){
         body: JSON.stringify(newTransportActivityData),
     })
     .then((resp) => {
+        if (resp.status == 201){
+            document.getElementById("resultCodeTransport").innerHTML = "Succesfully added the new activity";
+        }else{
+            resp.text().then((data)=>{
+                document.getElementById("resultCodeTransport").innerHTML = data;
+            });
+        }
         return;
     })
     .catch( error => console.error(error) ); // error handle

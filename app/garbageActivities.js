@@ -29,8 +29,8 @@ router.post('', async (req, res) => {
     let amount = req.body["amount"];
 
     if (!materialId || !amount){
-        console.error("The garbageActivity materialId and amount are required");
-        res.status(400).send("The garbageActivity materialId and amount are required");
+        console.error("The materialId and amount are required");
+        res.status(400).send("The materialId and amount are required");
         return;
     }
 

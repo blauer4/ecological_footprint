@@ -5,11 +5,12 @@ const productActivities = require("./productActivities.js");
 const garbageActivities = require("./garbageActivities.js");
 const transportActivities = require("./transportActivities.js");
 const listActivities = require("./listActivities.js");
+const generalStats = require("./generalStats.js");
 const products = require("./products.js");
 const materials = require("./materials.js");
 const vehicles = require("./vehicles.js");
-const users = require("./users.js")
-const login = require("./login.js")
+const users = require("./users.js");
+const login = require("./login.js");
 
 const tokenChecker = require('./tokenChecker.js');
 
@@ -51,6 +52,7 @@ app.use('/api/v1/activities/products', productActivities);
 app.use('/api/v1/activities/garbage', garbageActivities);
 app.use('/api/v1/activities/transport', transportActivities);
 app.use('/api/v1/activities', listActivities);
+app.use('/api/v1/generalstats', generalStats);
 
 app.use('/api/v1/products', products);
 app.use('/api/v1/materials', materials);
