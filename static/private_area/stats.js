@@ -83,4 +83,22 @@ function getAllActivities() {
     }).catch(error => console.error(error));
 }
 
+/**
+ * Funzione che carica i dati delle impronte ecologiche del singolo utente
+ * DA FARE
+ */
+
+ function loadPersonalImpact() {
+    let somma = 0;
+    let counter = 0;
+    
+    fetch('/api/v1/activities/total_impact')
+    .then((resp) => resp.json())
+    .then(function (data) {
+           let h1 = document.getElementById("personal_total");
+           h1.innerHTML = data.total_impact;
+        }).catch(error => console.error(error));
+}
+
+loadPersonalImpact();
 getAllActivities();
