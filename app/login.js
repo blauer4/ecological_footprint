@@ -61,12 +61,12 @@ router.post('', async function(req, res) {
 	}).exec();
 	
 	if (!user) {
-		res.json({ success: false, message: 'Authentication failed. User not found.' });
+		res.status(404).json({ success: false, message: 'Authentication failed. User not found.' });
         return;
 	}
 	
 	if (user.password != req.body.password) {
-		res.status().json({ success: false, message: 'Authentication failed. Wrong password.' });
+		res.status(404).json({ success: false, message: 'Authentication failed. Wrong password.' });
         return;
 	}
 	
@@ -80,6 +80,7 @@ router.post('', async function(req, res) {
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
 
 	res.json({
+        success: true,
 		token: token,
 		userId: user._id
 	});
