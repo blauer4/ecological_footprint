@@ -7,6 +7,7 @@ function getCookie(name) {
 
 function getAllActivities() {
     let activitiesList = document.getElementById("list_activities");
+    activitiesList.innerHTML = "";
 
     // labels for each activity
     let activityLabelMap = {
@@ -108,7 +109,10 @@ function removeActivity(activityId, type) {
         method: 'DELETE',
     })
     .then(res => res.text()) 
-    .then(res => console.log(res));
+    .then((res)=>{
+        getAllActivities();
+        loadPersonalImpact();
+    });
 }
 
 

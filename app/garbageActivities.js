@@ -66,10 +66,10 @@ router.delete('/:id', async (req, res) => {
     let result = await GarbageActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
         console.log(`Documento con id ${id} eliminato con successo`);
-        res.send("OK");
+        res.status(200).send("Succesfully deleted");
     }else{
         console.error(`ERRORE: eliminazione documento con attivita'(garbage) con id ${id}`);
-        res.send("Fail");
+        res.status(404).send("Activity removal error");
     }
     
 });
