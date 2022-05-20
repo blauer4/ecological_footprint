@@ -5,16 +5,32 @@ const router = express.Router();
 /**
  * @swagger
  * paths:
- *      /api/v1/users
+ *      /api/v1/users:
  *          get:
- *              summary: users ids
- *              description: this function retrives the list of users and returns it as a json document
+ *              summary: Get the list of users 
+ *              description: This function retrieves the list of users present in the db and returns it as a json document
  *              responses:
  *                  '200':
- *                      description: return of the answer to the successful list retrive
+ *                      description: The json list of all users present in the db
+ *                      content: 
+ *                          application/json:
+ *                              schema:
+ *                                  type: array
+ *                                  items:
+ *                                      type: object
+ *                                      properties: 
+ *                                          self:
+ *                                              type: string
+ *                                              description: The link to the resource of the user
+ *                                          username:
+ *                                              type: string
+ *                                              description: The username of the user
+ *                              example:
+ *                                  - self: "/api/v1/users/628367e9078d0308f8dd76ba"
+ *                                    username: "lollixzc"
  *          post:
- *              summary: insertion of a new user
- *              description: this function allows the insertion of a new user with the corret specified params
+ *              summary: Insertion of a new user
+ *              description: This function allows the insertion of a new user with the correct specified params
  *              requestBody:
  *                  required: true
  *                  content: 
@@ -24,13 +40,13 @@ const router = express.Router();
  *                              properties:
  *                                  name:
  *                                      type: string
- *                                      description: The name of the user  
+ *                                      description: The name of the user 
  *                                  surname:
  *                                      type: string
- *                                      description: The surname of the user  
+ *                                      description: The surname of the user 
  *                                  password:
  *                                      type: string
- *                                      description: The password of the user  
+ *                                      description: The password of the user 
  *                                  username:
  *                                      type: string
  *                                      description: The username of the user
@@ -47,36 +63,39 @@ const router = express.Router();
  *                                      email: ciao@vitt.jpg
  *              responses:
  *                  '302':
- *                      description: the user has been correctly registered
+ *                      description: The user has been correctly registered
  *                  '404':
- *                      description: username already exixts
+ *                      description: Username already exixts
  *                  '400':
- *                      description: a compulsory field is missing
+ *                      description: A compulsory field is missing
  *      /api/v1/users/{id}:
  *          get:
- *              summary: getting a specific user id
- *              description: this function retrives a specifid user id as specified in the req parameter (as json document)
+ *              summary: Getting a specific User through userId
+ *              description: This function retrives a specific user, thanks to the userId you set in the parameters
  *              parameters:
- *                  
+ *                  - in: path
+ *                    name: id
+ *                    required: true
+ *                    description: The id of the correspondent user you would like to search for
+ *                    schema: 
+ *                      type: string
  *              responses:
  *                  '200':
- *                      description: return of the answer to the successful retrive
+ *                      description: Returns a link to the resource user requested, and the username of the user
  *                      content: 
  *                          application/json:
  *                              schema:
  *                                  type: object
  *                                  properties:
  *                                      self:
+ *                                          type: string
+ *                                          description: The link to the resource of the user
  *                                      username:
- *                                      name:
- *                                      surname
- *                                      email:
+ *                                          type: string
+ *                                          description: The username of the user
  *                                  example:
  *                                      self: /api/v1/users/{id}
  *                                      username: vittossanna
- *                                      name: vittoria
- *                                      surname: ossanna
- *                                      email: ciao@vitt.jpg    
  */
 
 router.get('', async (req, res) => {
