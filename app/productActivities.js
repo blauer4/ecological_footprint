@@ -52,7 +52,7 @@ router.post('', async (req, res) => {
     /**
      * Return the link to the newly created resource 
      */
-    res.location("/api/v1/activities/products/" + activity.id).status(201).send();
+    res.location("/api/v1/activities/product/" + activity.id).status(201).send();
 });
 
 router.delete('/:id', async (req, res) => {

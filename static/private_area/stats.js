@@ -7,6 +7,7 @@ function getCookie(name) {
 
 function getAllActivities() {
     let activitiesList = document.getElementById("list_activities");
+    activitiesList.innerHTML = "";
 
     // labels for each activity
     let activityLabelMap = {
@@ -33,13 +34,31 @@ function getAllActivities() {
                 
                 // li creation
                 let li = document.createElement("li");
-                li.classList.add("list-group-item");
-                li.setAttribute("data-bs-toggle", "collapse");
-                li.setAttribute("type", "button");
-                li.setAttribute("data-bs-target", `#activity_${activityId}`);
-                li.setAttribute("aria-expanded", "false");
-                li.setAttribute("aria-controls", `activity_${activityId}`);
-                li.innerHTML = `<b>${date}</b>&nbsp;-&nbsp;${activityLabelMap[element.type]}`;
+                li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+                li.innerHTML = `<b>${date}</b>&nbsp;${activityLabelMap[element.type]}`;
+
+                let span = document.createElement("span");
+                span.classList.add("badge");
+                
+                // info activity button
+                let infoButton = document.createElement("button");
+                infoButton.classList.add("btn-sm", "btn-success");
+                infoButton.setAttribute("data-bs-toggle", "collapse");
+                infoButton.setAttribute("data-bs-target", `#activity_${activityId}`);
+                infoButton.setAttribute("aria-expanded", "false");
+                infoButton.setAttribute("aria-controls", `activity_${activityId}`);
+                infoButton.innerHTML = `<i class="fa fa-info"></i>`
+
+                // remove activity button
+                let removeButton = document.createElement("button");
+                removeButton.classList.add("btn-sm", "btn-danger");
+                removeButton.setAttribute("onclick", `removeActivity('${activityId}', '${element.type}')`);
+                removeButton.innerHTML = `<i class="fa fa-trash"></i>`
+                span.appendChild(infoButton)
+                span.appendChild(removeButton)
+                
+
+                li.appendChild(span);
 
                 let collapseDiv = document.createElement("div");
                 collapseDiv.classList.add("collapse", "card", "list-group-item");
@@ -82,6 +101,20 @@ function getAllActivities() {
 
     }).catch(error => console.error(error));
 }
+
+
+function removeActivity(activityId, type) {
+
+    fetch(`/api/v1/activities/${type}/${activityId}`, {
+        method: 'DELETE',
+    })
+    .then(res => res.text()) 
+    .then((res)=>{
+        getAllActivities();
+        loadPersonalImpact();
+    });
+}
+
 
 /**
  * Funzione che carica i dati delle impronte ecologiche del singolo utente

@@ -13,7 +13,7 @@ router.get('', async (req, res) => {
     let resp = [];
     for (item of product) {
         resp.push({
-            self: "/api/v1/activities/products/" + item.id,
+            self: "/api/v1/activities/product/" + item.id,
             type: "product",
             date: item.date,
             userId: item.userId

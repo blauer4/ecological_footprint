@@ -61,7 +61,7 @@ router.post('', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
 
-    let result = await GarbageActivity.deleteOne({_id: id});
+    let result = await TransportActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
         console.log(`Documento con id ${id} eliminato con successo`);
         res.send("OK");
