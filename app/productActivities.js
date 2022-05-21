@@ -13,7 +13,7 @@
  *                          schema: 
  *                              $ref: "#/components/schemas/ProductActivity"
  *      post:
- *          summary: Insert a new product
+ *          summary: Insert a new product activity
  *          description: Returns the link to the resource created. Requires authentication
  *          requestBody:
  *              required: true

@@ -13,7 +13,7 @@
  *                          schema: 
  *                              $ref: "#/components/schemas/GarbageActivity"
  *      post:
- *          summary: Insert a new garbage
+ *          summary: Insert a new garbage activity
  *          description: Returns the link to the resource created. Requires authentication
  *          requestBody:
  *              required: true

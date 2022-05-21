@@ -1,3 +1,92 @@
+/**
+ * @swagger
+ * paths:
+ *  /api/v1/activities/transport:
+ *      get:
+ *          summary: Returns all the transport activities
+ *          description: Returns all the transport activities 
+ *          responses:
+ *              '200':
+ *                  description: Returns the transport activities in JSON format described as in the model
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                              $ref: "#/components/schemas/TransportActivity"
+ *      post:
+ *          summary: Insert a new transport activity
+ *          description: Returns the link to the resource created. Requires authentication
+ *          requestBody:
+ *              required: true
+ *              content: 
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              vehiclelId:
+ *                                  type: string
+ *                                  description: The id of the vehicle that you want to insert into the activity
+ *                              amount:
+ *                                  type: integer
+ *                                  description: The amount of the kilometers you want to insert into the activity
+ *                              userId:
+ *                                  type: string
+ *                                  description: The userId of the user
+ *                          example:
+ *                              vehicleId: "627d3581477b05641a8c01c4"
+ *                              amount: 2
+ *                              userId: "628367e9078d0308f8dd76ba"
+ *          responses:
+ *              '201': 
+ *                  description: Return the link to the resource that i created
+ *              '400': 
+ *                  description: A required parameter is missing
+ *              '404':
+ *                  description: The vehicle that is inserted in the activity is not present in the database
+ *  /api/v1/activities/transport/{id}:
+ *      get:
+ *          summary: Returns one transport activity
+ *          description: Returns one transport activity associated with the given ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              required: true
+ *              description: The id of the transport activity to be found.
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Returns one transport activity in JSON format described as in the model
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                              $ref: "#/components/schemas/TransportActivity"
+ *      delete:
+ *          summary: Deletes one transport activity
+ *          description: Deletes one transport activity associated with the given ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              required: true
+ *              description: The id of the transport activity to be deleted.
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Deletes the given transport activity
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "OK"
+ *              '404':
+ *                  description: The given transport activity doesn't exists
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "Fail"
+ */
+
 const express = require('express');
 const TransportActivity = require('./models/transportActivity.js');
 const Vehicle = require('./models/vehicle.js').Vehicle;
