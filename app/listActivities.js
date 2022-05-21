@@ -5,11 +5,54 @@ const transportActivity = require('./models/transportActivity.js');
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * paths:
+ *  /api/v1/activities:
+ *      get:
+ *          summary: Returns all the activities of a specific user
+ *          description: Returns all the activities of the logged user
+ *          parameters:
+ *              - in: cookie
+ *                name: userId
+ *                required: true
+ *                description: The userId present in the cookie of the browser login
+ *                schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: The list of activities performed by the user
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: array
+ *                              items:  
+ *                                  type: object
+ *                                  properties: 
+ *                                      self:
+ *                                          type: string
+ *                                          description: The link to the activity
+ *                                      type:
+ *                                          type: string
+ *                                          description: The type of the activity
+ *                                      date:
+ *                                          type: date 
+ *                                          description: The date of insertion of the activity 
+ *                                      userId:
+ *                                          type: string
+ *                                          description: The id of the user
+ *                          example:
+ *                              - self: "/api/v1/activities/product/6285204dec2411e44ef73902"
+ *                                type: "product"
+ *                                date: "2022-05-18T16:35:25.296Z"
+ *                                userId: "628367e9078d0308f8dd76ba"
+ */
+
 router.get('', async (req, res) => {
-    let garbage = await garbageActivity.find({});
-    let product = await productActivity.find({});
-    let transport = await transportActivity.find({});
-    // TODO: Select only authenticated
+    let garbage = await garbageActivity.find({ userId: req.cookies['userId'] });
+    let product = await productActivity.find({ userId: req.cookies['userId'] });
+    let transport = await transportActivity.find({ userId: req.cookies['userId'] });
+
     let resp = [];
     for (item of product) {
         resp.push({
