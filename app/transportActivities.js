@@ -31,6 +31,13 @@ router.post('', async (req, res) => {
         return;
     }
 
+    distance = parseFloat(distance);
+    if (isNaN(distance) || distance <= 0){
+        console.error("The distance must be a positive number");
+        res.status(400).send("The distance must be a positive number");
+        return;
+    }
+
     let vehicle = await Vehicle.findById(vehicleId);
     if (!vehicle){
         console.error("The vehicle you are trying to use doesn't exists");

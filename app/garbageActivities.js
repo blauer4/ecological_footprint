@@ -34,6 +34,13 @@ router.post('', async (req, res) => {
         return;
     }
 
+    amount = parseFloat(amount);
+    if (isNaN(amount) || amount <= 0){
+        console.error("The amount must be a positive number");
+        res.status(400).send("The amount must be a positive number");
+        return;
+    }
+
     let material = await Material.findById(materialId);
     if (!material){
         console.error("The material you are trying to use doesn't exists");
