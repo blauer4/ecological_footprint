@@ -58,6 +58,12 @@ function getProductsByName() {
             return elem["name"].toLowerCase().includes(item_name.toLowerCase());
         });
 
+        if (data.length == 0){
+            document.getElementById("no_match_message").innerHTML = "no match found";
+        } else {
+            document.getElementById("no_match_message").innerHTML = "";
+        }
+        
         if (data.length <= 4){
             let res = "";
             data.forEach(element => {
