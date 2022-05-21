@@ -113,10 +113,19 @@ function addNewProduct(name, code){
             body: JSON.stringify(newProductData),
         })
         .then((resp) => {
-            let resourceLocation = resp.headers.get("Location"); // get the location of the resource
-            let resourceId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
+            if (resp.status == 201 ){
+                let resourceLocation = resp.headers.get("Location"); // get the location of the resource
+                let resourceId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
 
-            resolve(resourceId);
+                resolve(resourceId);
+
+            }else{
+                resp.text().then((msg)=>{
+                    reject(msg);
+                }).catch(error => console.error(error))
+            }
+            
+
         })
         .catch( error => console.error(error) ); // error handle
     });
@@ -160,7 +169,9 @@ function addProductActivity(){
             return;
         })
         .catch( error => console.error(error) ); // error handle
-    })
+    }).catch( (errorMsg) => {
+        document.getElementById("resultCodeProduct").innerHTML = errorMsg;
+    }); 
     
 }
 
