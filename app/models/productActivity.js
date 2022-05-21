@@ -25,23 +25,13 @@
  *                      type: integer
  *                      description: impact of the activity. This value is calculated multiplying the amount of product with the value of the impact of the single product
  *                  product: 
- *                      type: object
- *                      properties:
- *                          code:
- *                              type: string
- *                              description: barcode of the product
- *                          name:
- *                              type: string
- *                              description: name of the ptoduct
- *                          unitImpact:
- *                              type: integer
- *                              description: impact of a single unit of the product
+ *                      $ref: "#/components/schemas/Product"
  *              example:
  *                      userId: 56789wdfefe
  *                      date: 2022-05-17T12:46:47.215Z
  *                      amount: 1
  *                      impact: 12
- *                      product: {2345678, Kinder Bueno, 12}
+ *                      product: {code: 2345678, name: Kinder Bueno, unitImpact: 12}
  */ 
 
 var mongoose = require('mongoose');

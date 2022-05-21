@@ -14,7 +14,7 @@
  *                              $ref: "#/components/schemas/GarbageActivity"
  *      post:
  *          summary: Insert a new garbage
- *          description: Returns the link to the resource created, or, if it already exists, returns the link to the resource in the database. Requires authentication
+ *          description: Returns the link to the resource created. Requires authentication
  *          requestBody:
  *              required: true
  *              content: 

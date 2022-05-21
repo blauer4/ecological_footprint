@@ -1,3 +1,92 @@
+/**
+ * @swagger
+ * paths:
+ *  /api/v1/activities/product:
+ *      get:
+ *          summary: Returns all the product activities
+ *          description: Returns all the product activities 
+ *          responses:
+ *              '200':
+ *                  description: Returns the product activities in JSON format described as in the model
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                              $ref: "#/components/schemas/ProductActivity"
+ *      post:
+ *          summary: Insert a new product
+ *          description: Returns the link to the resource created. Requires authentication
+ *          requestBody:
+ *              required: true
+ *              content: 
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              productlId:
+ *                                  type: string
+ *                                  description: The id of the product that you want to insert into the activity
+ *                              amount:
+ *                                  type: integer
+ *                                  description: The amount of the product you want to insert into the activity
+ *                              userId:
+ *                                  type: string
+ *                                  description: The userId of the user
+ *                          example:
+ *                              productId: "627d3581477b05641a8c01c4"
+ *                              amount: 2
+ *                              userId: "628367e9078d0308f8dd76ba"
+ *          responses:
+ *              '201': 
+ *                  description: Return the link to the resource that i created
+ *              '400': 
+ *                  description: A required parameter is missing
+ *              '404':
+ *                  description: The product that is inserted in the activity is not present in the database
+ *  /api/v1/activities/product/{id}:
+ *      get:
+ *          summary: Returns one product activity
+ *          description: Returns one product activity associated with the given ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              required: true
+ *              description: The id of the product activity to be found.
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Returns one product activity in JSON format described as in the model
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                              $ref: "#/components/schemas/GarbageActivity"
+ *      delete:
+ *          summary: Deletes one product activity
+ *          description: Deletes one product activity associated with the given ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              required: true
+ *              description: The id of the product activity to be deleted.
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Deletes the given product activity
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "OK"
+ *              '404':
+ *                  description: The given product activity doesn't exists
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "Fail"
+ */
+
 const express = require('express');
 const ProductActivity = require('./models/productActivity.js');
 const Product = require('./models/product.js').Product;
