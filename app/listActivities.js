@@ -68,8 +68,8 @@ const router = express.Router();
  *                                  total_impact:
  *                                      type: integer
  *                                      description: The total impact of the user
- *                  example:
- *                      total_impact: 210
+ *                          example:
+ *                              total_impact: 210
  */
 
 router.get('', async (req, res) => {
