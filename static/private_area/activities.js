@@ -1,8 +1,13 @@
-/**
- * Funzione che carica i dati del db riguardante i materiali di rifiuto
- * dell'applicazione
- */
+// function that returns a cookie value by name
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
+/**
+ * this function loads the data that correspond to the garbage choices. 
+ */
 function loadMaterials() {
     fetch('/api/v1/materials')
         .then((resp) => resp.json())
@@ -21,7 +26,6 @@ function loadMaterials() {
 /**
  * This function loads the data that correspond to the transportation choices. 
 */  
-
 function loadVehicles() {
     fetch('/api/v1/vehicles')
         .then((resp) => resp.json())
@@ -109,10 +113,19 @@ function addNewProduct(name, code){
             body: JSON.stringify(newProductData),
         })
         .then((resp) => {
-            let resourceLocation = resp.headers.get("Location"); // get the location of the resource
-            let resourceId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
+            if (resp.status == 201 ){
+                let resourceLocation = resp.headers.get("Location"); // get the location of the resource
+                let resourceId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
 
-            resolve(resourceId);
+                resolve(resourceId);
+
+            }else{
+                resp.text().then((msg)=>{
+                    reject(msg);
+                }).catch(error => console.error(error))
+            }
+            
+
         })
         .catch( error => console.error(error) ); // error handle
     });
@@ -128,28 +141,37 @@ function addProductActivity(){
     let code = document.getElementById("input_food_code").value;
     let quantity = document.getElementById("input_food_quantity").value;
 
+    let userId = getCookie("userId");
 
     // add the new product to the database (inserted only if it doesn't exists)
     addNewProduct(name, code).then((productId) => {
-        console.log(productId);
 
         let newProductActivityData = { 
-            userId: name,
+            userId: userId,
             productId: productId,
             amount: quantity
         };
 
-        fetch('/api/v1/activities/products', {
+        fetch('/api/v1/activities/product', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newProductActivityData),
         })
         .then((resp) => {
-            console.log(resp);
+            if (resp.status == 201){
+                document.getElementById("resultCodeProduct").innerHTML = "Succesfully added the new activity";
+            }else{
+                resp.text().then((data)=>{
+                    document.getElementById("resultCodeProduct").innerHTML = data;
+                });
+            }
+
             return;
         })
         .catch( error => console.error(error) ); // error handle
-    })
+    }).catch( (errorMsg) => {
+        document.getElementById("resultCodeProduct").innerHTML = errorMsg;
+    }); 
     
 }
 
@@ -163,8 +185,10 @@ function addProductActivity(){
     let quantity = document.getElementById("input_garbage_quantity").value;
     let garbageId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
 
+    let userId = getCookie("userId");
+
     let newGarbageActivityData = { 
-        userId: 1234,
+        userId: userId,
         materialId: garbageId,
         amount: quantity
     };
@@ -175,7 +199,13 @@ function addProductActivity(){
         body: JSON.stringify(newGarbageActivityData),
     })
     .then((resp) => {
-        console.log(resp);
+        if (resp.status == 201){
+            document.getElementById("resultCodeGarbage").innerHTML = "Succesfully added the new activity";
+        }else{
+            resp.text().then((data)=>{
+                document.getElementById("resultCodeGarbage").innerHTML = data;
+            });
+        }
         return;
     })
     .catch( error => console.error(error) ); // error handle
@@ -192,19 +222,27 @@ function addProductActivity(){
     let distance = document.getElementById("input_distance").value;
     let vehicleId = resourceLocation.substring(resourceLocation.lastIndexOf('/') + 1);
 
+    let userId = getCookie("userId");
+
     let newTransportActivityData = { 
-        userId: 1234,
+        userId: userId,
         vehicleId: vehicleId,
         distance: distance
     };
 
-    fetch('/api/v1/activities/transports', {
+    fetch('/api/v1/activities/transport', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTransportActivityData),
     })
     .then((resp) => {
-        console.log(resp);
+        if (resp.status == 201){
+            document.getElementById("resultCodeTransport").innerHTML = "Succesfully added the new activity";
+        }else{
+            resp.text().then((data)=>{
+                document.getElementById("resultCodeTransport").innerHTML = data;
+            });
+        }
         return;
     })
     .catch( error => console.error(error) ); // error handle

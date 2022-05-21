@@ -25,15 +25,33 @@ router.post('', async (req, res) => {
     let vehicleId = req.body["vehicleId"];
     let distance = req.body["distance"];
 
+    if (!vehicleId || !distance){
+        console.error("The vehicleId and distance are required");
+        res.status(400).send("The vehicleId and distance are required");
+        return;
+    }
 
-    //TODO get the impact from the DB
-    let unitImpact = 5;
-    let impact = unitImpact * parseInt(distance);
+    distance = parseFloat(distance);
+    if (isNaN(distance) || distance <= 0){
+        console.error("The distance must be a positive number");
+        res.status(400).send("The distance must be a positive number");
+        return;
+    }
 
     let vehicle = await Vehicle.findById(vehicleId);
+    if (!vehicle){
+        console.error("The vehicle you are trying to use doesn't exists");
+        res.status(404).send("The vehicle you are trying to use doesn't exists");
+        return;
+    }
+
+    // calculate the impact
+    let impact = vehicle.unitImpact * parseInt(distance);
+
 
     var newActivity = new TransportActivity({
         userId: userId,
+        date: Date.now(),
         distance: distance,
         impact: impact,
         vehicle: vehicle
@@ -50,7 +68,7 @@ router.post('', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
 
-    let result = await GarbageActivity.deleteOne({_id: id});
+    let result = await TransportActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
         console.log(`Documento con id ${id} eliminato con successo`);
         res.send("OK");

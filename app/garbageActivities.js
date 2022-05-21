@@ -28,13 +28,32 @@ router.post('', async (req, res) => {
     let materialId = req.body["materialId"];
     let amount = req.body["amount"];
 
-    //TODO calculation of the impact 
-    // get the impact of the product from the DB
-    let impact = 10 * amount;
+    if (!materialId || !amount){
+        console.error("The materialId and amount are required");
+        res.status(400).send("The materialId and amount are required");
+        return;
+    }
+
+    amount = parseFloat(amount);
+    if (isNaN(amount) || amount <= 0){
+        console.error("The amount must be a positive number");
+        res.status(400).send("The amount must be a positive number");
+        return;
+    }
+
     let material = await Material.findById(materialId);
+    if (!material){
+        console.error("The material you are trying to use doesn't exists");
+        res.status(404).send("The material you are trying to use doesn't exists");
+        return;
+    }
+
+    // impact calculation
+    let impact = material.unitImpact * amount;
 
     var newActivity = new GarbageActivity({
         userId: userId,
+        date: Date.now(),
         material: material,
         amount: amount,
         impact: impact
@@ -54,10 +73,10 @@ router.delete('/:id', async (req, res) => {
     let result = await GarbageActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
         console.log(`Documento con id ${id} eliminato con successo`);
-        res.send("OK");
+        res.status(200).send("Succesfully deleted");
     }else{
         console.error(`ERRORE: eliminazione documento con attivita'(garbage) con id ${id}`);
-        res.send("Fail");
+        res.status(404).send("Activity removal error");
     }
     
 });

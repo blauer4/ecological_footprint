@@ -23,14 +23,25 @@ router.post('', async (req, res) => {
     let productId = req.body["productId"];
     let amount = req.body["amount"];
 
-    let product = await Product.findById(productId);
-    
-    //TODO calculation of a random impact 
-    let impact = product.unitImpact * amount;
+    if (!productId || !amount){
+        console.error("The productId and amount are required");
+        res.status(400).send("The productId and amount are required");
+        return;
+    }
 
+    let product = await Product.findById(productId);
+    if (!productId){
+        console.error("The product you are trying to add doesn't exists");
+        res.status(404).send("The product you are trying to add doesn't exists");
+        return;
+    }
+    
+    // impact calculation
+    let impact = product.unitImpact * amount;
 
     var newActivity = new ProductActivity({
         userId: userId,
+        date: Date.now(),
         amount: amount,
         impact: impact,
         product: product
@@ -41,7 +52,7 @@ router.post('', async (req, res) => {
     /**
      * Return the link to the newly created resource 
      */
-    res.location("/api/v1/activities/products/" + activity.id).status(201).send();
+    res.location("/api/v1/activities/product/" + activity.id).status(201).send();
 });
 
 router.delete('/:id', async (req, res) => {
