@@ -1,5 +1,90 @@
 /**
- * Ritorna un tipo di attività del tipo spazzatura(garbage)
+ * @swagger
+ * paths:
+ *  /api/v1/activities/garbage:
+ *      get:
+ *          summary: Returns all the garbage activities
+ *          description: Returns all the garbage activities 
+ *          responses:
+ *              '200':
+ *                  description: Returns the garbage activities in JSON format described as in the model
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                              $ref: "#/components/schemas/GarbageActivity"
+ *      post:
+ *          summary: Insert a new garbage
+ *          description: Returns the link to the resource created, or, if it already exists, returns the link to the resource in the database. Requires authentication
+ *          requestBody:
+ *              required: true
+ *              content: 
+ *                  application/x-www-form-urlencoded:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              materialId:
+ *                                  type: string
+ *                                  description: The id of the garbage that you want to insert into the activity
+ *                              amount:
+ *                                  type: integer
+ *                                  description: The amount of the garbage you want to insert into the activity
+ *                              userId:
+ *                                  type: string
+ *                                  description: The userId of the user
+ *                          example:
+ *                              materialId: "627e62bbf1f1da75f033373f"
+ *                              amount: 2
+ *                              userId: "628367e9078d0308f8dd76ba"
+ *          responses:
+ *              '201': 
+ *                  description: Return the link to the resource that i created
+ *              '400': 
+ *                  description: A required parameter is missing
+ *              '404':
+ *                  description: The material that is inserted is not present in the database
+ *  /api/v1/activities/garbage/{id}:
+ *      get:
+ *          summary: Returns one garbage activity
+ *          description: Returns one garbage activity associated with the given ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              required: true
+ *              description: The id of the garbage activity to be found.
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Returns one garbage activity in JSON format described as in the model
+ *                  content:
+ *                      application/json:
+ *                          schema: 
+ *                              $ref: "#/components/schemas/GarbageActivity"
+ *      delete:
+ *          summary: Deletes one garbage activity
+ *          description: Deletes one garbage activity associated with the given ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              required: true
+ *              description: The id of the garbage activity to be deleted.
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Deletes the given garbage activity
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "Succesfully deleted"
+ *              '404':
+ *                  description: The given garbage activity doesn't exists
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "Activity removal error"
  */
 
 const express = require('express');

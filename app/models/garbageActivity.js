@@ -22,22 +22,15 @@
  *                      type: integer
  *                      description: total impact of the activity, This value is calculated as the amount of the garbage disposed multiplied for the impact of the material disposed
  *                  material:
- *                      type: object
- *                      properties:
- *                          name: 
- *                              type: string
- *                              description: the name of the material to dispose.
- *                          unitImpact: 
- *                              type: integer
- *                              description: The value of the impact of a single unit of that material. 
+ *                      $ref: "#/components/schemas/Material"
  *                  amount:
  *                      type: integer
  *                      description: number of bags disposed
  *              example:
- *                  userId: 34567gtfgyu67890mmkjm
- *                  date: 2022-05-17T12:46:47.215Z
- *                  impact: 2
- *                  material: {Umido, 1}
+ *                  userId: 628367e9078d0308f8dd76ba
+ *                  date: 2022-05-18T16:34:25.847Z
+ *                  impact: 200
+ *                  material: {name: Umido, unitImpact: 100}
  *                  amount: 2
  *                  
  */
