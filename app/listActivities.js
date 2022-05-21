@@ -11,7 +11,7 @@ const router = express.Router();
  *  /api/v1/activities:
  *      get:
  *          summary: Returns all the activities of a specific user
- *          description: Returns all the activities of the logged user
+ *          description: Returns all the activities of the logged user. Requires authentication.
  *          parameters:
  *              - in: cookie
  *                name: userId
@@ -46,6 +46,30 @@ const router = express.Router();
  *                                type: "product"
  *                                date: "2022-05-18T16:35:25.296Z"
  *                                userId: "628367e9078d0308f8dd76ba"
+ *  /api/v1/activities/total_impact:
+ *      get:
+ *          summary: Returns the total impact of the user
+ *          description: Returns the total impact of the logged user. Requires authentication.
+ *          parameters:
+ *              - in: cookie
+ *                name: userId
+ *                required: true
+ *                description: The userId present in the cookie of the browser login
+ *                schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Returns the total impact of the user with a JSON object
+ *                  content:
+ *                      application/json: 
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  total_impact:
+ *                                      type: integer
+ *                                      description: The total impact of the user
+ *                  example:
+ *                      total_impact: 210
  */
 
 router.get('', async (req, res) => {
@@ -94,7 +118,7 @@ router.get('/total_impact', async (req, res) => {
     garbage = await garbageActivity.find(search ? search : {});
     product = await productActivity.find(search ? search : {});
     transport = await transportActivity.find(search ? search : {});
-    // TODO: Select only authenticated
+    
     let total_impact = 0;
     let resp;
     for (item of product) {
