@@ -20,6 +20,15 @@ function getAllActivities() {
     .then((resp) => resp.json())
     .then(function (data) {
 
+        if (data.length == 0){
+            let li = document.createElement("li");
+            li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+            li.innerHTML = "No activity found";
+
+            activitiesList.appendChild(li);
+            return;
+        }
+
         // sort the data according to the date
         data.sort(function(a,b){
             return new Date(b.date) - new Date(a.date);
