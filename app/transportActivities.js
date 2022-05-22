@@ -163,7 +163,7 @@ router.delete('/:id', async (req, res) => {
         res.send("OK");
     }else{
         console.error(`ERRORE: eliminazione documento con attivita'(transport) con id ${id}`);
-        res.send("Fail");
+        res.status(404).send("Fail");
     }
     
 });
