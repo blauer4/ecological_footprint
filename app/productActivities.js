@@ -72,14 +72,14 @@
  *                  type: string
  *          responses:
  *              '200':
- *                  description: Deletes the given product activity
+ *                  description: Deleted the given product activity
  *                  content: 
  *                      text/html:
  *                          schema:
  *                              type: string
  *                              example: "OK"
  *              '404':
- *                  description: The given product activity doesn't exists
+ *                  description: The given product was not deleted
  *                  content: 
  *                      text/html:
  *                          schema:
@@ -153,7 +153,7 @@ router.delete('/:id', async (req, res) => {
         res.send("OK");
     }else{
         console.error(`ERRORE: eliminazione documento con attivita'(product) con id ${id}`);
-        res.send("Fail");
+        res.status(404).send("Fail");
     }
     
 });
