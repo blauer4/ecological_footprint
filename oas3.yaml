@@ -1,0 +1,828 @@
+openapi: 3.0.0
+info:
+  title: Ecological footprint API with Swagger
+  version: 0.1.0
+  description: An API for the ecological footprint application
+servers:
+  - url: http://127.0.0.1:3000
+paths:
+  /api/v1/activities/garbage:
+    get:
+      summary: Returns all the garbage activities
+      description: Returns all the garbage activities
+      responses:
+        '200':
+          description: >-
+            Returns the garbage activities in JSON format described as in the
+            model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GarbageActivity'
+    post:
+      summary: Insert a new garbage activity
+      description: Returns the link to the resource created. Requires authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                materialId:
+                  type: string
+                  description: >-
+                    The id of the garbage that you want to insert into the
+                    activity
+                amount:
+                  type: integer
+                  description: >-
+                    The amount of the garbage you want to insert into the
+                    activity
+                userId:
+                  type: string
+                  description: The userId of the user
+      responses:
+        '201':
+          description: Return the link to the resource that i created
+        '400':
+          description: A required parameter is missing
+        '404':
+          description: The material that is inserted is not present in the database
+  /api/v1/activities/garbage/{id}:
+    get:
+      summary: Returns one garbage activity
+      description: Returns one garbage activity associated with the given ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the garbage activity to be found.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            Returns one garbage activity in JSON format described as in the
+            model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GarbageActivity'
+    delete:
+      summary: Deletes one garbage activity
+      description: Deletes one garbage activity associated with the given ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the garbage activity to be deleted.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deletes the given garbage activity
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Succesfully deleted
+        '404':
+          description: The given garbage activity doesn't exists
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Activity removal error
+  /api/v1/generalstats/total_impact:
+    get:
+      summary: Gets the total impact of every user aggregated
+      description: >-
+        Interrogates the server to have the full impact of the userbase of the
+        service
+      responses:
+        '200':
+          description: >-
+            Returns the total impact of the activities present in the database
+            with a JSON object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_impact:
+                    type: integer
+                    description: The total impact of the activities present in the database
+              example:
+                total_impact: 20000
+  /api/v1/activities:
+    get:
+      summary: Returns all the activities of a specific user
+      description: Returns all the activities of the logged user. Requires authentication.
+      parameters:
+        - in: cookie
+          name: userId
+          required: true
+          description: The userId present in the cookie of the browser login
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The list of activities performed by the user
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                      description: The link to the activity
+                    type:
+                      type: string
+                      description: The type of the activity
+                    date:
+                      type: string
+                      description: The date of insertion of the activity
+                    userId:
+                      type: string
+                      description: The id of the user
+              example:
+                - self: /api/v1/activities/product/6285204dec2411e44ef73902
+                  type: product
+                  date: '2022-05-18T16:35:25.296Z'
+                  userId: 628367e9078d0308f8dd76ba
+  /api/v1/activities/total_impact:
+    get:
+      summary: Returns the total impact of the user
+      description: Returns the total impact of the logged user. Requires authentication.
+      parameters:
+        - in: cookie
+          name: userId
+          required: true
+          description: The userId present in the cookie of the browser login
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the total impact of the user with a JSON object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_impact:
+                    type: integer
+                    description: The total impact of the user
+              example:
+                total_impact: 210
+  /api/v1/login/logout:
+    get:
+      summary: Logs out an user from the current session
+      responses:
+        '200':
+          description: Returns an answer that the user successfully logged out
+  /api/v1/login:
+    post:
+      summary: Gets a new login request
+      description: Login an account if a match is found in the database
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The email of the user
+                password:
+                  type: string
+                  description: The password of the user
+      responses:
+        '200':
+          description: Returns the jwt token in case of success, otherwise a message error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: If the response was successfull
+                  message:
+                    type: string
+                    description: The message of success or the message of what I got wrong
+  /api/v1/materials:
+    get:
+      summary: Get the materials
+      description: Returns all the possible materials from the database in JSON format
+      responses:
+        '200':
+          description: A list of materials in JSON format
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                      description: The link to the material resource
+                    name:
+                      type: string
+                      description: the name of the material
+              example:
+                - self: /api/v1/materials/627e62bbf1f1da75f033373f
+                  name: Umido
+  /api/v1/materials/{id}:
+    get:
+      summary: Get the material specified by id
+      description: Returns the specified material from the id in the parameters
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the correspondent material you would like to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The specified material in JSON format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the material resource
+                  name:
+                    type: string
+                    description: The name of the material
+                  unitImpact:
+                    type: integer
+                    description: The impact of the material
+              example:
+                self: /api/v1/materials/627e62bbf1f1da75f033373f
+                name: Umido
+                unitImpact: 10
+  /api/v1/activities/product:
+    get:
+      summary: Returns all the product activities
+      description: Returns all the product activities
+      responses:
+        '200':
+          description: >-
+            Returns the product activities in JSON format described as in the
+            model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductActivity'
+    post:
+      summary: Insert a new product activity
+      description: Returns the link to the resource created. Requires authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                productlId:
+                  type: string
+                  description: >-
+                    The id of the product that you want to insert into the
+                    activity
+                amount:
+                  type: integer
+                  description: >-
+                    The amount of the product you want to insert into the
+                    activity
+                userId:
+                  type: string
+                  description: The userId of the user
+      responses:
+        '201':
+          description: Return the link to the resource that i created
+        '400':
+          description: A required parameter is missing
+        '404':
+          description: >-
+            The product that is inserted in the activity is not present in the
+            database
+  /api/v1/activities/product/{id}:
+    get:
+      summary: Returns one product activity
+      description: Returns one product activity associated with the given ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the product activity to be found.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            Returns one product activity in JSON format described as in the
+            model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GarbageActivity'
+    delete:
+      summary: Deletes one product activity
+      description: Deletes one product activity associated with the given ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the product activity to be deleted.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted the given product activity
+          content:
+            text/html:
+              schema:
+                type: string
+                example: OK
+        '404':
+          description: The given product was not deleted
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Fail
+  /api/v1/products:
+    get:
+      summary: Retrieve all the products present in the database
+      description: Returns a json object with the resource link and the name of the product
+      responses:
+        '200':
+          description: >-
+            Returns a json object with self link of the resource and the name of
+            the product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the api resource
+                  name:
+                    type: string
+                    description: The name of the product given
+    post:
+      summary: Insert a new product
+      description: >-
+        Returns the link to the resource created, or, if it already exists,
+        returns the link to the resource in the database. Requires
+        authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The code of the product that you want to insert
+                name:
+                  type: string
+                  description: The name of the product you want to insert
+      responses:
+        '201':
+          description: Return the link to the resource that i created or found
+  /api/v1/products/{id}:
+    get:
+      summary: Get the specified product by ID
+      description: >-
+        Returns a product with lots of information like name, code, and impact
+        of the product. Requires authentication
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the correspondent product you would like to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Return the json of the before mentioned properties of the product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the api resource
+                  name:
+                    type: string
+                    description: The name of the product given
+                  code:
+                    type: string
+                    description: The code of the product given
+                  unitImpact:
+                    type: integer
+                    description: The impact of the product given
+  /api/v1/activities/transport:
+    get:
+      summary: Returns all the transport activities
+      description: Returns all the transport activities
+      responses:
+        '200':
+          description: >-
+            Returns the transport activities in JSON format described as in the
+            model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportActivity'
+    post:
+      summary: Insert a new transport activity
+      description: Returns the link to the resource created. Requires authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                vehiclelId:
+                  type: string
+                  description: >-
+                    The id of the vehicle that you want to insert into the
+                    activity
+                amount:
+                  type: integer
+                  description: >-
+                    The amount of the kilometers you want to insert into the
+                    activity
+                userId:
+                  type: string
+                  description: The userId of the user
+      responses:
+        '201':
+          description: Return the link to the resource that i created
+        '400':
+          description: A required parameter is missing
+        '404':
+          description: >-
+            The vehicle that is inserted in the activity is not present in the
+            database
+  /api/v1/activities/transport/{id}:
+    get:
+      summary: Returns one transport activity
+      description: Returns one transport activity associated with the given ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the transport activity to be found.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            Returns one transport activity in JSON format described as in the
+            model
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportActivity'
+    delete:
+      summary: Deletes one transport activity
+      description: Deletes one transport activity associated with the given ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the transport activity to be deleted.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deletes the given transport activity
+          content:
+            text/html:
+              schema:
+                type: string
+                example: OK
+        '404':
+          description: The given transport activity doesn't exists
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Fail
+  /api/v1/users:
+    get:
+      summary: Get the list of users
+      description: >-
+        This function retrieves the list of users present in the db and returns
+        it as a json document
+      responses:
+        '200':
+          description: The json list of all users present in the db
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                      description: The link to the resource of the user
+                    username:
+                      type: string
+                      description: The username of the user
+              example:
+                - self: /api/v1/users/628367e9078d0308f8dd76ba
+                  username: lollixzc
+    post:
+      summary: Insertion of a new user
+      description: >-
+        This function allows the insertion of a new user with the correct
+        specified params
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the user
+                surname:
+                  type: string
+                  description: The surname of the user
+                password:
+                  type: string
+                  description: The password of the user
+                username:
+                  type: string
+                  description: The username of the user
+                email:
+                  type: string
+                  description: The email of the user
+      responses:
+        '302':
+          description: The user has been correctly registered
+        '400':
+          description: A compulsory field is missing
+        '404':
+          description: Username already exixts
+  /api/v1/users/{id}:
+    get:
+      summary: Getting a specific User through userId
+      description: >-
+        This function retrives a specific user, thanks to the userId you set in
+        the parameters
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the correspondent user you would like to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            Returns a link to the resource user requested, and the username of
+            the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the resource of the user
+                  username:
+                    type: string
+                    description: The username of the user
+                example:
+                  self: /api/v1/users/{id}
+                  username: vittossanna
+  /api/v1/vehicles:
+    get:
+      summary: Get the vehicles
+      description: Returns all the possible vehicles from the database in JSON format
+      responses:
+        '200':
+          description: A list of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                      description: the link to the vehicle resource
+                    name:
+                      type: string
+                      description: the name of the vehicle
+              example:
+                - self: /api/v1/vehicles/627d22980997269a08ba74b6
+                  name: macchina
+  /api/v1/vehicles/{id}:
+    get:
+      summary: Get the vehicle specified by id
+      description: Returns the specified vehicle from the id in the parameters
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the correspondent vehicle you would like to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The specified vehicle in json format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the vehicle resource
+                  name:
+                    type: string
+                    description: The name of the vehicle
+                  unitImpact:
+                    type: integer
+                    description: The impact of the vehicle
+              example:
+                self: /api/v1/vehicles/627d22980997269a08ba74b6
+                name: macchina
+                unitImpact: 15
+components:
+  schemas:
+    GarbageActivity:
+      type: object
+      required:
+        - userId
+        - date
+        - impact
+        - material
+        - amount
+      properties:
+        userId:
+          type: string
+          description: id of this single garbage Activity.
+        date:
+          type: string
+          format: date
+          description: date of insertion of the activity.
+        impact:
+          type: integer
+          description: >-
+            total impact of the activity, This value is calculated as the amount
+            of the garbage disposed multiplied for the impact of the material
+            disposed
+        material:
+          $ref: '#/components/schemas/Material'
+        amount:
+          type: integer
+          description: number of bags disposed
+      example:
+        userId: 628367e9078d0308f8dd76ba
+        date: '2022-05-18T16:34:25.847Z'
+        impact: 200
+        material:
+          name: Umido
+          unitImpact: 100
+        amount: 2
+    Material:
+      type: object
+      required:
+        - name
+        - unitImpact
+      properties:
+        name:
+          type: string
+          description: the name of the material to dispose.
+        unitImpact:
+          type: integer
+          description: The value of the impact of a single unit of that material.
+      example:
+        name: Umido
+        unitImpact: 1
+    Product:
+      type: object
+      required:
+        - code
+        - name
+        - unitImpact
+      properties:
+        code:
+          type: string
+          description: bar-code of the product.
+        name:
+          type: string
+          description: name of the product
+        unitImpact:
+          type: integer
+          description: The value of the impact of a single unit of the product
+      example:
+        code: 2345678
+        name: Kinder Bueno
+        unitImpact: 12
+    ProductActivity:
+      type: object
+      required:
+        - userId
+        - date
+        - amount
+        - impact
+        - product
+      properties:
+        userId:
+          type: string
+          description: id of this single product activity
+        date:
+          type: string
+          format: date
+          description: date of insertion of the specific product activity
+        amount:
+          type: integer
+          description: amount of the product consumption
+        impact:
+          type: integer
+          description: >-
+            impact of the activity. This value is calculated multiplying the
+            amount of product with the value of the impact of the single product
+        product:
+          $ref: '#/components/schemas/Product'
+      example:
+        userId: 56789wdfefe
+        date: '2022-05-17T12:46:47.215Z'
+        amount: 1
+        impact: 12
+        product:
+          code: 2345678
+          name: Kinder Bueno
+          unitImpact: 12
+    TransportActivity:
+      type: object
+      required:
+        - userId
+        - date
+        - impact
+        - vehicle
+        - amount
+      properties:
+        userId:
+          type: string
+          description: Id of this single transport activity.
+        date:
+          type: string
+          format: date
+          description: Date of insertion of the activity.
+        impact:
+          type: integer
+          description: >-
+            Total impact of the activity. This value is calculated as the amount
+            of the kilometers multiplied for the impact of the vehicle used
+        vehicle:
+          $ref: '#/components/schemas/Vehicle'
+        amount:
+          type: integer
+          description: Number of kilometers
+      example:
+        userId: 628367e9078d0308f8dd76ba
+        date: '2022-05-18T16:34:25.847Z'
+        impact: 200
+        vehicle:
+          name: Macchina
+          unitImpact: 100
+        amount: 2
+    Vehicle:
+      type: object
+      required:
+        - name
+        - unitImpact
+      properties:
+        name:
+          type: string
+          description: name of the vehicle
+        unitImpact:
+          type: integer
+          description: value of the impact per single unit
+      example:
+        name: pedibus
+        unitImpact: 1000
