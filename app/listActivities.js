@@ -36,7 +36,7 @@ const router = express.Router();
  *                                          type: string
  *                                          description: The type of the activity
  *                                      date:
- *                                          type: date 
+ *                                          type: string 
  *                                          description: The date of insertion of the activity 
  *                                      userId:
  *                                          type: string

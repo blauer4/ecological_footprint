@@ -34,14 +34,15 @@ const router = express.Router();
  *                      description: Returns the jwt token in case of success, otherwise a message error
  *                      content:
  *                          application/json:
- *                              type: object
- *                              properties: 
- *                                  success:
- *                                      type: boolean
- *                                      description: If the response was successfull
- *                                  message: 
- *                                      type: string
- *                                      description: The message of success or the message of what I got wrong
+ *                              schema:
+ *                                  type: object
+ *                                  properties: 
+ *                                      success:
+ *                                          type: boolean
+ *                                          description: If the response was successfull
+ *                                      message: 
+ *                                          type: string
+ *                                          description: The message of success or the message of what I got wrong
  */
 
 router.get('/logout',async function(req,res){

@@ -12,7 +12,9 @@ paths:
       description: Returns all the garbage activities
       responses:
         '200':
-          description: Returns the garbage activities in JSON format described as in the model
+          description: >-
+            Returns the garbage activities in JSON format described as in the
+            model
           content:
             application/json:
               schema:
@@ -29,17 +31,17 @@ paths:
               properties:
                 materialId:
                   type: string
-                  description: The id of the garbage that you want to insert into the activity
+                  description: >-
+                    The id of the garbage that you want to insert into the
+                    activity
                 amount:
                   type: integer
-                  description: The amount of the garbage you want to insert into the activity
+                  description: >-
+                    The amount of the garbage you want to insert into the
+                    activity
                 userId:
                   type: string
                   description: The userId of the user
-              example:
-                materialId: 627e62bbf1f1da75f033373f
-                amount: 2
-                userId: 628367e9078d0308f8dd76ba
       responses:
         '201':
           description: Return the link to the resource that i created
@@ -60,7 +62,9 @@ paths:
             type: string
       responses:
         '200':
-          description: Returns one garbage activity in JSON format described as in the model
+          description: >-
+            Returns one garbage activity in JSON format described as in the
+            model
           content:
             application/json:
               schema:
@@ -93,10 +97,14 @@ paths:
   /api/v1/generalstats/total_impact:
     get:
       summary: Gets the total impact of every user aggregated
-      description: Interrogates the server to have the full impact of the userbase of the service
+      description: >-
+        Interrogates the server to have the full impact of the userbase of the
+        service
       responses:
         '200':
-          description: Returns the total impact of the activities present in the database with a JSON object
+          description: >-
+            Returns the total impact of the activities present in the database
+            with a JSON object
           content:
             application/json:
               schema:
@@ -136,7 +144,6 @@ paths:
                       description: The type of the activity
                     date:
                       type: string
-                      format: date
                       description: The date of insertion of the activity
                     userId:
                       type: string
@@ -193,11 +200,6 @@ paths:
                 password:
                   type: string
                   description: The password of the user
-            example:
-              description: An example of a request
-              value:
-                email: example@example.com
-                password: 12345
       responses:
         '200':
           description: Returns the jwt token in case of success, otherwise a message error
@@ -273,7 +275,9 @@ paths:
       description: Returns all the product activities
       responses:
         '200':
-          description: Returns the product activities in JSON format described as in the model
+          description: >-
+            Returns the product activities in JSON format described as in the
+            model
           content:
             application/json:
               schema:
@@ -290,24 +294,26 @@ paths:
               properties:
                 productlId:
                   type: string
-                  description: The id of the product that you want to insert into the activity
+                  description: >-
+                    The id of the product that you want to insert into the
+                    activity
                 amount:
                   type: integer
-                  description: The amount of the product you want to insert into the activity
+                  description: >-
+                    The amount of the product you want to insert into the
+                    activity
                 userId:
                   type: string
                   description: The userId of the user
-              example:
-                productId: 627d3581477b05641a8c01c4
-                amount: 2
-                userId: 628367e9078d0308f8dd76ba
       responses:
         '201':
           description: Return the link to the resource that i created
         '400':
           description: A required parameter is missing
         '404':
-          description: The product that is inserted in the activity is not present in the database
+          description: >-
+            The product that is inserted in the activity is not present in the
+            database
   /api/v1/activities/product/{id}:
     get:
       summary: Returns one product activity
@@ -321,7 +327,9 @@ paths:
             type: string
       responses:
         '200':
-          description: Returns one product activity in JSON format described as in the model
+          description: >-
+            Returns one product activity in JSON format described as in the
+            model
           content:
             application/json:
               schema:
@@ -357,7 +365,9 @@ paths:
       description: Returns a json object with the resource link and the name of the product
       responses:
         '200':
-          description: Returns a json object with self link of the resource and the name of the product
+          description: >-
+            Returns a json object with self link of the resource and the name of
+            the product
           content:
             application/json:
               schema:
@@ -371,7 +381,10 @@ paths:
                     description: The name of the product given
     post:
       summary: Insert a new product
-      description: Returns the link to the resource created, or, if it already exists, returns the link to the resource in the database. Requires authentication
+      description: >-
+        Returns the link to the resource created, or, if it already exists,
+        returns the link to the resource in the database. Requires
+        authentication
       requestBody:
         required: true
         content:
@@ -385,18 +398,15 @@ paths:
                 name:
                   type: string
                   description: The name of the product you want to insert
-            example:
-              description: An example of a insertion
-              value:
-                code: 1234
-                name: Nome prodotto
       responses:
         '201':
           description: Return the link to the resource that i created or found
   /api/v1/products/{id}:
     get:
       summary: Get the specified product by ID
-      description: Returns a product with lots of information like name, code, and impact of the product. Requires authentication
+      description: >-
+        Returns a product with lots of information like name, code, and impact
+        of the product. Requires authentication
       parameters:
         - in: path
           name: id
@@ -430,7 +440,9 @@ paths:
       description: Returns all the transport activities
       responses:
         '200':
-          description: Returns the transport activities in JSON format described as in the model
+          description: >-
+            Returns the transport activities in JSON format described as in the
+            model
           content:
             application/json:
               schema:
@@ -447,24 +459,26 @@ paths:
               properties:
                 vehiclelId:
                   type: string
-                  description: The id of the vehicle that you want to insert into the activity
+                  description: >-
+                    The id of the vehicle that you want to insert into the
+                    activity
                 amount:
                   type: integer
-                  description: The amount of the kilometers you want to insert into the activity
+                  description: >-
+                    The amount of the kilometers you want to insert into the
+                    activity
                 userId:
                   type: string
                   description: The userId of the user
-              example:
-                vehicleId: 627d3581477b05641a8c01c4
-                amount: 2
-                userId: 628367e9078d0308f8dd76ba
       responses:
         '201':
           description: Return the link to the resource that i created
         '400':
           description: A required parameter is missing
         '404':
-          description: The vehicle that is inserted in the activity is not present in the database
+          description: >-
+            The vehicle that is inserted in the activity is not present in the
+            database
   /api/v1/activities/transport/{id}:
     get:
       summary: Returns one transport activity
@@ -478,7 +492,9 @@ paths:
             type: string
       responses:
         '200':
-          description: Returns one transport activity in JSON format described as in the model
+          description: >-
+            Returns one transport activity in JSON format described as in the
+            model
           content:
             application/json:
               schema:
@@ -511,7 +527,9 @@ paths:
   /api/v1/users:
     get:
       summary: Get the list of users
-      description: This function retrieves the list of users present in the db and returns it as a json document
+      description: >-
+        This function retrieves the list of users present in the db and returns
+        it as a json document
       responses:
         '200':
           description: The json list of all users present in the db
@@ -533,7 +551,9 @@ paths:
                   username: lollixzc
     post:
       summary: Insertion of a new user
-      description: This function allows the insertion of a new user with the correct specified params
+      description: >-
+        This function allows the insertion of a new user with the correct
+        specified params
       requestBody:
         required: true
         content:
@@ -556,14 +576,6 @@ paths:
                 email:
                   type: string
                   description: The email of the user
-              example:
-                description: an example of registration
-                value:
-                  name: vittoria
-                  surname: ossanna
-                  password: 12345678
-                  username: vittannaossoria
-                  email: ciao@vitt.jpg
       responses:
         '302':
           description: The user has been correctly registered
@@ -574,7 +586,9 @@ paths:
   /api/v1/users/{id}:
     get:
       summary: Getting a specific User through userId
-      description: This function retrives a specific user, thanks to the userId you set in the parameters
+      description: >-
+        This function retrives a specific user, thanks to the userId you set in
+        the parameters
       parameters:
         - in: path
           name: id
@@ -584,7 +598,9 @@ paths:
             type: string
       responses:
         '200':
-          description: Returns a link to the resource user requested, and the username of the user
+          description: >-
+            Returns a link to the resource user requested, and the username of
+            the user
           content:
             application/json:
               schema:
@@ -674,7 +690,10 @@ components:
           description: date of insertion of the activity.
         impact:
           type: integer
-          description: total impact of the activity, This value is calculated as the amount of the garbage disposed multiplied for the impact of the material disposed
+          description: >-
+            total impact of the activity, This value is calculated as the amount
+            of the garbage disposed multiplied for the impact of the material
+            disposed
         material:
           $ref: '#/components/schemas/Material'
         amount:
@@ -744,7 +763,9 @@ components:
           description: amount of the product consumption
         impact:
           type: integer
-          description: impact of the activity. This value is calculated multiplying the amount of product with the value of the impact of the single product
+          description: >-
+            impact of the activity. This value is calculated multiplying the
+            amount of product with the value of the impact of the single product
         product:
           $ref: '#/components/schemas/Product'
       example:
@@ -774,7 +795,9 @@ components:
           description: Date of insertion of the activity.
         impact:
           type: integer
-          description: Total impact of the activity. This value is calculated as the amount of the kilometers multiplied for the impact of the vehicle used
+          description: >-
+            Total impact of the activity. This value is calculated as the amount
+            of the kilometers multiplied for the impact of the vehicle used
         vehicle:
           $ref: '#/components/schemas/Vehicle'
         amount:
@@ -803,4 +826,3 @@ components:
       example:
         name: pedibus
         unitImpact: 1000
-tags: []
