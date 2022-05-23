@@ -51,6 +51,7 @@ const router = express.Router();
 
 router.get('/logout',async function(req,res){
 	res.clearCookie('token', { path: '/' });
+	res.clearCookie('userId', { path: '/' });
 	res.status(200).send("Successfully logged out");
 });
 
