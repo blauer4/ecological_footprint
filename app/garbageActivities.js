@@ -31,10 +31,6 @@
  *                              userId:
  *                                  type: string
  *                                  description: The userId of the user
- *                          example:
- *                              materialId: "627e62bbf1f1da75f033373f"
- *                              amount: 2
- *                              userId: "628367e9078d0308f8dd76ba"
  *          responses:
  *              '201': 
  *                  description: Return the link to the resource that i created

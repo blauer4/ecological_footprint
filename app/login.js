@@ -29,11 +29,6 @@ const router = express.Router();
  *                                  password:
  *                                      type: string
  *                                      description: The password of the user
- *                          example:
- *                              description: An example of a request
- *                              value:
- *                                  email: example@example.com
- *                                  password: 12345
  *              responses:
  *                  '200':
  *                      description: Returns the jwt token in case of success, otherwise a message error

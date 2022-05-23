@@ -53,14 +53,6 @@ const router = express.Router();
  *                                  email:
  *                                      type: string
  *                                      description: The email of the user
- *                              example:
- *                                  description: an example of registration
- *                                  value:
- *                                      name: vittoria
- *                                      surname: ossanna
- *                                      password: 12345678
- *                                      username: vittannaossoria
- *                                      email: ciao@vitt.jpg
  *              responses:
  *                  '302':
  *                      description: The user has been correctly registered

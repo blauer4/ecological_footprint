@@ -35,11 +35,6 @@
  *                                  name:
  *                                      type: string
  *                                      description: The name of the product you want to insert
- *                          example:
- *                              description: An example of a insertion
- *                              value:
- *                                  code: 1234
- *                                  name: Nome prodotto
  *              responses:
  *                  '201': 
  *                      description: Return the link to the resource that i created or found

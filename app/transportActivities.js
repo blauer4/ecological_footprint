@@ -31,10 +31,6 @@
  *                              userId:
  *                                  type: string
  *                                  description: The userId of the user
- *                          example:
- *                              vehicleId: "627d3581477b05641a8c01c4"
- *                              amount: 2
- *                              userId: "628367e9078d0308f8dd76ba"
  *          responses:
  *              '201': 
  *                  description: Return the link to the resource that i created
