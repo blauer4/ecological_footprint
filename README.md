@@ -14,3 +14,4 @@ All'inizio di questo sprint il product backlog ha subito delle variazioni riguar
 
 * [Product Backlog aggiornato](https://drive.google.com/file/d/1TT4nlE6QebUXVST-cPV8yuF2u3TvfC8R/view?usp=sharing)
 * [Documento Milestone 5](ffffffff)
+* [Test cases](https://docs.google.com/spreadsheets/d/1oW_Eh_n9CbGNEbwJT0bLmFOGuA4jwtf5feUD8o9Hnms/edit?usp=sharing)
