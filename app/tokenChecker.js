@@ -12,6 +12,7 @@ const tokenChecker = function(req, res, next) {
         if (err) {  // if the token is invalid redirect to the login page
             res.redirect("/login.html");
         }else {
+            req.loggedUser = decoded;
             next();
         }
     });

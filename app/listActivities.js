@@ -73,9 +73,9 @@ const router = express.Router();
  */
 
 router.get('', async (req, res) => {
-    let garbage = await garbageActivity.find({ userId: req.cookies['userId'] });
-    let product = await productActivity.find({ userId: req.cookies['userId'] });
-    let transport = await transportActivity.find({ userId: req.cookies['userId'] });
+    let garbage = await garbageActivity.find({ userId: req.loggedUser.id });
+    let product = await productActivity.find({ userId: req.loggedUser.id });
+    let transport = await transportActivity.find({ userId: req.loggedUser.id });
 
     let resp = [];
     for (item of product) {
