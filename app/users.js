@@ -122,6 +122,7 @@ router.post('', async (req, res) => {
     let surname = req.body.surname;
     let password = req.body.password;
     let email = req.body.email;
+    let friends = []; // initially a user have no friend
 
     let user = await User.find({username: username});
     
@@ -141,7 +142,8 @@ router.post('', async (req, res) => {
         name: name,
         surname: surname,
         email: email,
-        password: password
+        password: password,
+        friends: friends
     });
     
     user = await user.save();
