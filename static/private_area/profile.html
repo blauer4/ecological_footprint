@@ -71,7 +71,7 @@
 
                     <!--BOTTONE STATS-->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page">Stats</a>
+                        <a href="./stats.html" class="nav-link active" aria-current="page">Stats</a>
                     </li>
                 </ul>
 
@@ -83,7 +83,7 @@
                             Your profile
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <!--<li><a class="dropdown-item" href="#">edit profile</a></li>-->
+                            <li><a class="dropdown-item" href="#">view profile</a></li>
                             <li><button class="dropdown-item" onclick="logout()">logout</button></li>
                             <!--<li><a class="dropdown-item" href="#">terms and condition of use</a></li>-->
                         </ul>
@@ -110,13 +110,12 @@
                     </figure>
                     <figure class="text-center">
                         <br>
-                        <h3>@username</h3>
+                        <h3 id="username_placeholder"></h3>
                     </figure>
                     <figure class="text-center mt-5">
-                        <h5 class="h5"> Name Surname </h5>
-                        <h5 class="h5"> email@ciao.com </h5>
-                        <h5 class="h5"> GG/MM/AAAA </h5>
-                        <h5 class="h5"> nationality </h5>
+                        <h5 class="h5" id="name_placeholder"></h5>
+                        <h5 class="h5" id="surname_placeholder"></h5>
+                        <h5 class="h5" id="email_placeholder"></h5>
                     </figure>
                 </div>
                 <div class="col">
@@ -170,7 +169,7 @@
                 </div>
             </div>
 
-            <!--THIRD COLUMN-->\
+            <!--THIRD COLUMN-->
             <div class="col md-4">
 
             </div>
