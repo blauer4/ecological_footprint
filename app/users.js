@@ -91,9 +91,9 @@ const router = express.Router();
  */
 
 router.get('', async (req, res) => {
- 
+
     let users = await User.find({});
-    users = users.map( (user) => {
+    users = users.map((user) => {
         return {
             self: '/api/v1/users/' + user["_id"],
             username: user["username"]
@@ -123,14 +123,14 @@ router.post('', async (req, res) => {
     let password = req.body.password;
     let email = req.body.email;
 
-    let user = await User.find({username: username});
-    
-    if(user.length!==0){
+    let user = await User.find({ username: username });
+
+    if (user.length !== 0) {
         res.status(404).send("Username already exists");
         return;
     }
 
-    if ( !username || !name || !surname || !password || !email) {
+    if (!username || !name || !surname || !password || !email) {
         console.error("Something went wrong! Missing required arguments");
         res.status(400).send("Something went wrong! Missing required arguments");
         return;
@@ -143,10 +143,34 @@ router.post('', async (req, res) => {
         email: email,
         password: password
     });
-    
+
     user = await user.save();
 
     res.location("/login.html").status(302).send();
-})
+});
+
+router.put('/update_profile', (req, res) => {
+    let username = req.body.username;
+    let name = req.body.name;
+    let surname = req.body.surname;
+    let email = req.body.email;
+    let userId = req.cookies.userId;
+
+    let user_present = await User.find({ username: username });
+    
+    if (user_present.length !== 0) {
+        res.status(404).send("Username already exists");
+        return;
+    }
+    
+    User.findByIdAndUpdate(userId,{
+        username: username,
+        name: name,
+        surname: surname,
+        email: email
+    });
+
+    res.location("/api/v1/users/update_profile").status(200).send();
+});
 
 module.exports = router;
