@@ -44,7 +44,7 @@ app.use('/api/v1/activities/product', tokenChecker);
 app.use('/api/v1/activities/garbage', tokenChecker);
 app.use('/api/v1/activities/transport', tokenChecker);
 app.use('/api/v1/products', tokenChecker);
-app.use('/api/v1/friends', tokenChecker);
+app.use('/api/v2/friends', tokenChecker);
 
 
 /**
@@ -68,7 +68,7 @@ app.use('/api/v1/login', login);
 /**
  * V2 Api endpoints routes
  */
-app.use('/api/v1/friends', friends);
+app.use('/api/v2/friends', friends);
 
 
 
