@@ -23,23 +23,38 @@ router.get('/:id', async (req, res) => {
     let currentUser = await User.findById(req.loggedUser.id);
     let friends = currentUser.friends;
 
-    let user = req.params.id;
+    let userId = req.params.id;
+
+    if(!userId){
+        console.error("Something went wrong! Missing required arguments");
+        res.status(400).send("Something went wrong! Missing required arguments");
+        return;
+    }
+
     // if the user you are searching is in my friend list return it
-    if (user in friends){
-        user = {
-            self: '/api/v1/users/' + user.id,
-            username: user["username"],
-            name: user["name"],
-            surname: user["surname"],
-            email: user["email"]
-        };
+    var inMyFriendList = friends.some(function (friend) {
+        return friend.equals(userId);
+    });
 
-        res.status(200).json(user);
-    }   
+    if (!inMyFriendList){
+        console.error("The user is not your friend");
+        res.status(400).send("The user is not your friend");
+        return;
+    }
 
-    res.status(404).send("Not found");
+    // otherwiser return the user details
+    let user = await User.findById(userId);
+    user = {
+        self: '/api/v1/users/' + user.id,
+        username: user["username"],
+        name: user["name"],
+        surname: user["surname"],
+        email: user["email"]
+    }
+
+    res.status(200).json(user);
+
 });
-
 
 
 router.put('', async (req, res) => {
@@ -70,13 +85,21 @@ router.put('', async (req, res) => {
         return;
     }
 
+    // check if the user you are trying to add as a friend actually exists
+    let newFriend = await User.findById(userId);
+    if (!newFriend){
+        res.status(400).send("You must provide an existing user to be add as a friend");
+        return;
+    }
+
     
     // otherwise add the new friend
     let newFriendsList = currentUser.friends;
     newFriendsList.push(userId);
 
-    User.findByIdAndUpdate(req.loggedUser.id, { friends: newFriendsList });
-    res.location(`/api/v1/users/${req.loggedUser.id}`).status(200).send();
+
+    await User.findByIdAndUpdate(req.loggedUser.id, { friends: newFriendsList });
+    res.location(`/api/v2/friends/${userId}`).status(200).send();
    
 })
 
