@@ -12,6 +12,13 @@ function updateProfile() {
     let username = document.getElementById("username").value; 
     let name = document.getElementById("name").value; 
     let surname = document.getElementById("surname").value; 
+    let errordiv = document.getElementById("errorMessage");
+
+    if(!String(email).toLocaleLowerCase().match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)) {
+        errordiv.innerHTML = '<div class="alert alert-danger alert-dismissible show fade" role="alert"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp; ' 
+        + ' Email is not valid <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+            return;
+    };
     
     fetch('/api/v1/users/update_profile', { 
         method: 'PUT', 
@@ -28,8 +35,6 @@ function updateProfile() {
         if (data.success) { 
             location.href = "/private_area/profile.html" 
         } else { 
-            let errordiv = document.getElementById("errorMessage");
-            errordiv.classList.remove("d-none");
             errordiv.innerHTML = '<div class="alert alert-danger alert-dismissible show fade" role="alert"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp; ' + data.message
             + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
         } 
