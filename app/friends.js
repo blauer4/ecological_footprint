@@ -71,7 +71,7 @@ router.put('', async (req, res) => {
     let currentUser = await User.findById(req.loggedUser.id);
 
     var alreadyIn = currentUser.friends.some(function (friend) {
-        return friend.equals(userId);
+        return friend.id.equals(userId);
     });
 
     if (alreadyIn){
