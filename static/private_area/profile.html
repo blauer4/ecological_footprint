@@ -48,7 +48,9 @@
     </style>
 </head>
 
+
 <body>
+    <!--NAVBAR-->
 
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         <div class="container-fluid">
@@ -69,7 +71,7 @@
 
                     <!--BOTTONE STATS-->
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page">Stats</a>
+                        <a href="./stats.html" class="nav-link active" aria-current="page">Stats</a>
                     </li>
                 </ul>
 
@@ -81,7 +83,7 @@
                             Your profile
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a href="./profile.html" class="dropdown-item" href="#">View profile</a></li>
+                            <li><a class="dropdown-item" href="#">view profile</a></li>
                             <li><button class="dropdown-item" onclick="logout()">logout</button></li>
                             <!--<li><a class="dropdown-item" href="#">terms and condition of use</a></li>-->
                         </ul>
@@ -96,27 +98,80 @@
         <div class="row">
             <!--FIRST COLUMN-->
             <div class="col md-4">
-               
+
             </div>
             <!--SECOND COLUMN-->
             <div class="col md-4">
-                <h4 class="text-center mx-auto">your total ecological footprint is</h4>
-                <h2 class="text-center mx-auto m-3" id="personal_total"></h2>
-                <br>
-                <div class="card" style="width: 28rem;">
-                    <div class="card-header">
-                        My activities
-                    </div>
-                    <ul class="list-group list-group-flush overflow-auto" id="list_activities" style="max-height: 30em;">
-                    </ul>
+                <figure class="text-center mt-5">
+                </figure>
+                <div>
+                    <figure class="text-center">
+                        <img src="..\img\void_user.png" class="img-fluid" style="height: 200px">
+                    </figure>
+                    <figure class="text-center">
+                        <br>
+                        <h3 id="username_placeholder"></h3>
+                    </figure>
+                    <figure class="text-center mt-5">
+                        <h5 class="h5" id="name_placeholder"></h5>
+                        <h5 class="h5" id="surname_placeholder"></h5>
+                        <h5 class="h5" id="email_placeholder"></h5>
+                    </figure>
                 </div>
-                <br>
+                <div class="col">
+                    <div class="d-grid gap-2">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#editprofile">
+                            Edit profile
+                        </button>
 
+                        <!-- Modal -->
+                        <div class="modal fade" id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit profile</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form>
+                                        <div class="modal-body">
+                                            <label for="name" class="form-label">Name </label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="name" required>
+                                            <br>
+                                            <label for="surname" class="form-label">Surname </label>
+                                            <input type="text" class="form-control" id="surname" name="surname"
+                                                placeholder="surname" required>
+                                            <br>
+                                            <label for="username" class="form-label">Username </label>
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                placeholder="username" required>
+                                            <br>
+                                            <label for="email" class="form-label">Email </label>
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                placeholder="mail@sample.com" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close
+                                                without saving</button>
+                                            <button type="button" class="btn btn-success" onclick="updateProfile()">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             <!--THIRD COLUMN-->
             <div class="col md-4">
-               
+
             </div>
         </div>
 
@@ -124,8 +179,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
-
-        <script src="stats.js"></script>
+        <script src="profile.js"></script>
         <script src="logout.js"></script>
 
 </body>
