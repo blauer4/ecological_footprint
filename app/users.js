@@ -56,7 +56,7 @@ const router = express.Router();
  *              responses:
  *                  '302':
  *                      description: The user has been correctly registered
- *                  '404':
+ *                  '409':
  *                      description: Username already exixts
  *                  '400':
  *                      description: A compulsory field is missing
@@ -88,6 +88,34 @@ const router = express.Router();
  *                                  example:
  *                                      self: /api/v1/users/{id}
  *                                      username: vittossanna
+ *      /api/v1/users/update_profile:
+ *          put: 
+ *              summary: Update user
+ *              description: This function allows the update of an existing user with all the specified parameters. Requires authentication
+ *              requestBody:
+ *                  required: true
+ *                  content: 
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  name:
+ *                                      type: string
+ *                                      description: The name of the user 
+ *                                  surname:
+ *                                      type: string
+ *                                      description: The surname of the user 
+ *                                  username:
+ *                                      type: string
+ *                                      description: The username of the user
+ *                                  email:
+ *                                      type: string
+ *                                      description: The email of the user
+ *              responses:
+ *                  '200':
+ *                      description: The user has been correctly updated
+ *                  '409':
+ *                      description: Username already exists
  */
 
 router.get('', async (req, res) => {
@@ -127,7 +155,7 @@ router.post('', async (req, res) => {
     let user = await User.find({ username: username });
 
     if (user.length !== 0) {
-        res.status(404).send("Username already exists");
+        res.status(409).send("Username already exists");
         return;
     }
 
@@ -160,18 +188,18 @@ router.put('/update_profile', async (req, res) => {
 
     let user_present = await User.find({ username: username });
     
-    if (user_present.length !== 0) {
-        res.status(404).json({success: false, message: "Username already exists"}).send();
+    if ((user_present.length !== 0) && (userId!==user_present[0]._id.toString())) {
+        res.status(409).json({success: false, message: "Username already exists"}).send();
         return;
     }
     
-    User.findByIdAndUpdate(userId,{
+    await User.findByIdAndUpdate(userId,{
         username: username,
         name: name,
         surname: surname,
         email: email
     });
-
+    
     res.location("/api/v1/users/update_profile").json({success: true}).status(200).send();
 });
 
