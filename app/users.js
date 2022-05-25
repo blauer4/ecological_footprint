@@ -159,7 +159,7 @@ router.put('/update_profile', (req, res) => {
     let user_present = await User.find({ username: username });
     
     if (user_present.length !== 0) {
-        res.status(404).send("Username already exists");
+        res.status(404).json({success: false, message: "Username already exists"}).send();
         return;
     }
     
@@ -170,7 +170,7 @@ router.put('/update_profile', (req, res) => {
         email: email
     });
 
-    res.location("/api/v1/users/update_profile").status(200).send();
+    res.location("/api/v1/users/update_profile").json({success: true}).status(200).send();
 });
 
 module.exports = router;
