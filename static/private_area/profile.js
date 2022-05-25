@@ -70,7 +70,7 @@ function getAllFollowing() {
             // li creation
             let li = document.createElement("li");
             li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-            li.innerHTML = `<b>${friend.name}</b>`;
+            li.innerHTML = `<b>${friend.username}</b>`;
 
             followersList.appendChild(li);
 
