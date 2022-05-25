@@ -59,6 +59,7 @@ function loadProfile() {
 function getAllFollowing() {
 
     let followersList = document.getElementById("list_followers");
+    followersList.innerHTML = "";
 
     fetch(`/api/v2/friends`)
     .then(res => res.json()) 
@@ -111,6 +112,7 @@ function addFriend(){
         .then((resp) => {
             if (resp.status == 200 ){
                 document.getElementById("error_add_user").innerHTML = "Friend added";
+                getAllFollowing();
             }else{
                 resp.text().then((msg)=>{
                     document.getElementById("error_add_user").innerHTML = msg;
