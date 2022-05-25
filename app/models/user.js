@@ -7,7 +7,7 @@ var userSchema = new Schema({
     surname: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    friends: { type: [Schema.ObjectId], required: false}
+    friends: { type: [{ id: Schema.ObjectId, name: String}], required: false}
 });
 
 var User = mongoose.model("User",userSchema);

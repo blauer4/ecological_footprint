@@ -10,7 +10,7 @@ router.get('', async (req, res) => {
 
     friends = friends.map( (friend) => {
         return {
-            self: '/api/v2/friends/' + friend["_id"],
+            self: '/api/v2/friends/' + friend["id"],
             name: friend["name"]
         };
     });
@@ -95,7 +95,7 @@ router.put('', async (req, res) => {
     
     // otherwise add the new friend
     let newFriendsList = currentUser.friends;
-    newFriendsList.push(userId);
+    newFriendsList.push({id: userId, name: newFriend.name});
 
 
     await User.findByIdAndUpdate(req.loggedUser.id, { friends: newFriendsList });
