@@ -12,7 +12,7 @@ function updateProfile() {
     let username = document.getElementById("username").value; 
     let name = document.getElementById("name").value; 
     let surname = document.getElementById("surname").value; 
- 
+    
     fetch('/api/v1/users/update_profile', { 
         method: 'PUT', 
         headers: { 'Content-Type': 'application/json' }, 
@@ -28,7 +28,10 @@ function updateProfile() {
         if (data.success) { 
             location.href = "/private_area/profile.html" 
         } else { 
-            document.getElementById("error-message").innerHTML = data.message; 
+            let errordiv = document.getElementById("errorMessage");
+            errordiv.classList.remove("d-none");
+            errordiv.innerHTML = '<div class="alert alert-danger alert-dismissible show fade" role="alert"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp; ' + data.message
+            + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
         } 
     }) 
     .catch(error => console.error(error)); 
@@ -38,19 +41,27 @@ function updateProfile() {
  * Load the profile data 
  */ 
 function loadProfile() { 
-    let email = document.getElementById("email_placeholder"); 
-    let username = document.getElementById("username_placeholder"); 
-    let name = document.getElementById("name_placeholder"); 
-    let surname = document.getElementById("surname_placeholder"); 
+    let email_p = document.getElementById("email_placeholder"); 
+    let username_p = document.getElementById("username_placeholder"); 
+    let name_p = document.getElementById("name_placeholder"); 
+    let surname_p = document.getElementById("surname_placeholder"); 
+    let email = document.getElementById("email"); 
+    let username = document.getElementById("username"); 
+    let name = document.getElementById("name"); 
+    let surname = document.getElementById("surname"); 
     let userId = getCookie('userId'); 
      
     fetch('/api/v1/users/' + userId) 
     .then((resp) => (resp.json())) 
     .then(function(data){ 
-        email.innerHTML = data.email; 
-        username.innerHTML = data.username; 
-        name.innerHTML = data.name; 
-        surname.innerHTML = data.surname; 
+        email.value = data.email; 
+        username.value = data.username; 
+        name.value = data.name; 
+        surname.value = data.surname; 
+        email_p.innerHTML = data.email; 
+        username_p.innerHTML = data.username; 
+        name_p.innerHTML = data.name; 
+        surname_p.innerHTML = data.surname; 
     }) 
     .catch(error => console.error(error)); 
 } 

@@ -160,18 +160,18 @@ router.put('/update_profile', async (req, res) => {
 
     let user_present = await User.find({ username: username });
     
-    if (user_present.length !== 0) {
+    if ((user_present.length !== 0) && (userId!==user_present[0]._id.toString())) {
         res.status(404).json({success: false, message: "Username already exists"}).send();
         return;
     }
     
-    User.findByIdAndUpdate(userId,{
+    await User.findByIdAndUpdate(userId,{
         username: username,
         name: name,
         surname: surname,
         email: email
     });
-
+    
     res.location("/api/v1/users/update_profile").json({success: true}).status(200).send();
 });
 
