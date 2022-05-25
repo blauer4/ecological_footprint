@@ -149,7 +149,7 @@ router.post('', async (req, res) => {
     res.location("/login.html").status(302).send();
 });
 
-router.put('/update_profile', (req, res) => {
+router.put('/update_profile', async (req, res) => {
     let username = req.body.username;
     let name = req.body.name;
     let surname = req.body.surname;
