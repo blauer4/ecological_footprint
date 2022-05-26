@@ -138,7 +138,8 @@ router.get('/:id', async (req, res) => {
         username: user["username"],
         name: user["name"],
         surname: user["surname"],
-        email: user["email"]
+        email: user["email"],
+        totalImpact: user["totalImpact"]
     }
 
     res.status(200).json(user);
@@ -171,7 +172,8 @@ router.post('', async (req, res) => {
         surname: surname,
         email: email,
         password: password,
-        friends: friends
+        friends: friends,
+        totalImpact: 0
     });
 
     user = await user.save();
