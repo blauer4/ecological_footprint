@@ -70,6 +70,31 @@
  *                                      email: 
  *                                          type: string
  *                                          description: The email of the given friend
+ *      delete:
+ *          summary: Deletes one friend 
+ *          description: Deletes one friend associated with the given user ID
+ *          parameters:
+ *            - in: path
+ *              name: id
+ *              required: true
+ *              description: The user id of the friend to be deleted.
+ *              schema:
+ *                  type: string
+ *          responses:
+ *              '200':
+ *                  description: Deletes the given friend
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "Succesfully deleted"
+ *              '400':
+ *                  description: The given user is not in your friend list
+ *                  content: 
+ *                      text/html:
+ *                          schema:
+ *                              type: string
+ *                              example: "Friend removal error"
  */
 
 const express = require('express');
@@ -174,7 +199,38 @@ router.put('', async (req, res) => {
 
     await User.findByIdAndUpdate(req.loggedUser.id, { friends: newFriendsList });
     res.location(`/api/v2/friends/${userId}`).status(200).send();
-   
+
+});
+
+
+router.delete('/:id', async (req, res) => {
+    let userId = req.params["id"];
+
+    if(!userId){
+        console.error("Something went wrong! Missing required arguments");
+        res.status(400).send("Something went wrong! Missing required arguments");
+        return;
+    }
+
+
+    // check if the user is in the friend list
+    let currentUser = await User.findById(req.loggedUser.id);
+
+    var inFriends = currentUser.friends.some(function (friend) {
+        return friend.id.equals(userId);
+    });
+
+    if (!inFriends){
+        res.status(400).send("The user is not in your friend list");
+        return;
+    }
+
+    // otherwise update and delete the friend
+    let newFriendsList = currentUser.friends.filter(function(el) { return el.id != userId; }); 
+
+    await User.findByIdAndUpdate(req.loggedUser.id, { friends: newFriendsList });
+    res.location(`/api/v2/friends/${userId}`).status(200).send();
+
 });
 
 module.exports = router;
