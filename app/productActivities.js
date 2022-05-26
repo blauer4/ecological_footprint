@@ -86,6 +86,7 @@
 const express = require('express');
 const ProductActivity = require('./models/productActivity.js');
 const Product = require('./models/product.js').Product;
+const User = require('./models/user.js').User;
 const router = express.Router();
 
 router.get('', async (req, res) => {
@@ -134,6 +135,8 @@ router.post('', async (req, res) => {
     
     activity = await newActivity.save();
 
+    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: impact}});
+
     /**
      * Return the link to the newly created resource 
      */
@@ -142,6 +145,10 @@ router.post('', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
+    let userId = req.loggedUser.id;
+    let product = await ProductActivity.findById(id);
+
+    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -product.impact}});
 
     let result = await ProductActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
