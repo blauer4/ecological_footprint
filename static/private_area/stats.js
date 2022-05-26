@@ -143,26 +143,27 @@ function loadPersonalImpact() {
 }
 
 
-async function getChartFollowing() {
+function getChartFollowing() {
     let friends_ranking = [];
     let followersList = document.getElementById("list_followers_stats");
     followersList.innerHTML = "";
+
+    // used to wait for all the fetch promises
+    let allPromises = [];
 
     fetch(`/api/v2/friends`)
         .then(res => res.json())
         .then((friends) => {
 
             friends.forEach(friend => {
-                let friendInfo = await fetch(friend);
-                let resp = await friendInfo.json();
-                friends_ranking.push({
-                    name: resp.name,
-                    surname: resp.surname,
-                    totalImpact: resp.total_impact
-                });
+                allPromises.push(fetch(friend.self).then((resp) => resp.json()));
             });
 
-            console.log(friends_ranking);
+            // wait for all the fetch promises
+            Promise.all(allPromises).then((result) => {
+                console.log(result); // TODO qui si fa il sort e il ranking
+            })
+
 
         });
 }
