@@ -148,6 +148,11 @@ router.put('', async (req, res) => {
         return friend.id.equals(userId);
     });
 
+    if (alreadyIn){
+        res.status(400).send("The user is already in your friend list");
+        return;
+    }
+
     // check if the user tries to add itself to his friends list
     if (userId == currentUser.id){
         res.status(400).send("You cannot add yourself to your friends list");
@@ -170,6 +175,6 @@ router.put('', async (req, res) => {
     await User.findByIdAndUpdate(req.loggedUser.id, { friends: newFriendsList });
     res.location(`/api/v2/friends/${userId}`).status(200).send();
    
-})
+});
 
 module.exports = router;
