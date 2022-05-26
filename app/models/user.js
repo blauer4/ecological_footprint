@@ -7,6 +7,7 @@ var userSchema = new Schema({
     surname: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    totalImpact: { type: Number, required: true },
     friends: { type: [{ id: Schema.ObjectId, username: String}], required: false}
 });
 

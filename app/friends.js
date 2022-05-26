@@ -123,7 +123,8 @@ router.get('/:id', async (req, res) => {
         username: user["username"],
         name: user["name"],
         surname: user["surname"],
-        email: user["email"]
+        email: user["email"],
+        totalImpact: user["totalImpact"]
     }
 
     res.status(200).json(user);

@@ -171,7 +171,8 @@ router.post('', async (req, res) => {
         surname: surname,
         email: email,
         password: password,
-        friends: friends
+        friends: friends,
+        totalImpact: 0
     });
 
     user = await user.save();

@@ -142,6 +142,8 @@ router.post('', async (req, res) => {
     
     activity = await newActivity.save();
 
+    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: impact}});
+
     /**
      * Return the link to the newly created resource 
      */
@@ -150,6 +152,10 @@ router.post('', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
+    let userId = req.loggedUser.id;
+    let garbage = await GarbageActivity.findById(id);
+
+    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -garbage.impact}});
 
     let result = await GarbageActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
