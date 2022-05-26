@@ -142,5 +142,18 @@ function removeActivity(activityId, type) {
         }).catch(error => console.error(error));
 }
 
+function getChartFollowing() {
+
+    let followersList = document.getElementById("list_followers");
+    followersList.innerHTML = "";
+
+    fetch(`/api/v2/friends`)
+    .then(res => res.json()) 
+    .then((friends)=>{
+        
+        
+    });
+}
+
 loadPersonalImpact();
 getAllActivities();
