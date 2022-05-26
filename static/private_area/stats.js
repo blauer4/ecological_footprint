@@ -131,41 +131,88 @@ function removeActivity(activityId, type) {
  */
 
 function loadPersonalImpact() {
-    let somma = 0;
-    let counter = 0;
-
     fetch('/api/v1/activities/total_impact')
-        .then((resp) => resp.json())
-        .then(function (data) {
-            let h1 = document.getElementById("personal_total");
-            h1.innerHTML = data.total_impact;
-        }).catch(error => console.error(error));
+    .then((resp) => resp.json())
+    .then(function (data) {
+        let h1 = document.getElementById("personal_total");
+        h1.innerHTML = data.total_impact;
+    }).catch(error => console.error(error));
 }
 
-
+function compareImpact( a, b ) {
+    if ( a.totalImpact < b.totalImpact ){
+        return -1;
+    }
+    if ( a.totalImpact > b.totalImpact ){
+        return 1;
+    }
+    return 0;
+}
+  
 function getChartFollowing() {
-    let friends_ranking = [];
+  
     let followersList = document.getElementById("list_followers_stats");
     followersList.innerHTML = "";
 
-    // used to wait for all the fetch promises
-    let allPromises = [];
+    let friends_ranking = [];
+    let waitPromises = [];     // used to wait for all the fetch promises
 
-    fetch(`/api/v2/friends`)
+    fetch('/api/v1/activities/total_impact')
+    .then((resp) => resp.json())
+    .then(function (data) {
+            
+        // add the current user to the ranking
+        friends_ranking.push({
+            name: "You",
+            surname: "",
+            totalImpact: data.total_impact
+        });
+
+        // get the friends impact
+        fetch(`/api/v2/friends`)
         .then(res => res.json())
         .then((friends) => {
 
             friends.forEach(friend => {
-                allPromises.push(fetch(friend.self).then((resp) => resp.json()));
+                waitPromises.push(fetch(friend.self).then((resp) => resp.json()));
             });
 
             // wait for all the fetch promises
-            Promise.all(allPromises).then((result) => {
-                console.log(result); // TODO qui si fa il sort e il ranking
+            Promise.all(waitPromises).then((friends) => {
+                
+                friends.forEach(friend => {
+
+                    friends_ranking.push(friend);
+
+                });
+                friends_ranking = friends_ranking.sort(compareImpact);
+
+                // generate the friends ranking
+                friends_ranking.forEach(friend => {
+                    console.log(friend);
+                    let li = document.createElement("li");
+                    li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+                    if (friend.name == "You"){
+                        li.innerHTML = `<b>${friend.name} ${friend.surname}</b> ${friend.totalImpact} `;
+                    }else{
+                        li.innerHTML = `<span>${friend.name} ${friend.surname}</span> ${friend.totalImpact} `;
+                    }
+
+                    followersList.appendChild(li);
+                });
+
             })
+
+            
 
 
         });
+    }).catch(error => console.error(error));
+
+    
+
+
+    
 }
 
 getChartFollowing();
