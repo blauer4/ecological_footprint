@@ -155,10 +155,8 @@ function addFriend(){
 
 function removeFriend(userId) {
 
-    fetch(`/api/v2/friends`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({userId: userId}),
+    fetch(`/api/v2/friends/${userId}`, {
+        method: 'DELETE'
     })
     .then(res => res.text()) 
     .then((res)=>{
