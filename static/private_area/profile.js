@@ -82,12 +82,20 @@ function getAllFollowing() {
     .then((friends)=>{
         
         friends.forEach((friend)=>{
+            let friendId = friend.self.substring(friend.self.lastIndexOf('/') + 1);;
 
             // li creation
             let li = document.createElement("li");
             li.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
             li.innerHTML = `<b>${friend.username}</b>`;
 
+            // remove friend button
+            let removeButton = document.createElement("button");
+            removeButton.classList.add("btn-sm", "btn-danger");
+            removeButton.setAttribute("onclick", `removeFriend('${friendId}')`);
+            removeButton.innerHTML = `<i class="fa fa-trash"></i>`
+
+            li.appendChild(removeButton)
             followersList.appendChild(li);
 
         });
@@ -143,6 +151,20 @@ function addFriend(){
         
     });
 
+}
+
+function removeFriend(userId) {
+
+    fetch(`/api/v2/friends`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({userId: userId}),
+    })
+    .then(res => res.text()) 
+    .then((res)=>{
+        document.getElementById("error_add_user").innerHTML = res;
+        getAllFollowing();
+    });
 }
 
 getAllFollowing();
