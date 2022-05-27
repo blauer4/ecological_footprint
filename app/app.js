@@ -12,6 +12,7 @@ const vehicles = require("./vehicles.js");
 const users = require("./users.js");
 const login = require("./login.js");
 const friends = require("./friends.js");
+const tips = require("./tips.js");
 
 const tokenChecker = require('./tokenChecker.js');
 
@@ -69,7 +70,7 @@ app.use('/api/v1/login', login);
  * V2 Api endpoints routes
  */
 app.use('/api/v2/friends', friends);
-
+app.use('/api/v2/tips', tips);
 
 
 
