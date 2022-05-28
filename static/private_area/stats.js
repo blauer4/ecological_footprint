@@ -51,12 +51,12 @@ function getAllActivities() {
 
                     // info activity button
                     let infoButton = document.createElement("button");
-                    infoButton.classList.add("btn-sm", "btn-success");
+                    infoButton.classList.add("btn-sm", "btn-success", "me-2");
                     infoButton.setAttribute("data-bs-toggle", "collapse");
                     infoButton.setAttribute("data-bs-target", `#activity_${activityId}`);
                     infoButton.setAttribute("aria-expanded", "false");
                     infoButton.setAttribute("aria-controls", `activity_${activityId}`);
-                    infoButton.innerHTML = `<i class="bi bi-info"></i>`
+                    infoButton.innerHTML = `<i class="bi bi-info-circle"></i>`
 
                     // remove activity button
                     let removeButton = document.createElement("button");
