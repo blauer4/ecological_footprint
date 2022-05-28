@@ -38,7 +38,7 @@ mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTo
         console.log("Connected to the Database");
 
         app.listen(process.env.PORT || process.env.EXPRESS_PORT, function () {
-            console.log('Server running on port ',process.env.PORT || process.env.EXPRESS_PORT);
+            console.log('Server running on port ', process.env.PORT || process.env.EXPRESS_PORT);
         });
 
     })
