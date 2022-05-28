@@ -93,7 +93,7 @@ function getAllFollowing() {
             let removeButton = document.createElement("button");
             removeButton.classList.add("btn-sm", "btn-danger");
             removeButton.setAttribute("onclick", `removeFriend('${friendId}')`);
-            removeButton.innerHTML = `<i class="fa fa-trash"></i>`
+            removeButton.innerHTML = `<i class="bi bi-trash-fill"></i>`
 
             li.appendChild(removeButton)
             followersList.appendChild(li);

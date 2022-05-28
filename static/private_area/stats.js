@@ -56,13 +56,13 @@ function getAllActivities() {
                     infoButton.setAttribute("data-bs-target", `#activity_${activityId}`);
                     infoButton.setAttribute("aria-expanded", "false");
                     infoButton.setAttribute("aria-controls", `activity_${activityId}`);
-                    infoButton.innerHTML = `<i class="fa fa-info"></i>`
+                    infoButton.innerHTML = `<i class="bi bi-info"></i>`
 
                     // remove activity button
                     let removeButton = document.createElement("button");
                     removeButton.classList.add("btn-sm", "btn-danger");
                     removeButton.setAttribute("onclick", `removeActivity('${activityId}', '${element.type}')`);
-                    removeButton.innerHTML = `<i class="fa fa-trash"></i>`
+                    removeButton.innerHTML = `<i class="bi bi-trash-fill"></i>`
                     span.appendChild(infoButton)
                     span.appendChild(removeButton)
 
