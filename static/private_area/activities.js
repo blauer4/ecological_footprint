@@ -255,9 +255,34 @@ function addProductActivity(){
 
 }
 
+
+function getRandomTip() {
+    let tipMessageDiv = document.getElementById("tipMessage");
+    
+    fetch("/api/v2/tips")
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) { 
+
+        let randomTip = data[Math.floor(Math.random()* data.length)];
+        fetch(randomTip.self)
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(tipDetails) { 
+
+            tipMessageDiv.innerHTML = tipDetails.text;
+            console.log(tipDetails.text)
+
+        })
+        .catch( error => console.error(error) );  // error handle
+
+    })
+    .catch( error => console.error(error) );  // error handle
+
+}
+
 /**
  * Inital calls
  */
 loadMaterials();
 loadVehicles();
 getProductsByName();
+getRandomTip();
