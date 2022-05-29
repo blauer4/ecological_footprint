@@ -77,6 +77,12 @@
 router.get('/:id', async (req, res) => {
 
     let material = await Material.findById(req.params.id);
+
+    if (!material){
+        res.status(404).send("Garbage not found");
+        return;
+    }
+
     material = {
         self: '/api/v1/materials/' + material.id,
         name: material["name"],
