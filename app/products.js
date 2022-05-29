@@ -69,6 +69,8 @@
  *                                      unitImpact: 
  *                                          type: integer
  *                                          description: The impact of the product given
+ *                  '404':
+ *                      description: The specified product doesn't exist
  */
 
 const express = require('express');

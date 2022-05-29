@@ -56,6 +56,8 @@
  *                                    self: "/api/v1/materials/627e62bbf1f1da75f033373f"
  *                                    name: "Umido"
  *                                    unitImpact: 10
+ *                  '404':
+ *                      description: The specified material doesn't exist
  */
 
  const express = require('express');

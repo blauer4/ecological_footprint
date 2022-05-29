@@ -56,6 +56,8 @@
  *                                    self: "/api/v1/vehicles/627d22980997269a08ba74b6"
  *                                    name: "macchina"
  *                                    unitImpact: 15
+ *                  '404':
+ *                      description: The specified vehicle doesn't exist
  */
 
 const express = require('express');

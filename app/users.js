@@ -114,6 +114,8 @@ const router = express.Router();
  *              responses:
  *                  '200':
  *                      description: The user has been correctly updated
+ *                  '422':
+ *                      description: Missing parameter
  *                  '409':
  *                      description: Username already exists
  */
@@ -186,10 +188,16 @@ router.put('/update_profile', async (req, res) => {
     let name = req.body.name;
     let surname = req.body.surname;
     let email = req.body.email;
-    let userId = req.cookies.userId;
+    let userId = req.logged;
+
+    if (!username || !name || !surname || !email) {
+        console.error("Something went wrong! Missing required arguments");
+        res.status(422).send("Something went wrong! Missing required arguments");
+        return;
+    }
 
     let user_present = await User.find({ username: username });
-    
+
     if ((user_present.length !== 0) && (userId!==user_present[0]._id.toString())) {
         res.status(409).json({success: false, message: "Username already exists"}).send();
         return;
