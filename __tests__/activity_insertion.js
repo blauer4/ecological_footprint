@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../app/models/user.js').User; 
 const Material = require('../app/models/material.js').Material; 
+const Product = require('../app/models/product.js').Product; 
 
 
 const url = process.env.HEROKU || "http://localhost:3000"
@@ -12,6 +13,7 @@ const url = process.env.HEROKU || "http://localhost:3000"
 describe('Activity insertion testing', () => {
 
     let validMaterialId;
+    let validProductlId;
     let token;
 
     beforeAll( async () => { 
@@ -22,8 +24,12 @@ describe('Activity insertion testing', () => {
         let user = await User.findOne({});
 
         // get a valid garbage material id
-        let materials = await Material.find({});
-        validMaterialId = materials[0].id;
+        let material = await Material.findOne({});
+        validMaterialId = material.id;
+
+        // get a valid product id
+        let product = await Product.findOne({});
+        validProductlId = product.id;
 
 
         // create a valid token
@@ -46,7 +52,22 @@ describe('Activity insertion testing', () => {
         .end((err, res) => {
             expect(res.status).toEqual(201);
             done();
-        })
+        });
+
+    });
+
+    test('Add new product activity', (done) => {
+
+        let productActivity = { productId: validProductlId, amount: 2 }
+
+        request(url)
+        .post('/api/v1/activities/product')
+        .set('Cookie', [`token=${token}`])
+        .send(productActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(201);
+            done();
+        });
 
     });
     

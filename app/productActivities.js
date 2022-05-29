@@ -105,7 +105,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
 
-    let userId = req.body["userId"];
+    let userId = req.loggedUser.id;
     let productId = req.body["productId"];
     let amount = req.body["amount"];
 
