@@ -8,7 +8,25 @@ const app = require('../app/app');
 const User = require('../app/models/user.js').User; 
 
 
-describe("new non-valid user insertion unit test", () => {
+describe("Private area access and registration", () => {
+    
+    let user;
+
+    beforeAll( async () => { 
+        jest.setTimeout(10000);
+        app.locals.db = await mongoose.connect(process.env.MONGO_DB_URL); 
+
+        // get a valid user from the db
+        user = await User.findOne({});
+
+        // create a valid token
+        token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
+
+        console.log("Testing with user " + user.username);
+    });
+
+    afterAll( () => { mongoose.connection.close(true); });
+
 
     it('POST non valid user: void fields', function (done) {
         request(url)
@@ -34,27 +52,6 @@ describe("new non-valid user insertion unit test", () => {
             });
     });
 
-});
-
-describe("retrive registered users", () => {
-
-    let user;
-
-    beforeAll( async () => { 
-        jest.setTimeout(10000);
-        app.locals.db = await mongoose.connect(process.env.MONGO_DB_URL); 
-
-        // get a valid user from the db
-        user = await User.findOne({});
-
-        // create a valid token
-        token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
-
-        console.log("Testing with user " + user.username);
-    });
-
-    afterAll( () => { mongoose.connection.close(true); });
-
     it('GET all users', function (done) {
         request(url)
             .get('/api/v1/users')
@@ -75,15 +72,47 @@ describe("retrive registered users", () => {
         });
     });
 
-});
-/*
-describe("update a specific user profile", () => {
-
-    it('PUT update of some fields of a specific user', function(done){
+    it('logging in with valid credentials', (done) => {
+        
+        const user = { email: 'laurence@foo.com', password: "ciao" }
+        const expectedResponse = []
         request(url)
-        .put()
+        .post('/api/v1/login')
+        .send(user)
+        .end((err, res) => {
+            expect(res.body.success).toEqual(true)
+            done();
+        })
+
+    });
+
+    it('logging in with valid mail but non-valid password', (done) => {
+        
+        const user = { email: 'laurence@foo.com', password: "foo" }
+        const expectedResponse = []
+        request(url)
+        .post('/api/v1/login')
+        .send(user)
+        .end((err, res) => {
+            expect(res.body.success).toEqual(false)
+            done();
+        })
+
+    });
+
+    it('logging in with non-valid credentials', (done) => {
+        
+        const user = { email: 'foo', password: "foo" }
+        const expectedResponse = []
+        request(url)
+        .post('/api/v1/login')
+        .send(user)
+        .end((err, res) => {
+            expect(res.body.success).toEqual(false)
+            done();
+        })
 
     });
 
 });
-*/
+
