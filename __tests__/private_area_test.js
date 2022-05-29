@@ -1,24 +1,12 @@
 const url = process.env.HEROKU || "http://localhost:3000"
 
 const request = require('supertest');
-const app = require('../app/app');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
-describe("new vadlid user insertion unit test", () => {
+const app = require('../app/app');
+const User = require('../app/models/user.js').User; 
 
-    it('POST new valid user', function (done) {
-        request(url)
-            .post('/api/v1/users')
-            .send({ name: "new", surname: "new", email : "new", username: "new", password: "new"})
-            .set('Accept', 'application/json')
-            .expect(302)
-            .end(function (err, res) {
-                if (err) return done(err);
-                return done();
-            });
-    });
-
-});
 
 describe("new non-valid user insertion unit test", () => {
 
@@ -50,6 +38,23 @@ describe("new non-valid user insertion unit test", () => {
 
 describe("retrive registered users", () => {
 
+    let user;
+
+    beforeAll( async () => { 
+        jest.setTimeout(10000);
+        app.locals.db = await mongoose.connect(process.env.MONGO_DB_URL); 
+
+        // get a valid user from the db
+        user = await User.findOne({});
+
+        // create a valid token
+        token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
+
+        console.log("Testing with user " + user.username);
+    });
+
+    afterAll( () => { mongoose.connection.close(true); });
+
     it('GET all users', function (done) {
         request(url)
             .get('/api/v1/users')
@@ -62,7 +67,7 @@ describe("retrive registered users", () => {
 
     it('GET one specific registered user', function(done){
         request(url)      
-        .get('/api/v1/users/6284eacc5fc87587fb73d939')      
+        .get(`/api/v1/users/${user.id}`)      
         .expect(200)
         .end(function (err, res){
             if(err) return done(err);
