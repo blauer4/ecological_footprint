@@ -24,8 +24,7 @@ describe('Remove an activity', () => {
         app.locals.db = await mongoose.connect(process.env.MONGO_DB_URL); 
 
         // get a valid user from the db
-        //let user = await User.findOne({});
-        let user = await User.findById('628367e9078d0308f8dd76ba');
+        let user = await User.findOne({});
         let material = await Material.findOne({});
         userId = user._id;
 
