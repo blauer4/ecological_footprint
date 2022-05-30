@@ -157,8 +157,10 @@ router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
     let userId = req.loggedUser.id;
     let transport = await TransportActivity.findById(id);
-    
-    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -(transport.impact)}});
+
+    if(transport){
+        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -(transport.impact)}});
+    }
 
     let result = await TransportActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){

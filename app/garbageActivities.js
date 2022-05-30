@@ -153,7 +153,9 @@ router.delete('/:id', async (req, res) => {
     let userId = req.loggedUser.id;
     let garbage = await GarbageActivity.findById(id);
 
-    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -garbage.impact}});
+    if(garbage){
+        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -garbage.impact}});
+    }
 
     let result = await GarbageActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
