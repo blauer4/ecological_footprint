@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * @swagger
  * paths:
- *  /api/v1/generalstats/total_impact:
+ *  /api/v1/generalstats:
  *      get:
  *          summary: Gets the total impact of every user aggregated
  *          description: Interrogates the server to have the full impact of the userbase of the service
@@ -27,7 +27,7 @@ const router = express.Router();
  *                              total_impact: 20000
  */
 
-router.get('/total_impact', async (req,res)=>{
+router.get('', async (req,res)=>{
     let garbage, product, transport;
     garbage = await garbageActivity.find({});
     product = await productActivity.find({});
