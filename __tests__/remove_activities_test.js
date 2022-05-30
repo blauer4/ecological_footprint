@@ -73,7 +73,7 @@ describe('Remove an activity', () => {
         // create a valid token
         token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
 
-        console.log("Testing activity insertion with user " + user.username);
+        console.log("Testing remove insertion with user " + user.username);
     });
 
     afterAll( () => { mongoose.connection.close(true); });

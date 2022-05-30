@@ -188,7 +188,7 @@ router.put('', async (req, res) => {
     // check if the user you are trying to add as a friend actually exists
     let newFriend = await User.findById(userId);
     if (!newFriend){
-        res.status(400).send("You must provide an existing user to be add as a friend");
+        res.status(404).send("You must provide an existing user to be add as a friend");
         return;
     }
 
