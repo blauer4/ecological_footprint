@@ -16,15 +16,18 @@ const url = process.env.HEROKU || "http://localhost:3000"
 describe('Remove an activity', () => {
 
     let rm_garbagea_id, rm_producta_id, rm_transporta_id;
-    let token;
+    let impact_garbagea_id, impact_producta_id, impact_transporta_id;
+    let token, previous_total_impact, userId;
 
     beforeAll( async () => { 
         jest.setTimeout(10000);
         app.locals.db = await mongoose.connect(process.env.MONGO_DB_URL); 
 
         // get a valid user from the db
-        let user = await User.findOne({});
+        //let user = await User.findOne({});
+        let user = await User.findById('628367e9078d0308f8dd76ba');
         let material = await Material.findOne({});
+        userId = user._id;
 
         let garbageActivity = new GarbageActivity({
             userId: user._id,
@@ -36,7 +39,8 @@ describe('Remove an activity', () => {
         
         activity = await garbageActivity.save();
         rm_garbagea_id = activity._id.toString();
-        console.log(activity,activity.id);
+        impact_garbagea_id = activity.impact;
+
         let product = await Product.findOne({});
 
         let productActivity = new ProductActivity({
@@ -49,6 +53,7 @@ describe('Remove an activity', () => {
         
         activity = await productActivity.save();
         rm_producta_id = activity._id.toString();
+        impact_producta_id = activity.impact;
 
         let vehicle = await Vehicle.findOne({});
 
@@ -62,7 +67,9 @@ describe('Remove an activity', () => {
         
         activity = await transportActivity.save();
         rm_transporta_id = activity._id.toString();
-        
+        impact_transporta_id = activity.impact;
+        previous_total_impact = user.totalImpact + impact_garbagea_id + impact_producta_id + impact_transporta_id;
+        await User.findByIdAndUpdate(userId, {$inc: {totalImpact: previous_total_impact}});
 
         // create a valid token
         token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
@@ -77,8 +84,10 @@ describe('Remove an activity', () => {
         request(url)
         .delete('/api/v1/activities/garbage/' + rm_garbagea_id)
         .set('Cookie', [`token=${token}`])
-        .end((err, res) => {
-            expect(res.status).toEqual(200)
+        .end(async (err, res) => {
+            expect(res.status).toEqual(200);
+            user = await User.findById(userId);
+            expect(user.totalImpact).toEqual(previous_total_impact - impact_garbagea_id);
             done();
         })
 
@@ -89,8 +98,10 @@ describe('Remove an activity', () => {
         request(url)
         .delete('/api/v1/activities/transport/' + rm_transporta_id)
         .set('Cookie', [`token=${token}`])
-        .end((err, res) => {
-            expect(res.status).toEqual(200)
+        .end(async (err, res) => {
+            expect(res.status).toEqual(200);
+            user = await User.findById(userId);
+            expect(user.totalImpact).toEqual(previous_total_impact - impact_transporta_id - impact_garbagea_id);
             done();
         })
 
@@ -101,8 +112,10 @@ describe('Remove an activity', () => {
         request(url)
         .delete('/api/v1/activities/product/' + rm_producta_id)
         .set('Cookie', [`token=${token}`])
-        .end((err, res) => {
-            expect(res.status).toEqual(200)
+        .end(async (err, res) => {
+            expect(res.status).toEqual(200);
+            user = await User.findById(userId);
+            expect(user.totalImpact).toEqual(previous_total_impact - impact_producta_id - impact_transporta_id - impact_garbagea_id);
             done();
         })
 
@@ -114,7 +127,7 @@ describe('Remove an activity', () => {
         .delete('/api/v1/activities/product/' + rm_producta_id)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
-            expect(res.status).toEqual(404)
+            expect(res.status).toEqual(404);
             done();
         })
 
