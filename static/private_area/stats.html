@@ -45,6 +45,12 @@
                 font-size: 3.5rem;
             }
         }
+
+        .world{
+            width: 9em;
+            height: 9em;
+            padding: 2px;
+        }
     </style>
 </head>
 
@@ -104,7 +110,7 @@
             </div>
             <!--SECOND COLUMN-->
             <div class="col md-4">
-                <h4 class="text-center mx-auto">your total ecological footprint is</h4>
+                <h4 class="text-center mx-auto">Your total ecological footprint is</h4>
                 <h2 class="text-center mx-auto m-3" id="personal_total"></h2>
                 <br>
                 <div class="card" style="width: 28rem;">
@@ -122,6 +128,18 @@
             <div class="col md-4">
                 <h4>Global Stats</h4>
                 <h5>Total glabal impact: <span id="average_placeholder"></span></h5>
+
+                <div class="row" id="planets_img">
+                    <img id="world_1" src="/img/empty_earth.png" class="world"></img>
+                    <img id="world_2" src="/img/empty_earth.png" class="world"></img>
+                    <img id="world_3" src="/img/empty_earth.png" class="world"></img>
+                    <img id="world_4" src="/img/empty_earth.png" class="world"></img>
+                </div>
+                <div class="row" id="planets">
+                    
+                </div>
+
+                <hr />
             </div>
         </div>
 

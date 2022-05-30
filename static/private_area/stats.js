@@ -224,6 +224,30 @@ function getChartFollowing() {
         let h1 = document.getElementById("average_placeholder");
         h1.innerHTML = data.total_impact;
     }).catch(error => console.error(error));
+
+    fetch('/api/v1/activities/total_impact')
+    .then((resp) => resp.json())
+    .then(function (data) {
+        // planets summary
+        if (data.total_impact > 1000){
+            worldsCount = 4;
+        }else if (data.total_impact > 700) {
+            worldsCount = 3;
+        }else if (data.total_impact > 700) {
+            worldsCount = 2;
+        }else {
+            worldsCount = 1;
+        }
+
+        for (let i=0; i<worldsCount; i++){
+            document.getElementById(`world_${i+1}`).src = "/img/earth.png";
+        }
+        
+
+        document.getElementById("planets").innerHTML = `If everyone would live like you, we'd need ${worldsCount} Planets!`;
+    }).catch(error => console.error(error));
+    
+
 }
 
 loadGlobalImpact();
