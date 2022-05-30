@@ -2,11 +2,11 @@
  * Funzione che carica i dati delle impronte ecologiche degli utenti e ne calcola la media
  */
 
- function loadGlobalImpact() {
+function loadGlobalImpact() {
     let somma = 0;
     let counter = 0;
     
-    fetch('/api/v1/generalStats/total_impact')
+    fetch('/api/v1/generalStats')
     .then((resp) => resp.json())
     .then(function (data) {
            let h1 = document.getElementById("average_placeholder");

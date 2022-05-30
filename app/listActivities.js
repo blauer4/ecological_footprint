@@ -109,15 +109,12 @@ router.get('', async (req, res) => {
 
 router.get('/total_impact', async (req, res) => {
 
-    let userId = req.loggedUser.userId;
+    let userId = req.loggedUser.id;
     let garbage, product, transport;
-    let search = false;
-    if (userId) {
-        search = { userId: userId };
-    }
-    garbage = await garbageActivity.find(search ? search : {});
-    product = await productActivity.find(search ? search : {});
-    transport = await transportActivity.find(search ? search : {});
+    
+    garbage = await garbageActivity.find({userId: userId});
+    product = await productActivity.find({userId: userId});
+    transport = await transportActivity.find({userId: userId});
     
     let total_impact = 0;
     let resp;
