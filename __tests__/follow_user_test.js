@@ -8,7 +8,7 @@ const url = process.env.HEROKU || "http://localhost:3000"
 
 describe('Follow user test', () => {
 
-    let token, userId, follower;
+    let token, userId, follower, no_follower;
 
     beforeAll(async () => {
         jest.setTimeout(10000);
@@ -17,7 +17,13 @@ describe('Follow user test', () => {
         // get a valid user from the db
         let user = await User.findOne({});
         userId = user.id;
-        follower = await User.findOne({_id:{ $nin: [userId] }});
+        no_follower = [userId];
+
+        for (friend of user.friends) {
+            no_follower.push(friend.id.toString());
+        }
+
+        follower = await User.findOne({ _id: { $nin: no_follower } });
 
         // create a valid token
         token = jwt.sign({ email: user.email, id: user.id }, process.env.SUPER_SECRET, { expiresIn: 86400 });
@@ -27,7 +33,7 @@ describe('Follow user test', () => {
 
 
     afterAll(async () => {
-        await User.findOneAndUpdate({ _id: userId }, { $pull: { friends: {id: follower._id} } }, false);
+        await User.findOneAndUpdate({ _id: userId }, { $pull: { friends: { id: follower._id } } }, false);
         await mongoose.disconnect();
     });
 
@@ -43,9 +49,9 @@ describe('Follow user test', () => {
         });
 
     });
-
+    
     it('Follow another user', (done) => {
-        
+
         request(url)
         .put('/api/v2/friends/')
         .set('Cookie', [`token=${token}`])
@@ -54,8 +60,9 @@ describe('Follow user test', () => {
             expect(res.status).toEqual(200);
             done();
         });
-    });
 
+    });
+    
     it('Follow a user that is already followed', (done) => {
 
         request(url)
