@@ -52,7 +52,7 @@ describe('Follow user test', () => {
     it('Unfollow a user that is not followed', (done) => {
 
         request(url)
-        .delete('/api/v2/friends/' + follower._id.toString())
+        .delete('/api/v2/friends/ffffffffffffffffffffffff')
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
             expect(res.status).toEqual(400);
