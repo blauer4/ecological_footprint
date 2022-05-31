@@ -40,7 +40,7 @@ describe('Follow user test', () => {
 
     it('Unfollow a user that is already followed', (done) => {
             
-        request(url)
+        request(app)
         .delete('/api/v2/friends/' + follower._id.toString())
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
@@ -51,7 +51,7 @@ describe('Follow user test', () => {
 
     it('Unfollow a user that is not followed', (done) => {
 
-        request(url)
+        request(app)
         .delete('/api/v2/friends/ffffffffffffffffffffffff')
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
@@ -62,7 +62,7 @@ describe('Follow user test', () => {
 
     it('Unfollow without parameters', (done) => {
             
-        request(url)
+        request(app)
         .delete('/api/v2/friends/')
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {

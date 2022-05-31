@@ -29,7 +29,7 @@ describe("Private area access and registration", () => {
 
 
     it('POST non valid user: void fields', function (done) {
-        request(url)
+        request(app)
             .post('/api/v1/users')
             .send({ name: "", surname: "", email: "", username: "", password: "" })
             .set('Accept', 'application/json')
@@ -41,7 +41,7 @@ describe("Private area access and registration", () => {
     });
 
     it('POST non valid user: username already exixts fields', function (done) {
-        request(url)
+        request(app)
             .post('/api/v1/users')
             .send({ name: "vittoria", surname: "ossanna", email: "vittossanna@gmail.com", username: "vittossanna", password: "12345678" })
             .set('Accept', 'application/json')
@@ -53,7 +53,7 @@ describe("Private area access and registration", () => {
     });
 
     it('GET all users', function (done) {
-        request(url)
+        request(app)
             .get('/api/v1/users')
             .expect(200)
             .end(function (err, res) {
@@ -63,7 +63,7 @@ describe("Private area access and registration", () => {
     });
 
     it('GET one specific registered user', function(done){
-        request(url)      
+        request(app)      
         .get(`/api/v1/users/${user.id}`)      
         .expect(200)
         .end(function (err, res){
@@ -74,11 +74,10 @@ describe("Private area access and registration", () => {
 
     it('logging in with valid credentials', (done) => {
         
-        const user = { email: 'laurence@foo.com', password: "ciao" }
-        const expectedResponse = []
-        request(url)
+        let mock_user = { email: user.email, password: user.password}
+        request(app)
         .post('/api/v1/login')
-        .send(user)
+        .send(mock_user)
         .end((err, res) => {
             expect(res.body.success).toEqual(true)
             done();
@@ -88,11 +87,10 @@ describe("Private area access and registration", () => {
 
     it('logging in with valid mail but non-valid password', (done) => {
         
-        const user = { email: 'laurence@foo.com', password: "foo" }
-        const expectedResponse = []
-        request(url)
+        let mock_user = { email: user.email, password: "foo"}
+        request(app)
         .post('/api/v1/login')
-        .send(user)
+        .send(mock_user)
         .end((err, res) => {
             expect(res.body.success).toEqual(false)
             done();
@@ -102,11 +100,10 @@ describe("Private area access and registration", () => {
 
     it('logging in with non-valid credentials', (done) => {
         
-        const user = { email: 'foo', password: "foo" }
-        const expectedResponse = []
-        request(url)
+        let mock_user = { email: 'foo', password: "foo" }
+        request(app)
         .post('/api/v1/login')
-        .send(user)
+        .send(mock_user)
         .end((err, res) => {
             expect(res.body.success).toEqual(false)
             done();

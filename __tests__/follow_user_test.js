@@ -24,7 +24,8 @@ describe('Follow user test', () => {
         }
 
         follower = await User.findOne({ _id: { $nin: no_follower } });
-
+        console.log(follower);
+        
         // create a valid token
         token = jwt.sign({ email: user.email, id: user.id }, process.env.SUPER_SECRET, { expiresIn: 86400 });
         
@@ -39,7 +40,7 @@ describe('Follow user test', () => {
 
     it('Follow myself', function (done) {
 
-        request(url)
+        request(app)
         .put('/api/v2/friends')
         .set('Cookie', [`token=${token}`])
         .send({ userId: userId })
@@ -52,10 +53,10 @@ describe('Follow user test', () => {
     
     it('Follow another user', (done) => {
 
-        request(url)
+        request(app)
         .put('/api/v2/friends/')
         .set('Cookie', [`token=${token}`])
-        .send({ userId: follower._id.toString() })
+        .send({ userId: follower.id })
         .end((err, res) => {
             expect(res.status).toEqual(200);
             done();
@@ -65,10 +66,10 @@ describe('Follow user test', () => {
     
     it('Follow a user that is already followed', (done) => {
 
-        request(url)
+        request(app)
         .put('/api/v2/friends/')
         .set('Cookie', [`token=${token}`])
-        .send({ userId: follower._id.toString() })
+        .send({ userId: follower.id })
         .end((err, res) => {
             expect(res.status).toEqual(400);
             done();
@@ -77,7 +78,7 @@ describe('Follow user test', () => {
 
     it('Follow a user that does not exist', (done) => {
 
-        request(url)
+        request(app)
         .put('/api/v2/friends/')
         .set('Cookie', [`token=${token}`])
         .send({ userId: "5c7b9f9b4a3b4f2b8f7d8a6a" })

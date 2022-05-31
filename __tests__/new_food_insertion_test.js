@@ -33,7 +33,7 @@ describe("New food insertion", () => {
 
     test('GET all existing data', function (done) {
 
-        request(url)
+        request(app)
         .get(`/api/v1/products`)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
@@ -47,7 +47,7 @@ describe("New food insertion", () => {
 
         let randomProductCode = Math.floor(100000 + Math.random() * 900000);
 
-        request(url)
+        request(app)
         .post('/api/v1/products')
         .set('Cookie', [`token=${token}`])
         .send({ name: "Random Food", code: randomProductCode })
@@ -56,7 +56,7 @@ describe("New food insertion", () => {
             let resourceId = res.header.location.substring(res.header.location.lastIndexOf('/') + 1);
 
             // deletes the mock resource after the insertion
-            Product.deleteOne({ _id: res})
+            Product.deleteOne({ _id: resourceId})
 
             done();
         });
@@ -66,7 +66,7 @@ describe("New food insertion", () => {
 
     test('Add product with missing parameters', function (done) {
 
-        request(url)
+        request(app)
         .post('/api/v1/products')
         .set('Cookie', [`token=${token}`])
         .send({ name: "", code: "" })
@@ -79,7 +79,7 @@ describe("New food insertion", () => {
 
     test('Get a product by id', (done) => {
 
-        request(url)
+        request(app)
         .get(`/api/v1/products/${realProduct.id}`)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
@@ -92,7 +92,7 @@ describe("New food insertion", () => {
 
     test('Get a product by wrong id', (done) => {
 
-        request(url)
+        request(app)
         .get(`/api/v1/products/ffffffffffffffffffffffff`)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {

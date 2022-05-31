@@ -80,7 +80,7 @@ describe('Remove an activity', () => {
 
     it('Remove a valid garbage activity and check the impact is calculated correctly', (done) => {
 
-        request(url)
+        request(app)
         .delete('/api/v1/activities/garbage/' + rm_garbagea_id)
         .set('Cookie', [`token=${token}`])
         .end(async (err, res) => {
@@ -94,7 +94,7 @@ describe('Remove an activity', () => {
 
     it('Remove a valid transport activity and check the impact is calculated correctly', (done) => {
 
-        request(url)
+        request(app)
         .delete('/api/v1/activities/transport/' + rm_transporta_id)
         .set('Cookie', [`token=${token}`])
         .end(async (err, res) => {
@@ -108,7 +108,7 @@ describe('Remove an activity', () => {
 
     it('Remove a valid product activity and check the impact is calculated correctly', (done) => {
 
-        request(url)
+        request(app)
         .delete('/api/v1/activities/product/' + rm_producta_id)
         .set('Cookie', [`token=${token}`])
         .end(async (err, res) => {
@@ -122,7 +122,7 @@ describe('Remove an activity', () => {
 
     it('Remove an non-existing item', (done) => {
         
-        request(url)
+        request(app)
         .delete('/api/v1/activities/product/' + rm_producta_id)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {

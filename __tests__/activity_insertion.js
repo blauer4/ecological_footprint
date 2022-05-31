@@ -18,6 +18,7 @@ describe('Activity insertion testing', () => {
 
     beforeAll( async () => { 
         jest.setTimeout(10000);
+        console.log(process.env.MONGO_DB_URL)
         app.locals.db = await mongoose.connect(process.env.MONGO_DB_URL); 
 
         // get a valid user from the db
@@ -45,7 +46,7 @@ describe('Activity insertion testing', () => {
 
         let garbageActivity = { materialId: validMaterialId, amount: 4 }
 
-        request(url)
+        request(app)
         .post('/api/v1/activities/garbage')
         .set('Cookie', [`token=${token}`])
         .send(garbageActivity)
@@ -60,7 +61,7 @@ describe('Activity insertion testing', () => {
 
         let productActivity = { productId: validProductlId, amount: 2 }
 
-        request(url)
+        request(app)
         .post('/api/v1/activities/product')
         .set('Cookie', [`token=${token}`])
         .send(productActivity)

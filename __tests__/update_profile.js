@@ -40,7 +40,7 @@ describe('Update user profile data', () => {
             email: ""  // missing email
         }
 
-        request(url)
+        request(app)
         .put('/api/v1/users/update_profile')
         .set('Cookie', [`token=${token}`])
         .send(updatedUser)
@@ -60,7 +60,7 @@ describe('Update user profile data', () => {
             email: user2.email
         }
 
-        request(url)
+        request(app)
         .put('/api/v1/users/update_profile')
         .set('Cookie', [`token=${token}`])
         .send(updatedUser)
