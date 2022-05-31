@@ -69,7 +69,7 @@ describe('Remove an activity', () => {
         impact_transporta_id = activity.impact;
         previous_total_impact = user.totalImpact + impact_garbagea_id + impact_producta_id + impact_transporta_id;
         await User.findByIdAndUpdate(userId, {$inc: {totalImpact: impact_garbagea_id + impact_producta_id + impact_transporta_id}});
-        console.log("siamo qui ",previous_total_impact, user.totalImpact);
+        
         // create a valid token
         token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
 
