@@ -69,6 +69,8 @@
  *                                      unitImpact: 
  *                                          type: integer
  *                                          description: The impact of the product given
+ *                  '404':
+ *                      description: The specified product doesn't exist
  */
 
 const express = require('express');
@@ -91,6 +93,12 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
 
     let product = await Product.findById(req.params.id);
+
+    if (!product){
+        res.status(404).send("Product not found");
+        return;
+    }
+
     product = {
         self: '/api/v1/products/' + product.id,
         name: product["name"],
@@ -109,7 +117,7 @@ router.post('', async (req, res) => {
 
     if (!code || !name){
         console.error("The product code and name are required");
-        res.status(400).send("The product code and name are required");
+        res.status(422).send("The product code and name are required");
         return;
     }
 

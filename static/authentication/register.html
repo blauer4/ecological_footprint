@@ -61,8 +61,11 @@
         <div class="row">
             <!--form to fill in with personal infos-->
             <div class="col">
-                    <h4 class="h4">Register</h4>
-                    <form action="/api/v1/users" method="POST">
+                <form action="/api/v1/users" id="register_form" method="POST">
+                    <div class="row m-auto m-5">
+                        <h4 class="h4">Register</h4>
+                    </div>
+                    
                         <br>
                         <label for="name" class="form-label">Your name </label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="name">
@@ -82,15 +85,31 @@
                         <label for="confirm password" class="form-label">Confirm password </label>
                         <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="password">
 
-                        <button class="btn btn-success w-100 mt-5" type="submit">Sign up</button>
-                    </form>
+                <div class="row my-5">
+                    <!--button register-->
+                    <div class="col">
+                        <div class="d-grid gap">
+                            <button class="btn btn-success" onclick="checkPasswords()" type="button">Sign up</button>
+                        </div>
+                    </div>
                 </div>
+                <div class="row my-2">
+                    <div class="col">
+                        <div class="d-grid gap" id="error-message">
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous">
+    </script>
+    <script src="register.js">
     </script>
 
 

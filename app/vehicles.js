@@ -56,6 +56,8 @@
  *                                    self: "/api/v1/vehicles/627d22980997269a08ba74b6"
  *                                    name: "macchina"
  *                                    unitImpact: 15
+ *                  '404':
+ *                      description: The specified vehicle doesn't exist
  */
 
 const express = require('express');
@@ -77,6 +79,12 @@ router.get('', async (req, res) => {
 router.get('/:id', async (req, res) => {
 
     let vehicle = await Vehicle.findById(req.params.id);
+
+    if (!vehicle){
+        res.status(404).send("Vehicle not found");
+        return;
+    }
+
     vehicle = {
         self: '/api/v1/vehicles/' + vehicle.id,
         name: vehicle["name"],

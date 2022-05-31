@@ -28,9 +28,6 @@
  *                              amount:
  *                                  type: integer
  *                                  description: The amount of the garbage you want to insert into the activity
- *                              userId:
- *                                  type: string
- *                                  description: The userId of the user
  *          responses:
  *              '201': 
  *                  description: Return the link to the resource that i created
@@ -106,7 +103,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
 
-    let userId = req.body["userId"];
+    let userId = req.loggedUser.id;
     let materialId = req.body["materialId"];
     let amount = req.body["amount"];
 
@@ -156,7 +153,9 @@ router.delete('/:id', async (req, res) => {
     let userId = req.loggedUser.id;
     let garbage = await GarbageActivity.findById(id);
 
-    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -garbage.impact}});
+    if(garbage){
+        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -garbage.impact}});
+    }
 
     let result = await GarbageActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
