@@ -5,3 +5,9 @@
 .nav-link.active{
     background-color: rgba(0, 0, 0, 0.10) !important;
 }
+
+.world{
+    width: 10em;
+    height: 10em;
+    padding: 2px;
+}
