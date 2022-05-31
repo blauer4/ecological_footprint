@@ -17,7 +17,7 @@ describe('Remove an activity', () => {
 
     let rm_garbagea_id, rm_producta_id, rm_transporta_id;
     let impact_garbagea_id, impact_producta_id, impact_transporta_id;
-    let token, previous_total_impact, userId;
+    let token, previous_total_impact = 0, userId;
 
     beforeAll( async () => { 
         jest.setTimeout(10000);
@@ -68,8 +68,8 @@ describe('Remove an activity', () => {
         rm_transporta_id = activity._id.toString();
         impact_transporta_id = activity.impact;
         previous_total_impact = user.totalImpact + impact_garbagea_id + impact_producta_id + impact_transporta_id;
-        await User.findByIdAndUpdate(userId, {$inc: {totalImpact: previous_total_impact}});
-
+        await User.findByIdAndUpdate(userId, {$inc: {totalImpact: impact_garbagea_id + impact_producta_id + impact_transporta_id}});
+        console.log("siamo qui ",previous_total_impact, user.totalImpact);
         // create a valid token
         token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
 
