@@ -33,7 +33,7 @@ function updateProfile() {
     .then((resp) => resp.json()) 
     .then(function (data) { 
         if (data.success) { 
-            location.href = "/private_area/profile.html" 
+            location.reload();
         } else { 
             errordiv.innerHTML = '<div class="alert alert-danger alert-dismissible show fade" role="alert"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp; ' + data.message
             + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
