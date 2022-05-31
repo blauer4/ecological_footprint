@@ -5,9 +5,6 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../app/models/user.js').User; 
 
-
-const url = process.env.HEROKU || "http://localhost:3000"
-
 describe('Update user profile data', () => {
 
     let token;

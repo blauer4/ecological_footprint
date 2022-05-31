@@ -1,5 +1,3 @@
-const url = process.env.HEROKU || "http://localhost:3000"
-
 const request = require('supertest');
 const app = require('../app/app');
 const mongoose = require('mongoose');

@@ -10,7 +10,6 @@ const TransportActivity = require('../app/models/transportActivity.js');
 const Vehicle = require('../app/models/vehicle.js').Vehicle; 
 const Material = require('../app/models/material.js').Material; 
 const Product = require('../app/models/product.js').Product; 
-const url = process.env.HEROKU || "http://localhost:3000"
 
 
 describe('Remove an activity', () => {

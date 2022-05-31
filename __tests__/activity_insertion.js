@@ -7,9 +7,6 @@ const User = require('../app/models/user.js').User;
 const Material = require('../app/models/material.js').Material; 
 const Product = require('../app/models/product.js').Product; 
 
-
-const url = process.env.HEROKU || "http://localhost:3000"
-
 describe('Activity insertion testing', () => {
 
     let validMaterialId;

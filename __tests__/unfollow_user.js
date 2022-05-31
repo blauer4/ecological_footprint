@@ -2,10 +2,8 @@ const request = require('supertest');
 const app = require('../app/app.js');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { findOneAndUpdate } = require('../app/models/productActivity.js');
 
 const User = require('../app/models/user.js').User;
-const url = process.env.HEROKU || "http://localhost:3000"
 
 describe('Follow user test', () => {
 

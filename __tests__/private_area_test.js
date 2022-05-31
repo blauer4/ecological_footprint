@@ -1,5 +1,3 @@
-const url = process.env.HEROKU || "http://localhost:3000"
-
 const request = require('supertest');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
