@@ -28,7 +28,7 @@ describe("Private area access and registration", () => {
 
     it('POST non valid user: void fields', function (done) {
         request(app)
-            .post('/api/v1/users')
+            .post('/api/v2/register')
             .send({ name: "", surname: "", email: "", username: "", password: "" })
             .set('Accept', 'application/json')
             .expect(400)
@@ -40,7 +40,7 @@ describe("Private area access and registration", () => {
 
     it('POST non valid user: username already exixts fields', function (done) {
         request(app)
-            .post('/api/v1/users')
+            .post('/api/v2/register')
             .send({ name: "vittoria", surname: "ossanna", email: "vittossanna@gmail.com", username: "vittossanna", password: "12345678" })
             .set('Accept', 'application/json')
             .expect(409)
@@ -52,17 +52,19 @@ describe("Private area access and registration", () => {
 
     it('GET all users', function (done) {
         request(app)
-            .get('/api/v1/users')
-            .expect(200)
-            .end(function (err, res) {
-                if (err) return done(err);
-                return done();
-            });
+        .get('/api/v1/users')
+        .set('Cookie', [`token=${token}`])
+        .expect(200)
+        .end(function (err, res) {
+            if (err) return done(err);
+            return done();
+        });
     });
 
     it('GET one specific registered user', function(done){
-        request(app)      
+        request(app)
         .get(`/api/v1/users/${user.id}`)      
+        .set('Cookie', [`token=${token}`])      
         .expect(200)
         .end(function (err, res){
             if(err) return done(err);

@@ -20,7 +20,7 @@ function updateProfile() {
             return;
     };
     
-    fetch('/api/v1/users/update_profile', { 
+    fetch('/api/v1/users', { 
         method: 'PUT', 
         headers: { 'Content-Type': 'application/json' }, 
         body: JSON.stringify({ 

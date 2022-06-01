@@ -28,67 +28,6 @@ const router = express.Router();
  *                              example:
  *                                  - self: "/api/v1/users/628367e9078d0308f8dd76ba"
  *                                    username: "lollixzc"
- *          post:
- *              summary: Insertion of a new user
- *              description: This function allows the insertion of a new user with the correct specified params
- *              requestBody:
- *                  required: true
- *                  content: 
- *                      application/x-www-form-urlencoded:
- *                          schema:
- *                              type: object
- *                              properties:
- *                                  name:
- *                                      type: string
- *                                      description: The name of the user 
- *                                  surname:
- *                                      type: string
- *                                      description: The surname of the user 
- *                                  password:
- *                                      type: string
- *                                      description: The password of the user 
- *                                  username:
- *                                      type: string
- *                                      description: The username of the user
- *                                  email:
- *                                      type: string
- *                                      description: The email of the user
- *              responses:
- *                  '302':
- *                      description: The user has been correctly registered
- *                  '409':
- *                      description: Username already exixts
- *                  '400':
- *                      description: A compulsory field is missing
- *      /api/v1/users/{id}:
- *          get:
- *              summary: Getting a specific User through userId
- *              description: This function retrives a specific user, thanks to the userId you set in the parameters
- *              parameters:
- *                  - in: path
- *                    name: id
- *                    required: true
- *                    description: The id of the correspondent user you would like to search for
- *                    schema: 
- *                      type: string
- *              responses:
- *                  '200':
- *                      description: Returns a link to the resource user requested, and the username of the user
- *                      content: 
- *                          application/json:
- *                              schema:
- *                                  type: object
- *                                  properties:
- *                                      self:
- *                                          type: string
- *                                          description: The link to the resource of the user
- *                                      username:
- *                                          type: string
- *                                          description: The username of the user
- *                                  example:
- *                                      self: /api/v1/users/{id}
- *                                      username: vittossanna
- *      /api/v1/users/update_profile:
  *          put: 
  *              summary: Update user
  *              description: This function allows the update of an existing user with all the specified parameters. Requires authentication
@@ -118,6 +57,34 @@ const router = express.Router();
  *                      description: Missing parameter
  *                  '409':
  *                      description: Username already exists
+ *      /api/v1/users/{id}:
+ *          get:
+ *              summary: Getting a specific User through userId
+ *              description: This function retrives a specific user, thanks to the userId you set in the parameters
+ *              parameters:
+ *                  - in: path
+ *                    name: id
+ *                    required: true
+ *                    description: The id of the correspondent user you would like to search for
+ *                    schema: 
+ *                      type: string
+ *              responses:
+ *                  '200':
+ *                      description: Returns a link to the resource user requested, and the username of the user
+ *                      content: 
+ *                          application/json:
+ *                              schema:
+ *                                  type: object
+ *                                  properties:
+ *                                      self:
+ *                                          type: string
+ *                                          description: The link to the resource of the user
+ *                                      username:
+ *                                          type: string
+ *                                          description: The username of the user
+ *                                  example:
+ *                                      self: /api/v1/users/{id}
+ *                                      username: vittossanna
  */
 
 router.get('', async (req, res) => {
@@ -147,48 +114,12 @@ router.get('/:id', async (req, res) => {
     res.status(200).json(user);
 });
 
-router.post('', async (req, res) => {
-    let username = req.body.username;
-    let name = req.body.name;
-    let surname = req.body.surname;
-    let password = req.body.password;
-    let email = req.body.email;
-    let friends = []; // initially a user have no friend
-
-    let user = await User.find({ username: username });
-
-    if (user.length !== 0) {
-        res.status(409).send("Username already exists");
-        return;
-    }
-
-    if (!username || !name || !surname || !password || !email) {
-        console.error("Something went wrong! Missing required arguments");
-        res.status(400).send("Something went wrong! Missing required arguments");
-        return;
-    }
-
-    user = new User({
-        username: username,
-        name: name,
-        surname: surname,
-        email: email,
-        password: password,
-        friends: friends,
-        totalImpact: 0
-    });
-
-    user = await user.save();
-
-    res.location("/login.html").status(302).send();
-});
-
-router.put('/update_profile', async (req, res) => {
+router.put('', async (req, res) => {
     let username = req.body.username;
     let name = req.body.name;
     let surname = req.body.surname;
     let email = req.body.email;
-    let userId = req.cookies.userId;
+    let userId = req.loggedUser.id;
 
     if (!username || !name || !surname || !email) {
         console.error("Something went wrong! Missing required arguments");
@@ -210,7 +141,7 @@ router.put('/update_profile', async (req, res) => {
         email: email
     });
     
-    res.location("/api/v1/users/update_profile").json({success: true}).status(200).send();
+    res.location("/api/v1/users").json({success: true}).status(200).send();
 });
 
 module.exports = router;

@@ -38,7 +38,7 @@ describe('Update user profile data', () => {
         }
 
         request(app)
-        .put('/api/v1/users/update_profile')
+        .put('/api/v1/users')
         .set('Cookie', [`token=${token}`])
         .send(updatedUser)
         .end((err, res) => {
@@ -58,7 +58,7 @@ describe('Update user profile data', () => {
         }
 
         request(app)
-        .put('/api/v1/users/update_profile')
+        .put('/api/v1/users')
         .set('Cookie', [`token=${token}`])
         .send(updatedUser)
         .end((err, res) => {

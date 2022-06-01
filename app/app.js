@@ -13,6 +13,7 @@ const users = require("./users.js");
 const login = require("./login.js");
 const friends = require("./friends.js");
 const tips = require("./tips.js");
+const register = require("./register.js");
 
 const tokenChecker = require('./tokenChecker.js');
 
@@ -46,6 +47,7 @@ app.use('/api/v1/activities/garbage', tokenChecker);
 app.use('/api/v1/activities/transport', tokenChecker);
 app.use('/api/v1/products', tokenChecker);
 app.use('/api/v2/friends', tokenChecker);
+app.use('/api/v1/users', tokenChecker);
 
 
 /**
@@ -71,6 +73,7 @@ app.use('/api/v1/login', login);
  */
 app.use('/api/v2/friends', friends);
 app.use('/api/v2/tips', tips);
+app.use('/api/v2/register', register);
 
 
 
