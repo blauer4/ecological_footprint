@@ -26,7 +26,7 @@ describe('Follow user test', () => {
         console.log(follower);
         
         // create a valid token
-        token = jwt.sign({ email: user.email, id: user.id }, process.env.SUPER_SECRET, { expiresIn: 86400 });
+        token = jwt.sign({ username: user.username, id: user.id }, process.env.SUPER_SECRET, { expiresIn: 86400 });
         
         console.log("Testing follow user with user " + user.username);
     });

@@ -3,13 +3,13 @@
  * into a cokkie, that is passed to the api across all the requests.
  */
 function login(){
-    var email = document.getElementById("email").value;
+    var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
     fetch('/api/v1/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( { email: email, password: password } ),
+        body: JSON.stringify( { username: username, password: password } ),
     })
     .then((resp) => resp.json()) 
     .then(function(data) { 

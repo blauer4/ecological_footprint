@@ -31,7 +31,7 @@ describe('Activity insertion testing', () => {
 
 
         // create a valid token
-        token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
+        token = jwt.sign( {username: user.username, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
 
         console.log("Testing activity insertion with user " + user.username);
     });

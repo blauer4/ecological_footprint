@@ -26,7 +26,7 @@ describe('Follow user test', () => {
         follower = await User.findOne({_id:{ $nin: no_follower }});
         await User.findByIdAndUpdate(userId, {$push: {friends: {id: follower._id, username: follower.username}}});
         // create a valid token
-        token = jwt.sign({ email: user.email, id: user.id }, process.env.SUPER_SECRET, { expiresIn: 86400 });
+        token = jwt.sign({ username: user.username, id: user.id }, process.env.SUPER_SECRET, { expiresIn: 86400 });
         
         console.log("Testing unfollow user with user " + user.username);
     });

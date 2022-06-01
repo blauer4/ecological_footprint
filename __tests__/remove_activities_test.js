@@ -70,7 +70,7 @@ describe('Remove an activity', () => {
         await User.findByIdAndUpdate(userId, {$inc: {totalImpact: impact_garbagea_id + impact_producta_id + impact_transporta_id}});
         
         // create a valid token
-        token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
+        token = jwt.sign( {username: user.username, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
 
         console.log("Testing remove insertion with user " + user.username);
     });

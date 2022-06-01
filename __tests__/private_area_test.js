@@ -18,7 +18,7 @@ describe("Private area access and registration", () => {
         user = await User.findOne({});
 
         // create a valid token
-        token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
+        token = jwt.sign( {username: user.username, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
 
         console.log("Testing with user " + user.username);
     });
@@ -72,7 +72,7 @@ describe("Private area access and registration", () => {
 
     it('logging in with valid credentials', (done) => {
         
-        let mock_user = { email: user.email, password: user.password}
+        let mock_user = { username: user.username, password: user.password}
         request(app)
         .post('/api/v1/login')
         .send(mock_user)
@@ -85,7 +85,7 @@ describe("Private area access and registration", () => {
 
     it('logging in with valid mail but non-valid password', (done) => {
         
-        let mock_user = { email: user.email, password: "foo"}
+        let mock_user = { username: user.username, password: "foo"}
         request(app)
         .post('/api/v1/login')
         .send(mock_user)
@@ -98,7 +98,7 @@ describe("Private area access and registration", () => {
 
     it('logging in with non-valid credentials', (done) => {
         
-        let mock_user = { email: 'foo', password: "foo" }
+        let mock_user = { username: 'foo', password: "foo" }
         request(app)
         .post('/api/v1/login')
         .send(mock_user)

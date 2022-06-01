@@ -20,7 +20,7 @@ describe('Update user profile data', () => {
         user2 = await User.findOne({}).skip(1);
 
         // create a valid token
-        token = jwt.sign( {email: user.email, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
+        token = jwt.sign( {username: user.username, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
 
         console.log("Testing profile update with user " + user.username);
     });
