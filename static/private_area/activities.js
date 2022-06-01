@@ -60,6 +60,8 @@ function getProductsByName() {
 
         if (data.length == 0){
             document.getElementById("no_match_message").innerHTML = "no match found";
+            document.getElementById("input_food_name").disabled = false;
+            document.getElementById("input_food_code").disabled = false;
         } else {
             document.getElementById("no_match_message").innerHTML = "";
         }
@@ -96,6 +98,8 @@ function fillProductActivityForm(){
         // fill the food consumption fields
         inputFoodName.value = data["name"];
         inputFoodCode.value = data["code"];
+        inputFoodCode.disabled = true;
+        inputFoodName.disabled = true;
     })
     .catch( error => console.error(error) );  // error handle
 }
