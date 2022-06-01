@@ -188,7 +188,7 @@ router.put('/update_profile', async (req, res) => {
     let name = req.body.name;
     let surname = req.body.surname;
     let email = req.body.email;
-    let userId = req.logged;
+    let userId = req.cookies.userId;
 
     if (!username || !name || !surname || !email) {
         console.error("Something went wrong! Missing required arguments");
