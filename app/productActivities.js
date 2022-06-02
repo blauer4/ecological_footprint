@@ -115,6 +115,12 @@ router.post('', async (req, res) => {
         return;
     }
 
+    if (isNaN(amount) || amount <= 0){
+        console.error("The amount must be a positive number");
+        res.status(400).send("The amount must be a positive number");
+        return;
+    }
+
     let product = await Product.findById(productId);
     if (!productId){
         console.error("The product you are trying to add doesn't exists");
