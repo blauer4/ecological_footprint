@@ -9,6 +9,7 @@ const User = require('../app/models/user.js').User;
 describe("Private area access and registration", () => {
     
     let user;
+    let user2;
 
     beforeAll( async () => { 
         jest.setTimeout(10000);
@@ -16,6 +17,7 @@ describe("Private area access and registration", () => {
 
         // get a valid user from the db
         user = await User.findOne({});
+        user2 = await User.findOne({}).skip(1);
 
         // create a valid token
         token = jwt.sign( {username: user.username, id: user.id}, process.env.SUPER_SECRET, {expiresIn: 86400} ); 
@@ -41,7 +43,7 @@ describe("Private area access and registration", () => {
     it('POST non valid user: username already exixts fields', function (done) {
         request(app)
             .post('/api/v2/register')
-            .send({ name: "vittoria", surname: "ossanna", email: "vittossanna@gmail.com", username: "vittossanna", password: "12345678" })
+            .send({ name: "foo", foo: "prova", email: "foo", username: user2.username, password: "foo" })
             .set('Accept', 'application/json')
             .expect(409)
             .end(function (err, res) {
