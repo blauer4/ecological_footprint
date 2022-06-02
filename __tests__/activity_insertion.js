@@ -45,21 +45,8 @@ describe('Activity insertion testing', () => {
     afterAll( () => { mongoose.connection.close(true); });
     
 
-    test('Add new garbage activity', (done) => {
 
-        let garbageActivity = { materialId: validMaterialId, amount: 4 }
-
-        request(app)
-        .post('/api/v1/activities/garbage')
-        .set('Cookie', [`token=${token}`])
-        .send(garbageActivity)
-        .end((err, res) => {
-            expect(res.status).toEqual(201);
-            done();
-        });
-
-    });
-
+    // Product activity
     test('Add new valid product activity', (done) => {
 
         let productActivity = { productId: validProductId, amount: 2 }
@@ -120,6 +107,7 @@ describe('Activity insertion testing', () => {
 
     });
 
+    // Transport activity
     test('Add new valid transport activity', (done) => {
 
         let transportActivity = { vehicleId: validVehicleId, distance: 2 }
@@ -173,6 +161,67 @@ describe('Activity insertion testing', () => {
         .post('/api/v1/activities/transport')
         .set('Cookie', [`token=${token}`])
         .send(transportActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(404);
+            done();
+        });
+
+    });
+
+    // Garbage activity
+    test('Add new valid garbage activity', (done) => {
+
+        let garbageActivity = { materialId: validMaterialId, amount: 4 }
+
+        request(app)
+        .post('/api/v1/activities/garbage')
+        .set('Cookie', [`token=${token}`])
+        .send(garbageActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(201);
+            done();
+        });
+
+    });
+
+    test('Add new garbage without amount', (done) => {
+
+        let garbageActivity = { materialId: validMaterialId, amount: "" }
+
+        request(app)
+        .post('/api/v1/activities/garbage')
+        .set('Cookie', [`token=${token}`])
+        .send(garbageActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(400);
+            done();
+        });
+
+    });
+
+    test('Add new garbage with negative amount', (done) => {
+
+        let garbageActivity = { materialId: validMaterialId, amount: -5 }
+
+        request(app)
+        .post('/api/v1/activities/garbage')
+        .set('Cookie', [`token=${token}`])
+        .send(garbageActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(400);
+            done();
+        });
+
+    });
+
+    test('Add new garbage with non existing material id', (done) => {
+
+        let garbageActivity = { materialId: "ffffffffffffffffffffffff", amount: 5 }
+
+        request(app)
+        .post('/api/v1/activities/garbage')
+        .set('Cookie', [`token=${token}`])
+        .send(garbageActivity)
         .end((err, res) => {
             expect(res.status).toEqual(404);
             done();
