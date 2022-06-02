@@ -135,6 +135,51 @@ describe('Activity insertion testing', () => {
 
     });
 
+    test('Add new transport activity without distance', (done) => {
+
+        let transportActivity = { vehicleId: validVehicleId, distance: "" }
+
+        request(app)
+        .post('/api/v1/activities/transport')
+        .set('Cookie', [`token=${token}`])
+        .send(transportActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(400);
+            done();
+        });
+
+    });
+
+    test('Add new transport activity with negative distance', (done) => {
+
+        let transportActivity = { vehicleId: validVehicleId, distance: -5 }
+
+        request(app)
+        .post('/api/v1/activities/transport')
+        .set('Cookie', [`token=${token}`])
+        .send(transportActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(400);
+            done();
+        });
+
+    });
+
+    test('Add new transport activity with non existing vehicle id', (done) => {
+
+        let transportActivity = { vehicleId: "ffffffffffffffffffffffff", distance: 5 }
+
+        request(app)
+        .post('/api/v1/activities/transport')
+        .set('Cookie', [`token=${token}`])
+        .send(transportActivity)
+        .end((err, res) => {
+            expect(res.status).toEqual(404);
+            done();
+        });
+
+    });
+
     
 
 });
