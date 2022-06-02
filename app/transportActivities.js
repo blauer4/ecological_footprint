@@ -107,7 +107,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
 
-    let userId = req.body["userId"];
+    let userId = req.loggedUser.id;
     let vehicleId = req.body["vehicleId"];
     let distance = req.body["distance"];
 
