@@ -79,20 +79,23 @@ describe("Private area access and registration", () => {
         .post('/api/v1/login')
         .send(mock_user)
         .end((err, res) => {
-            expect(res.body.success).toEqual(true)
+            expect(res.body.success).toEqual(true);
+            expect(res.status).toEqual(200);
             done();
         })
 
     });
 
-    it('logging in with valid mail but non-valid password', (done) => {
+    it('logging in with valid username but non-valid password', (done) => {
         
         let mock_user = { username: user.username, password: "foo"}
         request(app)
         .post('/api/v1/login')
         .send(mock_user)
         .end((err, res) => {
-            expect(res.body.success).toEqual(false)
+            expect(res.body.success).toEqual(false);
+            expect(res.status).toEqual(404);
+
             done();
         })
 
@@ -105,7 +108,8 @@ describe("Private area access and registration", () => {
         .post('/api/v1/login')
         .send(mock_user)
         .end((err, res) => {
-            expect(res.body.success).toEqual(false)
+            expect(res.body.success).toEqual(false);
+            expect(res.status).toEqual(404);
             done();
         })
 
