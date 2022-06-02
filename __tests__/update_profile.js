@@ -69,6 +69,26 @@ describe('Update user profile data', () => {
 
     });
 
+    test('Update the profile without specifying the email (empty field)', (done) => {
+
+        let updatedUser = { 
+            username: user2.username,
+            name: user2.name,
+            surname: user2.surname,
+            email: ""
+        }
+
+        request(app)
+        .put('/api/v1/users')
+        .set('Cookie', [`token=${token}`])
+        .send(updatedUser)
+        .end((err, res) => {
+            expect(res.status).toEqual(422);
+            done();
+        });
+
+    });
+
 
 });
 
