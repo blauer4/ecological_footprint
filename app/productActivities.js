@@ -122,7 +122,7 @@ router.post('', async (req, res) => {
     }
 
     let product = await Product.findById(productId);
-    if (!productId){
+    if (!product){
         console.error("The product you are trying to add doesn't exists");
         res.status(404).send("The product you are trying to add doesn't exists");
         return;
