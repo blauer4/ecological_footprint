@@ -8,6 +8,10 @@ const Material = require('../app/models/material.js').Material;
 const Product = require('../app/models/product.js').Product; 
 const Vehicle = require('../app/models/vehicle.js').Vehicle; 
 
+const ProductActivity = require('../app/models/productActivity.js'); 
+const GarbageActivity = require('../app/models/garbageActivity.js'); 
+const TransportActivity = require('../app/models/productActivity.js'); 
+
 describe('Activity insertion testing', () => {
 
     let validMaterialId;
@@ -56,7 +60,9 @@ describe('Activity insertion testing', () => {
         .set('Cookie', [`token=${token}`])
         .send(productActivity)
         .end((err, res) => {
-            expect(res.status).toEqual(201);
+            expect(res.status).toEqual(201)
+            let resourceId = res.headers.location.substring(res.headers.location.lastIndexOf('/') + 1);
+            ProductActivity.deleteOne({_id: resourceId});
             done();
         });
 
@@ -118,6 +124,8 @@ describe('Activity insertion testing', () => {
         .send(transportActivity)
         .end((err, res) => {
             expect(res.status).toEqual(201);
+            let resourceId = res.headers.location.substring(res.headers.location.lastIndexOf('/') + 1);
+            TransportActivity.deleteOne({_id: resourceId});
             done();
         });
 
@@ -179,6 +187,8 @@ describe('Activity insertion testing', () => {
         .send(garbageActivity)
         .end((err, res) => {
             expect(res.status).toEqual(201);
+            let resourceId = res.headers.location.substring(res.headers.location.lastIndexOf('/') + 1);
+            GarbageActivity.deleteOne({_id: resourceId});
             done();
         });
 
