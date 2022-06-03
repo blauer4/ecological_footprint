@@ -6,15 +6,106 @@ info:
 servers:
   - url: http://127.0.0.1:3000
 paths:
+  /api/v2/friends:
+    get:
+      summary: Retrieve all the friends present in the database
+      description: Returns a json object with the resource link and the name of the friend. Requires authentication
+      responses:
+        '200':
+          description: Returns a json object with self link of the resource and the name of the friend
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the api resource
+                  name:
+                    type: string
+                    description: The name of the friend given
+    put:
+      summary: Add a new friend
+      description: Updates the friends list with a new friend. Requires authentication
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  description: The id of the user that you want to insert as a new friend
+      responses:
+        '201':
+          description: Return the link to the resource that i created or found
+  /api/v2/friends/{id}:
+    get:
+      summary: Get the specified friend by ID
+      description: Returns a friend with lots of information like username, name, surname, email. Requires authentication
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the correspondent friend you would like to search for presence
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Return the json of the before mentioned properties of the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the api user
+                  username:
+                    type: string
+                    description: The username of the given friend
+                  name:
+                    type: string
+                    description: The name of the given friend
+                  surname:
+                    type: string
+                    description: The surname of the given friend
+                  email:
+                    type: string
+                    description: The email of the given friend
+    delete:
+      summary: Deletes one friend
+      description: Deletes one friend associated with the given user ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The user id of the friend to be deleted.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deletes the given friend
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Succesfully deleted
+        '400':
+          description: The given user is not in your friend list
+          content:
+            text/html:
+              schema:
+                type: string
+                example: Friend removal error
   /api/v1/activities/garbage:
     get:
       summary: Returns all the garbage activities
       description: Returns all the garbage activities
       responses:
         '200':
-          description: >-
-            Returns the garbage activities in JSON format described as in the
-            model
+          description: Returns the garbage activities in JSON format described as in the model
           content:
             application/json:
               schema:
@@ -31,17 +122,10 @@ paths:
               properties:
                 materialId:
                   type: string
-                  description: >-
-                    The id of the garbage that you want to insert into the
-                    activity
+                  description: The id of the garbage that you want to insert into the activity
                 amount:
                   type: integer
-                  description: >-
-                    The amount of the garbage you want to insert into the
-                    activity
-                userId:
-                  type: string
-                  description: The userId of the user
+                  description: The amount of the garbage you want to insert into the activity
       responses:
         '201':
           description: Return the link to the resource that i created
@@ -62,9 +146,7 @@ paths:
             type: string
       responses:
         '200':
-          description: >-
-            Returns one garbage activity in JSON format described as in the
-            model
+          description: Returns one garbage activity in JSON format described as in the model
           content:
             application/json:
               schema:
@@ -94,17 +176,13 @@ paths:
               schema:
                 type: string
                 example: Activity removal error
-  /api/v1/generalstats/total_impact:
+  /api/v1/generalstats:
     get:
       summary: Gets the total impact of every user aggregated
-      description: >-
-        Interrogates the server to have the full impact of the userbase of the
-        service
+      description: Interrogates the server to have the full impact of the userbase of the service
       responses:
         '200':
-          description: >-
-            Returns the total impact of the activities present in the database
-            with a JSON object
+          description: Returns the total impact of the activities present in the database with a JSON object
           content:
             application/json:
               schema:
@@ -194,9 +272,9 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                username:
                   type: string
-                  description: The email of the user
+                  description: The username of the user
                 password:
                   type: string
                   description: The password of the user
@@ -269,15 +347,15 @@ paths:
                 self: /api/v1/materials/627e62bbf1f1da75f033373f
                 name: Umido
                 unitImpact: 10
+        '404':
+          description: The specified material doesn't exist
   /api/v1/activities/product:
     get:
       summary: Returns all the product activities
       description: Returns all the product activities
       responses:
         '200':
-          description: >-
-            Returns the product activities in JSON format described as in the
-            model
+          description: Returns the product activities in JSON format described as in the model
           content:
             application/json:
               schema:
@@ -294,14 +372,10 @@ paths:
               properties:
                 productlId:
                   type: string
-                  description: >-
-                    The id of the product that you want to insert into the
-                    activity
+                  description: The id of the product that you want to insert into the activity
                 amount:
                   type: integer
-                  description: >-
-                    The amount of the product you want to insert into the
-                    activity
+                  description: The amount of the product you want to insert into the activity
                 userId:
                   type: string
                   description: The userId of the user
@@ -311,9 +385,7 @@ paths:
         '400':
           description: A required parameter is missing
         '404':
-          description: >-
-            The product that is inserted in the activity is not present in the
-            database
+          description: The product that is inserted in the activity is not present in the database
   /api/v1/activities/product/{id}:
     get:
       summary: Returns one product activity
@@ -327,9 +399,7 @@ paths:
             type: string
       responses:
         '200':
-          description: >-
-            Returns one product activity in JSON format described as in the
-            model
+          description: Returns one product activity in JSON format described as in the model
           content:
             application/json:
               schema:
@@ -365,9 +435,7 @@ paths:
       description: Returns a json object with the resource link and the name of the product
       responses:
         '200':
-          description: >-
-            Returns a json object with self link of the resource and the name of
-            the product
+          description: Returns a json object with self link of the resource and the name of the product
           content:
             application/json:
               schema:
@@ -381,10 +449,7 @@ paths:
                     description: The name of the product given
     post:
       summary: Insert a new product
-      description: >-
-        Returns the link to the resource created, or, if it already exists,
-        returns the link to the resource in the database. Requires
-        authentication
+      description: Returns the link to the resource created, or, if it already exists, returns the link to the resource in the database. Requires authentication
       requestBody:
         required: true
         content:
@@ -404,9 +469,7 @@ paths:
   /api/v1/products/{id}:
     get:
       summary: Get the specified product by ID
-      description: >-
-        Returns a product with lots of information like name, code, and impact
-        of the product. Requires authentication
+      description: Returns a product with lots of information like name, code, and impact of the product. Requires authentication
       parameters:
         - in: path
           name: id
@@ -434,15 +497,95 @@ paths:
                   unitImpact:
                     type: integer
                     description: The impact of the product given
+        '404':
+          description: The specified product doesn't exist
+  /api/v2/register:
+    post:
+      summary: Insertion of a new user
+      description: This function allows the insertion of a new user with the correct specified params
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the user
+                surname:
+                  type: string
+                  description: The surname of the user
+                password:
+                  type: string
+                  description: The password of the user
+                username:
+                  type: string
+                  description: The username of the user
+                email:
+                  type: string
+                  description: The email of the user
+      responses:
+        '302':
+          description: The user has been correctly registered
+        '400':
+          description: A compulsory field is missing
+        '409':
+          description: Username already exixts
+  /api/v2/tips:
+    get:
+      summary: Get the tips
+      description: Returns all the possible tips from the database in JSON format
+      responses:
+        '200':
+          description: A list of tips
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                      description: the link to the tip resource
+              example:
+                - self: /api/v2/tips/629128f4ea8ec30051e944f7
+  /api/v2/tips/{id}:
+    get:
+      summary: Get the tip specified by id
+      description: Returns the specified tip from the id in the parameters
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the correspondent tip you would like to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The specified tip in json format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: The link to the tip resource
+                  text:
+                    type: string
+                    description: The text description of the tip
+              example:
+                self: /api/v2/tips/629128b2d6ddfc3796a4d6d7
+                text: Use the bike instead of the car
   /api/v1/activities/transport:
     get:
       summary: Returns all the transport activities
       description: Returns all the transport activities
       responses:
         '200':
-          description: >-
-            Returns the transport activities in JSON format described as in the
-            model
+          description: Returns the transport activities in JSON format described as in the model
           content:
             application/json:
               schema:
@@ -459,14 +602,10 @@ paths:
               properties:
                 vehiclelId:
                   type: string
-                  description: >-
-                    The id of the vehicle that you want to insert into the
-                    activity
+                  description: The id of the vehicle that you want to insert into the activity
                 amount:
                   type: integer
-                  description: >-
-                    The amount of the kilometers you want to insert into the
-                    activity
+                  description: The amount of the kilometers you want to insert into the activity
                 userId:
                   type: string
                   description: The userId of the user
@@ -476,9 +615,7 @@ paths:
         '400':
           description: A required parameter is missing
         '404':
-          description: >-
-            The vehicle that is inserted in the activity is not present in the
-            database
+          description: The vehicle that is inserted in the activity is not present in the database
   /api/v1/activities/transport/{id}:
     get:
       summary: Returns one transport activity
@@ -492,9 +629,7 @@ paths:
             type: string
       responses:
         '200':
-          description: >-
-            Returns one transport activity in JSON format described as in the
-            model
+          description: Returns one transport activity in JSON format described as in the model
           content:
             application/json:
               schema:
@@ -527,9 +662,7 @@ paths:
   /api/v1/users:
     get:
       summary: Get the list of users
-      description: >-
-        This function retrieves the list of users present in the db and returns
-        it as a json document
+      description: This function retrieves the list of users present in the db and returns it as a json document
       responses:
         '200':
           description: The json list of all users present in the db
@@ -549,15 +682,13 @@ paths:
               example:
                 - self: /api/v1/users/628367e9078d0308f8dd76ba
                   username: lollixzc
-    post:
-      summary: Insertion of a new user
-      description: >-
-        This function allows the insertion of a new user with the correct
-        specified params
+    put:
+      summary: Update user
+      description: This function allows the update of an existing user with all the specified parameters. Requires authentication
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          application/json:
             schema:
               type: object
               properties:
@@ -567,9 +698,6 @@ paths:
                 surname:
                   type: string
                   description: The surname of the user
-                password:
-                  type: string
-                  description: The password of the user
                 username:
                   type: string
                   description: The username of the user
@@ -577,18 +705,16 @@ paths:
                   type: string
                   description: The email of the user
       responses:
-        '302':
-          description: The user has been correctly registered
-        '400':
-          description: A compulsory field is missing
-        '404':
-          description: Username already exixts
+        '200':
+          description: The user has been correctly updated
+        '409':
+          description: Username already exists
+        '422':
+          description: Missing parameter
   /api/v1/users/{id}:
     get:
       summary: Getting a specific User through userId
-      description: >-
-        This function retrives a specific user, thanks to the userId you set in
-        the parameters
+      description: This function retrives a specific user, thanks to the userId you set in the parameters
       parameters:
         - in: path
           name: id
@@ -598,9 +724,7 @@ paths:
             type: string
       responses:
         '200':
-          description: >-
-            Returns a link to the resource user requested, and the username of
-            the user
+          description: Returns a link to the resource user requested, and the username of the user
           content:
             application/json:
               schema:
@@ -670,6 +794,8 @@ paths:
                 self: /api/v1/vehicles/627d22980997269a08ba74b6
                 name: macchina
                 unitImpact: 15
+        '404':
+          description: The specified vehicle doesn't exist
 components:
   schemas:
     GarbageActivity:
@@ -690,10 +816,7 @@ components:
           description: date of insertion of the activity.
         impact:
           type: integer
-          description: >-
-            total impact of the activity, This value is calculated as the amount
-            of the garbage disposed multiplied for the impact of the material
-            disposed
+          description: total impact of the activity, This value is calculated as the amount of the garbage disposed multiplied for the impact of the material disposed
         material:
           $ref: '#/components/schemas/Material'
         amount:
@@ -763,9 +886,7 @@ components:
           description: amount of the product consumption
         impact:
           type: integer
-          description: >-
-            impact of the activity. This value is calculated multiplying the
-            amount of product with the value of the impact of the single product
+          description: impact of the activity. This value is calculated multiplying the amount of product with the value of the impact of the single product
         product:
           $ref: '#/components/schemas/Product'
       example:
@@ -777,6 +898,16 @@ components:
           code: 2345678
           name: Kinder Bueno
           unitImpact: 12
+    Tip:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          description: the message contained in the tip
+      example:
+        message: Use a bike instead of the car
     TransportActivity:
       type: object
       required:
@@ -795,9 +926,7 @@ components:
           description: Date of insertion of the activity.
         impact:
           type: integer
-          description: >-
-            Total impact of the activity. This value is calculated as the amount
-            of the kilometers multiplied for the impact of the vehicle used
+          description: Total impact of the activity. This value is calculated as the amount of the kilometers multiplied for the impact of the vehicle used
         vehicle:
           $ref: '#/components/schemas/Vehicle'
         amount:
