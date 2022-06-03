@@ -28,13 +28,13 @@ const router = express.Router();
  *                              example:
  *                                  - self: "/api/v1/users/628367e9078d0308f8dd76ba"
  *                                    username: "lollixzc"
- *          post:
- *              summary: Insertion of a new user
- *              description: This function allows the insertion of a new user with the correct specified params
+ *          put: 
+ *              summary: Update user
+ *              description: This function allows the update of an existing user with all the specified parameters. Requires authentication
  *              requestBody:
  *                  required: true
  *                  content: 
- *                      application/x-www-form-urlencoded:
+ *                      application/json:
  *                          schema:
  *                              type: object
  *                              properties:
@@ -44,9 +44,6 @@ const router = express.Router();
  *                                  surname:
  *                                      type: string
  *                                      description: The surname of the user 
- *                                  password:
- *                                      type: string
- *                                      description: The password of the user 
  *                                  username:
  *                                      type: string
  *                                      description: The username of the user
@@ -54,12 +51,12 @@ const router = express.Router();
  *                                      type: string
  *                                      description: The email of the user
  *              responses:
- *                  '302':
- *                      description: The user has been correctly registered
- *                  '404':
- *                      description: Username already exixts
- *                  '400':
- *                      description: A compulsory field is missing
+ *                  '200':
+ *                      description: The user has been correctly updated
+ *                  '422':
+ *                      description: Missing parameter
+ *                  '409':
+ *                      description: Username already exists
  *      /api/v1/users/{id}:
  *          get:
  *              summary: Getting a specific User through userId
@@ -91,9 +88,9 @@ const router = express.Router();
  */
 
 router.get('', async (req, res) => {
- 
+
     let users = await User.find({});
-    users = users.map( (user) => {
+    users = users.map((user) => {
         return {
             self: '/api/v1/users/' + user["_id"],
             username: user["username"]
@@ -110,43 +107,41 @@ router.get('/:id', async (req, res) => {
         username: user["username"],
         name: user["name"],
         surname: user["surname"],
-        email: user["email"]
+        email: user["email"],
+        totalImpact: user["totalImpact"]
     }
 
     res.status(200).json(user);
 });
 
-router.post('', async (req, res) => {
+router.put('', async (req, res) => {
     let username = req.body.username;
     let name = req.body.name;
     let surname = req.body.surname;
-    let password = req.body.password;
     let email = req.body.email;
+    let userId = req.loggedUser.id;
 
-    let user = await User.find({username: username});
-    
-    if(user.length!==0){
-        res.status(404).send("Username already exists");
-        return;
-    }
-
-    if ( !username || !name || !surname || !password || !email) {
+    if (!username || !name || !surname || !email) {
         console.error("Something went wrong! Missing required arguments");
-        res.status(400).send("Something went wrong! Missing required arguments");
+        res.status(422).send("Something went wrong! Missing required arguments");
         return;
     }
 
-    user = new User({
+    let user_present = await User.find({ username: username });
+
+    if ((user_present.length !== 0) && (userId!==user_present[0]._id.toString())) {
+        res.status(409).json({success: false, message: "Username already exists"}).send();
+        return;
+    }
+    
+    await User.findByIdAndUpdate(userId,{
         username: username,
         name: name,
         surname: surname,
-        email: email,
-        password: password
+        email: email
     });
     
-    user = await user.save();
-
-    res.location("/login.html").status(302).send();
-})
+    res.location("/api/v1/users").json({success: true}).status(200).send();
+});
 
 module.exports = router;

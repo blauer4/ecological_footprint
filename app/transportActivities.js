@@ -86,6 +86,7 @@
 const express = require('express');
 const TransportActivity = require('./models/transportActivity.js');
 const Vehicle = require('./models/vehicle.js').Vehicle;
+const User = require('./models/user.js').User;
 const router = express.Router();
 
 
@@ -106,7 +107,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
 
-    let userId = req.body["userId"];
+    let userId = req.loggedUser.id;
     let vehicleId = req.body["vehicleId"];
     let distance = req.body["distance"];
 
@@ -144,6 +145,8 @@ router.post('', async (req, res) => {
 
     activity = await newActivity.save();
 
+    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: impact}});
+
     /**
      * Return the link to the newly created resource 
      */
@@ -152,6 +155,12 @@ router.post('', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
+    let userId = req.loggedUser.id;
+    let transport = await TransportActivity.findById(id);
+
+    if(transport){
+        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -(transport.impact)}});
+    }
 
     let result = await TransportActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){

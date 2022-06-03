@@ -23,9 +23,9 @@ const router = express.Router();
  *                          schema:
  *                              type: object
  *                              properties:
- *                                  email: 
+ *                                  username: 
  *                                      type: string
- *                                      description: The email of the user
+ *                                      description: The username of the user
  *                                  password:
  *                                      type: string
  *                                      description: The password of the user
@@ -54,7 +54,7 @@ router.get('/logout',async function(req,res){
 router.post('', async function(req, res) {
     
 	let user = await User.findOne({
-		email: req.body.email
+		username: req.body.username
 	}).exec();
 	
 	if (!user) {
@@ -68,7 +68,7 @@ router.post('', async function(req, res) {
 	}
 	
 	var payload = {
-		email: user.email,
+		username: user.username,
 		id: user._id
 	}
 	var options = {

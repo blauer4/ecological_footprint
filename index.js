@@ -2,12 +2,11 @@ require('dotenv').config();
 const mongoose = require("mongoose");
 const app = require("./app/app.js");
 
-var express = require("express"),
-    bodyParser = require("body-parser"),
-    swaggerJsdoc = require("swagger-jsdoc"),
-    swaggerUI = require("swagger-ui-express");
+const bodyParser = require("body-parser");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
 
-mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+app.locals.db = mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
 
         const options = {
@@ -37,8 +36,8 @@ mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTo
 
         console.log("Connected to the Database");
 
-        app.listen(process.env.EXPRESS_PORT, function () {
-            console.log('Server running on port ', process.env.EXPRESS_PORT);
+        app.listen(process.env.PORT || process.env.EXPRESS_PORT, function () {
+            console.log('Server running on port ', process.env.PORT || process.env.EXPRESS_PORT);
         });
 
     })

@@ -28,9 +28,6 @@
  *                              amount:
  *                                  type: integer
  *                                  description: The amount of the garbage you want to insert into the activity
- *                              userId:
- *                                  type: string
- *                                  description: The userId of the user
  *          responses:
  *              '201': 
  *                  description: Return the link to the resource that i created
@@ -86,6 +83,7 @@
 const express = require('express');
 const GarbageActivity = require('./models/garbageActivity.js');
 const Material = require('./models/material.js').Material; 
+const User = require('./models/user.js').User; 
 
 const router = express.Router();
 
@@ -105,7 +103,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
 
-    let userId = req.body["userId"];
+    let userId = req.loggedUser.id;
     let materialId = req.body["materialId"];
     let amount = req.body["amount"];
 
@@ -142,6 +140,8 @@ router.post('', async (req, res) => {
     
     activity = await newActivity.save();
 
+    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: impact}});
+
     /**
      * Return the link to the newly created resource 
      */
@@ -150,6 +150,12 @@ router.post('', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
+    let userId = req.loggedUser.id;
+    let garbage = await GarbageActivity.findById(id);
+
+    if(garbage){
+        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -garbage.impact}});
+    }
 
     let result = await GarbageActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){

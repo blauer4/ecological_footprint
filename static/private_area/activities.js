@@ -60,6 +60,8 @@ function getProductsByName() {
 
         if (data.length == 0){
             document.getElementById("no_match_message").innerHTML = "no match found";
+            document.getElementById("input_food_name").disabled = false;
+            document.getElementById("input_food_code").disabled = false;
         } else {
             document.getElementById("no_match_message").innerHTML = "";
         }
@@ -96,6 +98,8 @@ function fillProductActivityForm(){
         // fill the food consumption fields
         inputFoodName.value = data["name"];
         inputFoodCode.value = data["code"];
+        inputFoodCode.disabled = true;
+        inputFoodName.disabled = true;
     })
     .catch( error => console.error(error) );  // error handle
 }
@@ -255,9 +259,34 @@ function addProductActivity(){
 
 }
 
+
+function getRandomTip() {
+    let tipMessageDiv = document.getElementById("tipMessage");
+    
+    fetch("/api/v2/tips")
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) { 
+
+        let randomTip = data[Math.floor(Math.random()* data.length)];
+        fetch(randomTip.self)
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(tipDetails) { 
+
+            tipMessageDiv.innerHTML = tipDetails.text;
+            console.log(tipDetails.text)
+
+        })
+        .catch( error => console.error(error) );  // error handle
+
+    })
+    .catch( error => console.error(error) );  // error handle
+
+}
+
 /**
  * Inital calls
  */
 loadMaterials();
 loadVehicles();
 getProductsByName();
+getRandomTip();

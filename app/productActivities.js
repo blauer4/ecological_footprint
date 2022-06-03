@@ -86,6 +86,7 @@
 const express = require('express');
 const ProductActivity = require('./models/productActivity.js');
 const Product = require('./models/product.js').Product;
+const User = require('./models/user.js').User;
 const router = express.Router();
 
 router.get('', async (req, res) => {
@@ -104,7 +105,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('', async (req, res) => {
 
-    let userId = req.body["userId"];
+    let userId = req.loggedUser.id;
     let productId = req.body["productId"];
     let amount = req.body["amount"];
 
@@ -114,8 +115,14 @@ router.post('', async (req, res) => {
         return;
     }
 
+    if (isNaN(amount) || amount <= 0){
+        console.error("The amount must be a positive number");
+        res.status(400).send("The amount must be a positive number");
+        return;
+    }
+
     let product = await Product.findById(productId);
-    if (!productId){
+    if (!product){
         console.error("The product you are trying to add doesn't exists");
         res.status(404).send("The product you are trying to add doesn't exists");
         return;
@@ -134,6 +141,8 @@ router.post('', async (req, res) => {
     
     activity = await newActivity.save();
 
+    await User.findByIdAndUpdate(userId,{$inc: {totalImpact: impact}});
+
     /**
      * Return the link to the newly created resource 
      */
@@ -142,7 +151,13 @@ router.post('', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     let id = req.params["id"];
+    let userId = req.loggedUser.id;
+    let product = await ProductActivity.findById(id);
 
+    if(product){
+        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -product.impact}});
+    }
+    
     let result = await ProductActivity.deleteOne({_id: id});
     if (result.deletedCount == 1){
         console.log(`Documento con id ${id} eliminato con successo`);

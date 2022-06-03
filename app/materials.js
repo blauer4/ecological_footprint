@@ -56,6 +56,8 @@
  *                                    self: "/api/v1/materials/627e62bbf1f1da75f033373f"
  *                                    name: "Umido"
  *                                    unitImpact: 10
+ *                  '404':
+ *                      description: The specified material doesn't exist
  */
 
  const express = require('express');
@@ -77,6 +79,12 @@
 router.get('/:id', async (req, res) => {
 
     let material = await Material.findById(req.params.id);
+
+    if (!material){
+        res.status(404).send("Garbage not found");
+        return;
+    }
+
     material = {
         self: '/api/v1/materials/' + material.id,
         name: material["name"],
