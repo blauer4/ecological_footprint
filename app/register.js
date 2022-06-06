@@ -32,7 +32,7 @@ const router = express.Router();
  *                                      type: string
  *                                      description: The email of the user
  *              responses:
- *                  '302':
+ *                  '200':
  *                      description: The user has been correctly registered
  *                  '409':
  *                      description: Username already exixts
@@ -73,7 +73,7 @@ router.post('', async (req, res) => {
 
     user = await user.save();
 
-    res.location("/login.html").status(302).send();
+    res.status(200).send();
 });
 
 module.exports = router;
