@@ -32,7 +32,7 @@ describe("New food insertion", () => {
     test('GET all existing data', function (done) {
 
         request(app)
-        .get(`/api/v1/products`)
+        .get(`/api/v2/products`)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
             expect(res.status).toEqual(200);
@@ -46,7 +46,7 @@ describe("New food insertion", () => {
         let randomProductCode = Math.floor(100000 + Math.random() * 900000);
 
         request(app)
-        .post('/api/v1/products')
+        .post('/api/v2/products')
         .set('Cookie', [`token=${token}`])
         .send({ name: "Random Food", code: randomProductCode })
         .end((err, res) => {
@@ -65,7 +65,7 @@ describe("New food insertion", () => {
     test('Add product with missing parameters', function (done) {
 
         request(app)
-        .post('/api/v1/products')
+        .post('/api/v2/products')
         .set('Cookie', [`token=${token}`])
         .send({ name: "", code: "" })
         .end((err, res) => {
@@ -78,7 +78,7 @@ describe("New food insertion", () => {
     test('Get a product by id', (done) => {
 
         request(app)
-        .get(`/api/v1/products/${realProduct.id}`)
+        .get(`/api/v2/products/${realProduct.id}`)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
             expect(res.status).toEqual(200);
@@ -91,7 +91,7 @@ describe("New food insertion", () => {
     test('Get a product by wrong id', (done) => {
 
         request(app)
-        .get(`/api/v1/products/ffffffffffffffffffffffff`)
+        .get(`/api/v2/products/ffffffffffffffffffffffff`)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
             expect(res.status).toEqual(404);

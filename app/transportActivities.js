@@ -1,7 +1,7 @@
 /**
  * @swagger
  * paths:
- *  /api/v1/activities/transport:
+ *  /api/v2/activities/transport:
  *      get:
  *          summary: Returns all the transport activities
  *          description: Returns all the transport activities 
@@ -38,7 +38,7 @@
  *                  description: A required parameter is missing
  *              '404':
  *                  description: The vehicle that is inserted in the activity is not present in the database
- *  /api/v1/activities/transport/{id}:
+ *  /api/v2/activities/transport/{id}:
  *      get:
  *          summary: Returns one transport activity
  *          description: Returns one transport activity associated with the given ID
@@ -150,7 +150,7 @@ router.post('', async (req, res) => {
     /**
      * Return the link to the newly created resource 
      */
-    res.location("/api/v1/activities/transports/" + activity.id).status(201).send();
+    res.location("/api/v2/activities/transports/" + activity.id).status(201).send();
 });
 
 router.delete('/:id', async (req, res) => {

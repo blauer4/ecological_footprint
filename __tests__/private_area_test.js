@@ -54,7 +54,7 @@ describe("Private area access and registration", () => {
 
     it('GET all users', function (done) {
         request(app)
-        .get('/api/v1/users')
+        .get('/api/v2/users')
         .set('Cookie', [`token=${token}`])
         .expect(200)
         .end(function (err, res) {
@@ -65,7 +65,7 @@ describe("Private area access and registration", () => {
 
     it('GET one specific registered user', function(done){
         request(app)
-        .get(`/api/v1/users/${user.id}`)      
+        .get(`/api/v2/users/${user.id}`)      
         .set('Cookie', [`token=${token}`])      
         .expect(200)
         .end(function (err, res){
@@ -78,7 +78,7 @@ describe("Private area access and registration", () => {
         
         let mock_user = { username: user.username, password: user.password}
         request(app)
-        .post('/api/v1/login')
+        .post('/api/v2/login')
         .send(mock_user)
         .end((err, res) => {
             expect(res.body.success).toEqual(true);
@@ -92,7 +92,7 @@ describe("Private area access and registration", () => {
         
         let mock_user = { username: user.username, password: "foo"}
         request(app)
-        .post('/api/v1/login')
+        .post('/api/v2/login')
         .send(mock_user)
         .end((err, res) => {
             expect(res.body.success).toEqual(false);
@@ -107,7 +107,7 @@ describe("Private area access and registration", () => {
         
         let mock_user = { username: 'foo', password: "foo" }
         request(app)
-        .post('/api/v1/login')
+        .post('/api/v2/login')
         .send(mock_user)
         .end((err, res) => {
             expect(res.body.success).toEqual(false);

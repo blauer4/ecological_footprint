@@ -1,7 +1,7 @@
 /**
  * @swagger
  *  paths:
- *      /api/v1/products:
+ *      /api/v2/products:
  *          get:
  *              summary: Retrieve all the products present in the database
  *              description: Returns a json object with the resource link and the name of the product
@@ -38,7 +38,7 @@
  *              responses:
  *                  '201': 
  *                      description: Return the link to the resource that i created or found
- *      /api/v1/products/{id}:
+ *      /api/v2/products/{id}:
  *          get:
  *              summary: Get the specified product by ID
  *              description: Returns a product with lots of information like name, code, and impact of the product. Requires authentication
@@ -82,7 +82,7 @@ router.get('', async (req, res) => {
     let products = await Product.find({});
     products = products.map( (product) => {
         return {
-            self: '/api/v1/products/' + product["_id"],
+            self: '/api/v2/products/' + product["_id"],
             name: product["name"]
         };
     });
@@ -100,7 +100,7 @@ router.get('/:id', async (req, res) => {
     }
 
     product = {
-        self: '/api/v1/products/' + product.id,
+        self: '/api/v2/products/' + product.id,
         name: product["name"],
         code: product["code"],
         unitImpact: product["unitImpact"]
@@ -137,14 +137,14 @@ router.post('', async (req, res) => {
         /**
          * Return the link to the newly created resource 
          */
-        res.location("/api/v1/products/" + newProductId).status(201).send();
+        res.location("/api/v2/products/" + newProductId).status(201).send();
         return;
     }
 
     /**
      * Return the link to the existing resource 
      */
-    res.location("/api/v1/products/" + products[0].id).status(201).send();
+    res.location("/api/v2/products/" + products[0].id).status(201).send();
 });
 
 module.exports = router;

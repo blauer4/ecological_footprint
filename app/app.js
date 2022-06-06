@@ -41,36 +41,32 @@ app.use('/private_area', express.static('static/private_area'));
 /**
  * protect some endpoints (also products to avoid product insertion from unauthorizes users)
  */
-app.use('/api/v1/activities', tokenChecker);
-app.use('/api/v1/activities/product', tokenChecker);
-app.use('/api/v1/activities/garbage', tokenChecker);
-app.use('/api/v1/activities/transport', tokenChecker);
-app.use('/api/v1/products', tokenChecker);
+app.use('/api/v2/activities', tokenChecker);
+app.use('/api/v2/activities/product', tokenChecker);
+app.use('/api/v2/activities/garbage', tokenChecker);
+app.use('/api/v2/activities/transport', tokenChecker);
+app.use('/api/v2/products', tokenChecker);
 app.use('/api/v2/friends', tokenChecker);
-app.use('/api/v1/users', tokenChecker);
-
-
-/**
- * V1 Api endopoints routes
- */
-app.use('/api/v1/activities/product', productActivities);
-app.use('/api/v1/activities/garbage', garbageActivities);
-app.use('/api/v1/activities/transport', transportActivities);
-app.use('/api/v1/activities', listActivities);
-app.use('/api/v1/generalstats', generalStats);
-
-app.use('/api/v1/products', products);
-app.use('/api/v1/materials', materials);
-app.use('/api/v1/vehicles', vehicles); 
-
-app.use('/api/v1/users', users);
-app.use('/api/v1/login', login);
+app.use('/api/v2/users', tokenChecker);
 
 
 
 /**
- * V2 Api endpoints routes
+ * Api endpoints routes
  */
+app.use('/api/v2/activities/product', productActivities);
+app.use('/api/v2/activities/garbage', garbageActivities);
+app.use('/api/v2/activities/transport', transportActivities);
+app.use('/api/v2/activities', listActivities);
+app.use('/api/v2/generalstats', generalStats);
+
+app.use('/api/v2/products', products);
+app.use('/api/v2/materials', materials);
+app.use('/api/v2/vehicles', vehicles); 
+
+app.use('/api/v2/users', users);
+app.use('/api/v2/login', login);
+
 app.use('/api/v2/friends', friends);
 app.use('/api/v2/tips', tips);
 app.use('/api/v2/register', register);

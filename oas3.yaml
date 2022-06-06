@@ -99,7 +99,7 @@ paths:
               schema:
                 type: string
                 example: Friend removal error
-  /api/v1/activities/garbage:
+  /api/v2/activities/garbage:
     get:
       summary: Returns all the garbage activities
       description: Returns all the garbage activities
@@ -133,7 +133,7 @@ paths:
           description: A required parameter is missing
         '404':
           description: The material that is inserted is not present in the database
-  /api/v1/activities/garbage/{id}:
+  /api/v2/activities/garbage/{id}:
     get:
       summary: Returns one garbage activity
       description: Returns one garbage activity associated with the given ID
@@ -176,7 +176,7 @@ paths:
               schema:
                 type: string
                 example: Activity removal error
-  /api/v1/generalstats:
+  /api/v2/generalstats:
     get:
       summary: Gets the total impact of every user aggregated
       description: Interrogates the server to have the full impact of the userbase of the service
@@ -193,7 +193,7 @@ paths:
                     description: The total impact of the activities present in the database
               example:
                 total_impact: 20000
-  /api/v1/activities:
+  /api/v2/activities:
     get:
       summary: Returns all the activities of a specific user
       description: Returns all the activities of the logged user. Requires authentication.
@@ -227,11 +227,11 @@ paths:
                       type: string
                       description: The id of the user
               example:
-                - self: /api/v1/activities/product/6285204dec2411e44ef73902
+                - self: /api/v2/activities/product/6285204dec2411e44ef73902
                   type: product
                   date: '2022-05-18T16:35:25.296Z'
                   userId: 628367e9078d0308f8dd76ba
-  /api/v1/activities/total_impact:
+  /api/v2/activities/total_impact:
     get:
       summary: Returns the total impact of the user
       description: Returns the total impact of the logged user. Requires authentication.
@@ -255,13 +255,13 @@ paths:
                     description: The total impact of the user
               example:
                 total_impact: 210
-  /api/v1/login/logout:
+  /api/v2/login/logout:
     get:
       summary: Logs out an user from the current session
       responses:
         '200':
           description: Returns an answer that the user successfully logged out
-  /api/v1/login:
+  /api/v2/login:
     post:
       summary: Gets a new login request
       description: Login an account if a match is found in the database
@@ -292,7 +292,7 @@ paths:
                   message:
                     type: string
                     description: The message of success or the message of what I got wrong
-  /api/v1/materials:
+  /api/v2/materials:
     get:
       summary: Get the materials
       description: Returns all the possible materials from the database in JSON format
@@ -313,9 +313,9 @@ paths:
                       type: string
                       description: the name of the material
               example:
-                - self: /api/v1/materials/627e62bbf1f1da75f033373f
+                - self: /api/v2/materials/627e62bbf1f1da75f033373f
                   name: Umido
-  /api/v1/materials/{id}:
+  /api/v2/materials/{id}:
     get:
       summary: Get the material specified by id
       description: Returns the specified material from the id in the parameters
@@ -344,12 +344,12 @@ paths:
                     type: integer
                     description: The impact of the material
               example:
-                self: /api/v1/materials/627e62bbf1f1da75f033373f
+                self: /api/v2/materials/627e62bbf1f1da75f033373f
                 name: Umido
                 unitImpact: 10
         '404':
           description: The specified material doesn't exist
-  /api/v1/activities/product:
+  /api/v2/activities/product:
     get:
       summary: Returns all the product activities
       description: Returns all the product activities
@@ -386,7 +386,7 @@ paths:
           description: A required parameter is missing
         '404':
           description: The product that is inserted in the activity is not present in the database
-  /api/v1/activities/product/{id}:
+  /api/v2/activities/product/{id}:
     get:
       summary: Returns one product activity
       description: Returns one product activity associated with the given ID
@@ -429,7 +429,7 @@ paths:
               schema:
                 type: string
                 example: Fail
-  /api/v1/products:
+  /api/v2/products:
     get:
       summary: Retrieve all the products present in the database
       description: Returns a json object with the resource link and the name of the product
@@ -466,7 +466,7 @@ paths:
       responses:
         '201':
           description: Return the link to the resource that i created or found
-  /api/v1/products/{id}:
+  /api/v2/products/{id}:
     get:
       summary: Get the specified product by ID
       description: Returns a product with lots of information like name, code, and impact of the product. Requires authentication
@@ -579,7 +579,7 @@ paths:
               example:
                 self: /api/v2/tips/629128b2d6ddfc3796a4d6d7
                 text: Use the bike instead of the car
-  /api/v1/activities/transport:
+  /api/v2/activities/transport:
     get:
       summary: Returns all the transport activities
       description: Returns all the transport activities
@@ -616,7 +616,7 @@ paths:
           description: A required parameter is missing
         '404':
           description: The vehicle that is inserted in the activity is not present in the database
-  /api/v1/activities/transport/{id}:
+  /api/v2/activities/transport/{id}:
     get:
       summary: Returns one transport activity
       description: Returns one transport activity associated with the given ID
@@ -659,7 +659,7 @@ paths:
               schema:
                 type: string
                 example: Fail
-  /api/v1/users:
+  /api/v2/users:
     get:
       summary: Get the list of users
       description: This function retrieves the list of users present in the db and returns it as a json document
@@ -680,7 +680,7 @@ paths:
                       type: string
                       description: The username of the user
               example:
-                - self: /api/v1/users/628367e9078d0308f8dd76ba
+                - self: /api/v2/users/628367e9078d0308f8dd76ba
                   username: lollixzc
     put:
       summary: Update user
@@ -711,7 +711,7 @@ paths:
           description: Username already exists
         '422':
           description: Missing parameter
-  /api/v1/users/{id}:
+  /api/v2/users/{id}:
     get:
       summary: Getting a specific User through userId
       description: This function retrives a specific user, thanks to the userId you set in the parameters
@@ -737,9 +737,9 @@ paths:
                     type: string
                     description: The username of the user
                 example:
-                  self: /api/v1/users/{id}
+                  self: /api/v2/users/{id}
                   username: vittossanna
-  /api/v1/vehicles:
+  /api/v2/vehicles:
     get:
       summary: Get the vehicles
       description: Returns all the possible vehicles from the database in JSON format
@@ -760,9 +760,9 @@ paths:
                       type: string
                       description: the name of the vehicle
               example:
-                - self: /api/v1/vehicles/627d22980997269a08ba74b6
+                - self: /api/v2/vehicles/627d22980997269a08ba74b6
                   name: macchina
-  /api/v1/vehicles/{id}:
+  /api/v2/vehicles/{id}:
     get:
       summary: Get the vehicle specified by id
       description: Returns the specified vehicle from the id in the parameters
@@ -791,7 +791,7 @@ paths:
                     type: integer
                     description: The impact of the vehicle
               example:
-                self: /api/v1/vehicles/627d22980997269a08ba74b6
+                self: /api/v2/vehicles/627d22980997269a08ba74b6
                 name: macchina
                 unitImpact: 15
         '404':

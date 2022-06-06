@@ -20,7 +20,7 @@ function updateProfile() {
             return;
     };
     
-    fetch('/api/v1/users', { 
+    fetch('/api/v2/users', { 
         method: 'PUT', 
         headers: { 'Content-Type': 'application/json' }, 
         body: JSON.stringify({ 
@@ -56,7 +56,7 @@ function loadProfile() {
     let surname = document.getElementById("surname"); 
     let userId = getCookie('userId'); 
      
-    fetch('/api/v1/users/' + userId) 
+    fetch('/api/v2/users/' + userId) 
     .then((resp) => (resp.json())) 
     .then(function(data){ 
         email.value = data.email; 
@@ -106,7 +106,7 @@ function getAllFollowing() {
 function addFriend(){
     let friendName = document.getElementById("followNewUserName").value;
 
-    fetch(`/api/v1/users`)
+    fetch(`/api/v2/users`)
     .then((resp) => resp.json()) 
     .then(function(availableUsers) { 
         

@@ -144,7 +144,7 @@ router.get('/:id', async (req, res) => {
     // otherwiser return the user details
     let user = await User.findById(userId);
     user = {
-        self: '/api/v1/users/' + user.id,
+        self: '/api/v2/users/' + user.id,
         username: user["username"],
         name: user["name"],
         surname: user["surname"],
