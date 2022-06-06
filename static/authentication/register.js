@@ -24,7 +24,7 @@ function register(){
         }),
     })
     .then((resp) => {
-        if (resp.status == 201){
+        if (resp.status == 200){
             document.getElementById("error-message").innerHTML = "Succesfully registered";
         }else{
             resp.text().then((data)=>{

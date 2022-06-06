@@ -159,17 +159,22 @@ router.delete('/:id', async (req, res) => {
     let transport = await TransportActivity.findById(id);
 
     if(transport){
-        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -(transport.impact)}});
+        let user = await User.findById(userId);
+        await User.findByIdAndUpdate(userId,{totalImpact: user.totalImpact-transport.impact});
+
+        let result = await TransportActivity.deleteOne({_id: id});
+        if (result.deletedCount == 1){
+            console.log(`Documento con id ${id} eliminato con successo`);
+            res.send("OK");
+        }else{
+            console.error(`ERRORE: eliminazione documento con attivita'(transport) con id ${id}`);
+            res.status(404).send("Fail");
+        }
+
+        return;
     }
 
-    let result = await TransportActivity.deleteOne({_id: id});
-    if (result.deletedCount == 1){
-        console.log(`Documento con id ${id} eliminato con successo`);
-        res.send("OK");
-    }else{
-        console.error(`ERRORE: eliminazione documento con attivita'(transport) con id ${id}`);
-        res.status(404).send("Fail");
-    }
+    res.status(404).send("Activity not found");    
     
 });
 
