@@ -154,17 +154,22 @@ router.delete('/:id', async (req, res) => {
     let garbage = await GarbageActivity.findById(id);
 
     if(garbage){
-        await User.findByIdAndUpdate(userId,{$inc: {totalImpact: -garbage.impact}});
+        let user = await User.findById(userId);
+        await User.findByIdAndUpdate(userId,{totalImpact: user.totalImpact-garbage.impact});
+
+        let result = await GarbageActivity.deleteOne({_id: id});
+        if (result.deletedCount == 1){
+            console.log(`Documento con id ${id} eliminato con successo`);
+            res.status(200).send("Succesfully deleted");
+        }else{
+            console.error(`ERRORE: eliminazione documento con attivita'(garbage) con id ${id}`);
+            res.status(404).send("Activity removal error");
+        }
+
+        return;
     }
 
-    let result = await GarbageActivity.deleteOne({_id: id});
-    if (result.deletedCount == 1){
-        console.log(`Documento con id ${id} eliminato con successo`);
-        res.status(200).send("Succesfully deleted");
-    }else{
-        console.error(`ERRORE: eliminazione documento con attivita'(garbage) con id ${id}`);
-        res.status(404).send("Activity removal error");
-    }
+    res.status(404).send("Activity not found");
     
 });
 
