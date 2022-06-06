@@ -121,6 +121,9 @@ function removeActivity(activityId, type) {
         .then((res) => {
             getAllActivities();
             loadPersonalImpact();
+
+            loadGlobalImpact();
+            getChartFollowing();
         });
 }
 
