@@ -1,7 +1,7 @@
 /**
  * @swagger
  * paths: 
- *      /api/v1/vehicles:
+ *      /api/v2/vehicles:
  *          get:
  *              summary: Get the vehicles
  *              description: Returns all the possible vehicles from the database in JSON format
@@ -22,9 +22,9 @@
  *                                              type: string
  *                                              description: the name of the vehicle 
  *                              example:
- *                                  - self: "/api/v1/vehicles/627d22980997269a08ba74b6"
+ *                                  - self: "/api/v2/vehicles/627d22980997269a08ba74b6"
  *                                    name: "macchina"
- *      /api/v1/vehicles/{id}:
+ *      /api/v2/vehicles/{id}:
  *          get:
  *              summary: Get the vehicle specified by id
  *              description: Returns the specified vehicle from the id in the parameters
@@ -53,7 +53,7 @@
  *                                          type: integer
  *                                          description: The impact of the vehicle 
  *                              example:
- *                                    self: "/api/v1/vehicles/627d22980997269a08ba74b6"
+ *                                    self: "/api/v2/vehicles/627d22980997269a08ba74b6"
  *                                    name: "macchina"
  *                                    unitImpact: 15
  *                  '404':
@@ -69,7 +69,7 @@ router.get('', async (req, res) => {
     let vehicles = await Vehicle.find({});
     vehicles = vehicles.map( (vehicle) => {
         return {
-            self: '/api/v1/vehicles/' + vehicle["_id"],
+            self: '/api/v2/vehicles/' + vehicle["_id"],
             name: vehicle["name"]
         };
     });
@@ -86,7 +86,7 @@ router.get('/:id', async (req, res) => {
     }
 
     vehicle = {
-        self: '/api/v1/vehicles/' + vehicle.id,
+        self: '/api/v2/vehicles/' + vehicle.id,
         name: vehicle["name"],
         unitImpact: vehicle["unitImpact"]
     }

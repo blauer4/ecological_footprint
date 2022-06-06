@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * @swagger
  * paths:
- *  /api/v1/activities:
+ *  /api/v2/activities:
  *      get:
  *          summary: Returns all the activities of a specific user
  *          description: Returns all the activities of the logged user. Requires authentication.
@@ -42,11 +42,11 @@ const router = express.Router();
  *                                          type: string
  *                                          description: The id of the user
  *                          example:
- *                              - self: "/api/v1/activities/product/6285204dec2411e44ef73902"
+ *                              - self: "/api/v2/activities/product/6285204dec2411e44ef73902"
  *                                type: "product"
  *                                date: "2022-05-18T16:35:25.296Z"
  *                                userId: "628367e9078d0308f8dd76ba"
- *  /api/v1/activities/total_impact:
+ *  /api/v2/activities/total_impact:
  *      get:
  *          summary: Returns the total impact of the user
  *          description: Returns the total impact of the logged user. Requires authentication.
@@ -80,7 +80,7 @@ router.get('', async (req, res) => {
     let resp = [];
     for (item of product) {
         resp.push({
-            self: "/api/v1/activities/product/" + item.id,
+            self: "/api/v2/activities/product/" + item.id,
             type: "product",
             date: item.date,
             userId: item.userId
@@ -89,7 +89,7 @@ router.get('', async (req, res) => {
 
     for (item of garbage) {
         resp.push({
-            self: "/api/v1/activities/garbage/" + item.id,
+            self: "/api/v2/activities/garbage/" + item.id,
             type: "garbage",
             date: item.date,
             userId: item.userId
@@ -98,7 +98,7 @@ router.get('', async (req, res) => {
 
     for (item of transport) {
         resp.push({
-            self: "/api/v1/activities/transport/" + item.id,
+            self: "/api/v2/activities/transport/" + item.id,
             type: "transport",
             date: item.date,
             userId: item.userId

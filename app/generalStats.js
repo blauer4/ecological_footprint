@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * @swagger
  * paths:
- *  /api/v1/generalstats:
+ *  /api/v2/generalstats:
  *      get:
  *          summary: Gets the total impact of every user aggregated
  *          description: Interrogates the server to have the full impact of the userbase of the service

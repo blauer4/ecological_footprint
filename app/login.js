@@ -6,13 +6,13 @@ const router = express.Router();
 /**
  * @swagger
  * paths:
- *      /api/v1/login/logout:
+ *      /api/v2/login/logout:
  *          get:
  *              summary: Logs out an user from the current session
  *              responses:
  *                  '200':
  *                      description: Returns an answer that the user successfully logged out
- *      /api/v1/login:
+ *      /api/v2/login:
  *          post:
  *              summary: Gets a new login request
  *              description: Login an account if a match is found in the database

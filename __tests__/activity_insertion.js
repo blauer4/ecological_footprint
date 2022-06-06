@@ -56,7 +56,7 @@ describe('Activity insertion testing', () => {
         let productActivity = { productId: validProductId, amount: 2 }
 
         request(app)
-        .post('/api/v1/activities/product')
+        .post('/api/v2/activities/product')
         .set('Cookie', [`token=${token}`])
         .send(productActivity)
         .end((err, res) => {
@@ -73,7 +73,7 @@ describe('Activity insertion testing', () => {
         let productActivity = { productId: validProductId, amount: "" }
 
         request(app)
-        .post('/api/v1/activities/product')
+        .post('/api/v2/activities/product')
         .set('Cookie', [`token=${token}`])
         .send(productActivity)
         .end((err, res) => {
@@ -88,7 +88,7 @@ describe('Activity insertion testing', () => {
         let productActivity = { productId: validProductId, amount: -5 }
 
         request(app)
-        .post('/api/v1/activities/product')
+        .post('/api/v2/activities/product')
         .set('Cookie', [`token=${token}`])
         .send(productActivity)
         .end((err, res) => {
@@ -103,7 +103,7 @@ describe('Activity insertion testing', () => {
         let productActivity = { productId: "ffffffffffffffffffffffff", amount: 5 }
 
         request(app)
-        .post('/api/v1/activities/product')
+        .post('/api/v2/activities/product')
         .set('Cookie', [`token=${token}`])
         .send(productActivity)
         .end((err, res) => {
@@ -119,7 +119,7 @@ describe('Activity insertion testing', () => {
         let transportActivity = { vehicleId: validVehicleId, distance: 2 }
 
         request(app)
-        .post('/api/v1/activities/transport')
+        .post('/api/v2/activities/transport')
         .set('Cookie', [`token=${token}`])
         .send(transportActivity)
         .end((err, res) => {
@@ -136,7 +136,7 @@ describe('Activity insertion testing', () => {
         let transportActivity = { vehicleId: validVehicleId, distance: "" }
 
         request(app)
-        .post('/api/v1/activities/transport')
+        .post('/api/v2/activities/transport')
         .set('Cookie', [`token=${token}`])
         .send(transportActivity)
         .end((err, res) => {
@@ -151,7 +151,7 @@ describe('Activity insertion testing', () => {
         let transportActivity = { vehicleId: validVehicleId, distance: -5 }
 
         request(app)
-        .post('/api/v1/activities/transport')
+        .post('/api/v2/activities/transport')
         .set('Cookie', [`token=${token}`])
         .send(transportActivity)
         .end((err, res) => {
@@ -166,7 +166,7 @@ describe('Activity insertion testing', () => {
         let transportActivity = { vehicleId: "ffffffffffffffffffffffff", distance: 5 }
 
         request(app)
-        .post('/api/v1/activities/transport')
+        .post('/api/v2/activities/transport')
         .set('Cookie', [`token=${token}`])
         .send(transportActivity)
         .end((err, res) => {
@@ -182,7 +182,7 @@ describe('Activity insertion testing', () => {
         let garbageActivity = { materialId: validMaterialId, amount: 4 }
 
         request(app)
-        .post('/api/v1/activities/garbage')
+        .post('/api/v2/activities/garbage')
         .set('Cookie', [`token=${token}`])
         .send(garbageActivity)
         .end((err, res) => {
@@ -199,7 +199,7 @@ describe('Activity insertion testing', () => {
         let garbageActivity = { materialId: validMaterialId, amount: "" }
 
         request(app)
-        .post('/api/v1/activities/garbage')
+        .post('/api/v2/activities/garbage')
         .set('Cookie', [`token=${token}`])
         .send(garbageActivity)
         .end((err, res) => {
@@ -214,7 +214,7 @@ describe('Activity insertion testing', () => {
         let garbageActivity = { materialId: validMaterialId, amount: -5 }
 
         request(app)
-        .post('/api/v1/activities/garbage')
+        .post('/api/v2/activities/garbage')
         .set('Cookie', [`token=${token}`])
         .send(garbageActivity)
         .end((err, res) => {
@@ -229,7 +229,7 @@ describe('Activity insertion testing', () => {
         let garbageActivity = { materialId: "ffffffffffffffffffffffff", amount: 5 }
 
         request(app)
-        .post('/api/v1/activities/garbage')
+        .post('/api/v2/activities/garbage')
         .set('Cookie', [`token=${token}`])
         .send(garbageActivity)
         .end((err, res) => {

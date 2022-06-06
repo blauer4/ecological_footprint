@@ -80,7 +80,7 @@ describe('Remove an activity', () => {
     it('Remove a valid garbage activity and check the impact is calculated correctly', (done) => {
 
         request(app)
-        .delete('/api/v1/activities/garbage/' + rm_garbagea_id)
+        .delete('/api/v2/activities/garbage/' + rm_garbagea_id)
         .set('Cookie', [`token=${token}`])
         .end(async (err, res) => {
             expect(res.status).toEqual(200);
@@ -94,7 +94,7 @@ describe('Remove an activity', () => {
     it('Remove a valid transport activity and check the impact is calculated correctly', (done) => {
 
         request(app)
-        .delete('/api/v1/activities/transport/' + rm_transporta_id)
+        .delete('/api/v2/activities/transport/' + rm_transporta_id)
         .set('Cookie', [`token=${token}`])
         .end(async (err, res) => {
             expect(res.status).toEqual(200);
@@ -108,7 +108,7 @@ describe('Remove an activity', () => {
     it('Remove a valid product activity and check the impact is calculated correctly', (done) => {
 
         request(app)
-        .delete('/api/v1/activities/product/' + rm_producta_id)
+        .delete('/api/v2/activities/product/' + rm_producta_id)
         .set('Cookie', [`token=${token}`])
         .end(async (err, res) => {
             expect(res.status).toEqual(200);
@@ -122,7 +122,7 @@ describe('Remove an activity', () => {
     it('Remove an non-existing item', (done) => {
         
         request(app)
-        .delete('/api/v1/activities/product/' + rm_producta_id)
+        .delete('/api/v2/activities/product/' + rm_producta_id)
         .set('Cookie', [`token=${token}`])
         .end((err, res) => {
             expect(res.status).toEqual(404);

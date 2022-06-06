@@ -6,7 +6,7 @@ function loadGlobalImpact() {
     let somma = 0;
     let counter = 0;
     
-    fetch('/api/v1/generalStats')
+    fetch('/api/v2/generalStats')
     .then((resp) => resp.json())
     .then(function (data) {
            let h1 = document.getElementById("average_placeholder");

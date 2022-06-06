@@ -16,7 +16,7 @@ function getAllActivities() {
         "transport": "Transport activity"
     };
 
-    fetch('/api/v1/activities')
+    fetch('/api/v2/activities')
         .then((resp) => resp.json())
         .then(function (data) {
 
@@ -114,7 +114,7 @@ function getAllActivities() {
 
 function removeActivity(activityId, type) {
 
-    fetch(`/api/v1/activities/${type}/${activityId}`, {
+    fetch(`/api/v2/activities/${type}/${activityId}`, {
         method: 'DELETE',
     })
         .then(res => res.text())
@@ -134,7 +134,7 @@ function removeActivity(activityId, type) {
  */
 
 function loadPersonalImpact() {
-    fetch('/api/v1/activities/total_impact')
+    fetch('/api/v2/activities/total_impact')
     .then((resp) => resp.json())
     .then(function (data) {
         let h1 = document.getElementById("personal_total");
@@ -160,7 +160,7 @@ function getChartFollowing() {
     let friends_ranking = [];
     let waitPromises = [];     // used to wait for all the fetch promises
 
-    fetch('/api/v1/activities/total_impact')
+    fetch('/api/v2/activities/total_impact')
     .then((resp) => resp.json())
     .then(function (data) {
             
@@ -221,14 +221,14 @@ function getChartFollowing() {
     let somma = 0;
     let counter = 0;
     
-    fetch('/api/v1/generalStats')
+    fetch('/api/v2/generalStats')
     .then((resp) => resp.json())
     .then(function (data) {
         let h1 = document.getElementById("average_placeholder");
         h1.innerHTML = data.total_impact;
     }).catch(error => console.error(error));
 
-    fetch('/api/v1/activities/total_impact')
+    fetch('/api/v2/activities/total_impact')
     .then((resp) => resp.json())
     .then(function (data) {
         // planets summary

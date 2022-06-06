@@ -1,7 +1,7 @@
 /**
  * @swagger
  * paths:
- *  /api/v1/activities/product:
+ *  /api/v2/activities/product:
  *      get:
  *          summary: Returns all the product activities
  *          description: Returns all the product activities 
@@ -38,7 +38,7 @@
  *                  description: A required parameter is missing
  *              '404':
  *                  description: The product that is inserted in the activity is not present in the database
- *  /api/v1/activities/product/{id}:
+ *  /api/v2/activities/product/{id}:
  *      get:
  *          summary: Returns one product activity
  *          description: Returns one product activity associated with the given ID
@@ -146,7 +146,7 @@ router.post('', async (req, res) => {
     /**
      * Return the link to the newly created resource 
      */
-    res.location("/api/v1/activities/product/" + activity.id).status(201).send();
+    res.location("/api/v2/activities/product/" + activity.id).status(201).send();
 });
 
 router.delete('/:id', async (req, res) => {

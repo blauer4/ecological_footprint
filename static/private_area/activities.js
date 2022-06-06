@@ -9,7 +9,7 @@ function getCookie(name) {
  * this function loads the data that correspond to the garbage choices. 
  */
 function loadMaterials() {
-    fetch('/api/v1/materials')
+    fetch('/api/v2/materials')
         .then((resp) => resp.json())
         .then(function (data) {
             let select = document.getElementById("materialSelect");
@@ -27,7 +27,7 @@ function loadMaterials() {
  * This function loads the data that correspond to the transportation choices. 
 */  
 function loadVehicles() {
-    fetch('/api/v1/vehicles')
+    fetch('/api/v2/vehicles')
         .then((resp) => resp.json())
         .then(function (data) {
             let select = document.getElementById("vehicleSelect");
@@ -50,7 +50,7 @@ function getProductsByName() {
     let item_name = document.getElementById("input_food_item").value;
     let floatingSelectProduct = document.getElementById("floatingSelectProduct");
 
-    fetch('/api/v1/products')
+    fetch('/api/v2/products')
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) { 
         
@@ -117,7 +117,7 @@ function addNewProduct(name, code){
             code: code
         };
 
-        fetch('/api/v1/products', {
+        fetch('/api/v2/products', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newProductData),
@@ -162,7 +162,7 @@ function addProductActivity(){
             amount: quantity
         };
 
-        fetch('/api/v1/activities/product', {
+        fetch('/api/v2/activities/product', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newProductActivityData),
@@ -203,7 +203,7 @@ function addProductActivity(){
         amount: quantity
     };
 
-    fetch('/api/v1/activities/garbage', {
+    fetch('/api/v2/activities/garbage', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newGarbageActivityData),
@@ -240,7 +240,7 @@ function addProductActivity(){
         distance: distance
     };
 
-    fetch('/api/v1/activities/transport', {
+    fetch('/api/v2/activities/transport', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newTransportActivityData),

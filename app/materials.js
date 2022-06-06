@@ -1,7 +1,7 @@
 /**
  * @swagger
  * paths: 
- *      /api/v1/materials:
+ *      /api/v2/materials:
  *          get:
  *              summary: Get the materials
  *              description: Returns all the possible materials from the database in JSON format
@@ -22,9 +22,9 @@
  *                                              type: string
  *                                              description: the name of the material 
  *                              example:
- *                                  - self: "/api/v1/materials/627e62bbf1f1da75f033373f"
+ *                                  - self: "/api/v2/materials/627e62bbf1f1da75f033373f"
  *                                    name: "Umido"
- *      /api/v1/materials/{id}:
+ *      /api/v2/materials/{id}:
  *          get:
  *              summary: Get the material specified by id
  *              description: Returns the specified material from the id in the parameters
@@ -53,7 +53,7 @@
  *                                          type: integer
  *                                          description: The impact of the material 
  *                              example:
- *                                    self: "/api/v1/materials/627e62bbf1f1da75f033373f"
+ *                                    self: "/api/v2/materials/627e62bbf1f1da75f033373f"
  *                                    name: "Umido"
  *                                    unitImpact: 10
  *                  '404':
@@ -69,7 +69,7 @@
     let materials = await Material.find({});
     materials = materials.map( (material) => {
         return {
-            self: '/api/v1/materials/' + material["_id"],
+            self: '/api/v2/materials/' + material["_id"],
             name: material["name"]
         };
     });
@@ -86,7 +86,7 @@ router.get('/:id', async (req, res) => {
     }
 
     material = {
-        self: '/api/v1/materials/' + material.id,
+        self: '/api/v2/materials/' + material.id,
         name: material["name"],
         unitImpact: material["unitImpact"]
     }

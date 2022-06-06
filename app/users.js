@@ -5,7 +5,7 @@ const router = express.Router();
 /**
  * @swagger
  * paths:
- *      /api/v1/users:
+ *      /api/v2/users:
  *          get:
  *              summary: Get the list of users 
  *              description: This function retrieves the list of users present in the db and returns it as a json document
@@ -26,7 +26,7 @@ const router = express.Router();
  *                                              type: string
  *                                              description: The username of the user
  *                              example:
- *                                  - self: "/api/v1/users/628367e9078d0308f8dd76ba"
+ *                                  - self: "/api/v2/users/628367e9078d0308f8dd76ba"
  *                                    username: "lollixzc"
  *          put: 
  *              summary: Update user
@@ -57,7 +57,7 @@ const router = express.Router();
  *                      description: Missing parameter
  *                  '409':
  *                      description: Username already exists
- *      /api/v1/users/{id}:
+ *      /api/v2/users/{id}:
  *          get:
  *              summary: Getting a specific User through userId
  *              description: This function retrives a specific user, thanks to the userId you set in the parameters
@@ -83,7 +83,7 @@ const router = express.Router();
  *                                          type: string
  *                                          description: The username of the user
  *                                  example:
- *                                      self: /api/v1/users/{id}
+ *                                      self: /api/v2/users/{id}
  *                                      username: vittossanna
  */
 
@@ -92,7 +92,7 @@ router.get('', async (req, res) => {
     let users = await User.find({});
     users = users.map((user) => {
         return {
-            self: '/api/v1/users/' + user["_id"],
+            self: '/api/v2/users/' + user["_id"],
             username: user["username"]
         };
     });
@@ -103,7 +103,7 @@ router.get('/:id', async (req, res) => {
 
     let user = await User.findById(req.params.id);
     user = {
-        self: '/api/v1/users/' + user.id,
+        self: '/api/v2/users/' + user.id,
         username: user["username"],
         name: user["name"],
         surname: user["surname"],
@@ -141,7 +141,7 @@ router.put('', async (req, res) => {
         email: email
     });
     
-    res.location("/api/v1/users").json({success: true}).status(200).send();
+    res.location("/api/v2/users").json({success: true}).status(200).send();
 });
 
 module.exports = router;
